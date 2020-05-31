@@ -1,13 +1,7 @@
 /* @flow */
 import React, { useState } from "react";
-import { ImageInfo } from "./MainPage";
+import { ImageInfo } from "./Body";
 import Sketch from "react-p5";
-
-const styles = {
-  sketch: {
-    justifyContent: "center",
-  },
-};
 
 type Props = { imageInfo: ImageInfo; detections: Array<any> };
 
@@ -30,11 +24,11 @@ const CanvasWrapper = ({ imageInfo, detections }: Props) => {
     }
     if (detections) {
       for (const detection of detections) {
-        let height = detection.box.height;
-        let width = detection.box.width;
-        let x = detection.box._x;
-        let y = detection.box._y;
-        p5.rect(x, y, width, height);
+        let height = detection.box.height * 1.2;
+        let width = detection.box.width * 0.8;
+        let x = detection.box.x + detection.box.height / 2;
+        let y = detection.box.y + detection.box.width * 0.4;
+        p5.ellipse(x, y, width, height);
       }
     }
   };

@@ -1,7 +1,9 @@
-import React, { Component } from "react";
+import React, { Component, CSSProperties } from "react";
 import CanvasWrapper from "./CanvasWrapper";
 import { loadModels, getFullFaceDescription } from "../face-api/face";
-import { ImageInfo } from "./MainPage";
+import { ImageInfo } from "./Body";
+import { GridLoader } from "react-spinners";
+import symbol from "../symbol";
 
 type State = {
   detections: any;
@@ -10,6 +12,22 @@ type State = {
 };
 
 type Props = { imageInfo: ImageInfo };
+
+const styles: {
+  loader: CSSProperties;
+  text: CSSProperties;
+} = {
+  loader: {
+    alignItems: "center",
+    display: "flex",
+    flexDirection: "column",
+    margin: 48,
+  },
+  text: {
+    color: symbol.COLOR.text,
+    marginBottom: 24,
+  },
+};
 
 const INITITAL_STATE: State = {
   detections: null,
@@ -49,12 +67,21 @@ class ImageDisplay extends Component<Props, State> {
   render() {
     const { detections } = this.state;
     const { imageInfo } = this.props;
-    const { width, height } = imageInfo;
+
+    if (!imageInfo.src) {
+      return null;
+    }
 
     return (
-      <div style={{ position: "relative" }}>
-        {!!width && !!height && (
+      <div style={symbol.STYLE.card}>
+        {imageInfo.src && detections && (
           <CanvasWrapper imageInfo={imageInfo} detections={detections} />
+        )}
+        {imageInfo.src && !detections && (
+          <div style={styles.loader}>
+            <p style={styles.text}>DETECTING FACES</p>
+            <GridLoader color={symbol.COLOR.text} size={20} margin={4} />
+          </div>
         )}
       </div>
     );
