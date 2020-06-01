@@ -3,11 +3,16 @@ import { Typography } from "@material-ui/core";
 import { COLOR } from "../../symbol/color";
 
 const styles: {
+  body: CSSProperties;
   label: CSSProperties;
   buttonText: CSSProperties;
   caption: CSSProperties;
   subTitle: CSSProperties;
 } = {
+  body: {
+    color: COLOR.text,
+    fontSize: 14,
+  },
   label: {
     color: COLOR.text,
     fontSize: 16,
@@ -27,6 +32,14 @@ const styles: {
     fontSize: 20,
     fontWeight: "bold",
   },
+};
+
+const Body = ({ children }) => {
+  return (
+    <Typography variant="body1" style={styles.body}>
+      {children}
+    </Typography>
+  );
 };
 
 const Label = ({ children }) => {
@@ -60,4 +73,4 @@ const SubTitle = ({ children }) => {
   );
 };
 
-export { Label, ButtonText, Caption, SubTitle };
+export { Body, Label, ButtonText, Caption, SubTitle };

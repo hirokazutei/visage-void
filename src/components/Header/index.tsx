@@ -1,10 +1,13 @@
 /* @flow */
-import React, { CSSProperties } from "react";
+import React, { CSSProperties, useContext } from "react";
 import symbol from "../../symbol";
+import SettingContext from "../../context";
+import { Button } from "../atom/Button";
 
 const styles: { header: CSSProperties; title: CSSProperties } = {
   header: {
     alignContent: "flex-end",
+    justifyContent: "space-between",
     backgroundColor: symbol.COLOR.background,
     boxShadow: `0px 0px 20px ${symbol.COLOR.backgroundOffset}`,
     display: "flex",
@@ -24,9 +27,14 @@ const styles: { header: CSSProperties; title: CSSProperties } = {
 };
 
 const Header = () => {
+  const { context, setContext } = useContext(SettingContext);
+  const showDialog = () => {
+    setContext({ ...context, showDialog: true });
+  };
   return (
     <div style={styles.header}>
       <h1 style={styles.title}>VISAGE VOID</h1>
+      <Button onClick={showDialog}>DONATE</Button>
     </div>
   );
 };

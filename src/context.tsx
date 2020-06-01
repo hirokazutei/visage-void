@@ -14,6 +14,7 @@ export const INITIAL_VALUE: ContextValue = {
     },
   },
   imageInfo: {},
+  showDialog: false,
 };
 
 export const INITIAL_STATE: ContextType = {

@@ -1,5 +1,7 @@
 export type CoverType = "OVAL" | "BOX";
 
+export type SizeKey = "tiny" | "small" | "medium" | "large" | "huge" | "macro";
+
 export type ColorSetting = {
   red: number;
   green: number;
@@ -25,6 +27,7 @@ export type ContextValue = {
   setting: Setting;
   imageInfo: ImageInfo;
   detections?: Detections;
+  showDialog: boolean;
 };
 
 export type ContextType = {

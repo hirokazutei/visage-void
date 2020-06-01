@@ -14,20 +14,12 @@ import { COVER_TYPE } from "../../const";
 import { CoverType, ColorSetting } from "../../types";
 import { Paper } from "../atom/Paper";
 import { Label, SubTitle } from "../atom/Text";
+import Space from "../atom/Space";
 
 const styles: {
-  sliderContainer: CSSProperties;
-  buttonContainer: CSSProperties;
   colorSliderContianer: CSSProperties;
   colorSetting: CSSProperties;
-  colorLabelContainer: CSSProperties;
 } = {
-  sliderContainer: {
-    margin: 10,
-  },
-  buttonContainer: {
-    margin: 10,
-  },
   colorSliderContianer: {
     display: "flex",
     minWidth: 200,
@@ -36,9 +28,6 @@ const styles: {
   colorSetting: {
     display: "flex",
     flexDirection: "column",
-  },
-  colorLabelContainer: {
-    marginRight: 12,
   },
 };
 
@@ -112,25 +101,26 @@ const Setting = () => {
   return (
     <Paper>
       <SubTitle>SETTINGS</SubTitle>
-      <div style={styles.buttonContainer}>
-        <Label>COVER TYPE</Label>
-        <ButtonGroup color="primary" aria-label="outlined primary button group">
-          {COVER_TYPE.map((type) => {
-            return (
-              <Button
-                key={type}
-                variant={type === currentType ? "contained" : "outlined"}
-                onClick={() => setType(type)}
-              >
-                {type}
-              </Button>
-            );
-          })}
-        </ButtonGroup>
-      </div>
+      <Space.Stack size="large" />
+      <Label>COVER TYPE</Label>
+      <ButtonGroup color="primary" aria-label="outlined primary button group">
+        <Space.Stack size="medium" />
+        {COVER_TYPE.map((type) => {
+          return (
+            <Button
+              key={type}
+              variant={type === currentType ? "contained" : "outlined"}
+              onClick={() => setType(type)}
+            >
+              {type}
+            </Button>
+          );
+        })}
+      </ButtonGroup>
+      <Space.Stack size="large" />
       {sliders.map(({ text, value, setter }) => {
         return (
-          <div style={styles.sliderContainer} key={text}>
+          <>
             <Label>{text}</Label>
             <Slider
               value={value}
@@ -145,7 +135,8 @@ const Setting = () => {
               max={200}
               valueLabelDisplay="auto"
             />
-          </div>
+            <Space.Stack size="medium" />
+          </>
         );
       })}
       <ExpansionPanel style={symbol.STYLE.contentWrapper}>
@@ -171,9 +162,8 @@ const Setting = () => {
               const { text, value, setter } = props;
               return (
                 <div style={styles.colorSliderContianer} key={text}>
-                  <div style={styles.colorLabelContainer}>
-                    <Label>{text}</Label>
-                  </div>
+                  <Label>{text}</Label>
+                  <Space.Queue size="medium" />
                   <Slider
                     value={value}
                     onChange={(_, newValue) => {

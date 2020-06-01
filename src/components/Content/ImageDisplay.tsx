@@ -17,12 +17,16 @@ type Props = ContextType;
 
 const styles: {
   loader: CSSProperties;
+  textWrapper: CSSProperties;
 } = {
   loader: {
     alignItems: "center",
     display: "flex",
     flexDirection: "column",
     margin: 48,
+  },
+  textWrapper: {
+    marginBottom: 12,
   },
 };
 
@@ -73,7 +77,9 @@ class ImageDisplay extends Component<Props, State> {
         {imageInfo.src && detections && <CanvasWrapper />}
         {imageInfo.src && !detections && (
           <div style={styles.loader}>
-            <Caption>DETECTING FACES</Caption>
+            <div style={styles.textWrapper}>
+              <Caption>DETECTING FACES</Caption>
+            </div>
             <GridLoader color={symbol.COLOR.text} size={20} margin={4} />
           </div>
         )}
