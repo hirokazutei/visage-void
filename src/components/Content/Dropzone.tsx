@@ -57,6 +57,7 @@ const Dropzone = () => {
             const { width, height } = image;
             setContext({
               ...context,
+              detections: undefined,
               imageInfo: { src: URL.createObjectURL(file), height, width },
             });
           };
