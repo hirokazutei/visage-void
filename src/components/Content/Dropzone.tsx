@@ -43,7 +43,6 @@ const Dropzone = () => {
   const onDrop = useCallback(
     (images) => {
       images.forEach((file: any) => {
-        console.log(file);
         const reader = new FileReader();
 
         reader.onabort = () => alert("file reading was aborted");

@@ -45,7 +45,7 @@ const DonateModal = () => {
         <Paper>
           <SubTitle>Please Donate!</SubTitle>
           <Space.Stack size="medium" />
-          <Body>People in US are Fighting Against Opression!</Body>
+          <Body>People in the US are Fighting Against Opression!</Body>
           <Body>If you are able to, please donate to support their cause.</Body>
           <Space.Stack size="small" />
           <Label>

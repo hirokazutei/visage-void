@@ -26,6 +26,5 @@ export async function getFullFaceDescription(blob, inputSize = 512) {
     .detectAllFaces(img, OPTION)
     .withFaceLandmarks(useTinyModel)
     .withFaceDescriptors();
-  console.log(fullDesc);
   return fullDesc;
 }
