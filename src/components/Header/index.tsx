@@ -1,6 +1,6 @@
 /* @flow */
 import React, { CSSProperties } from "react";
-import symbol from "../symbol";
+import symbol from "../../symbol";
 
 const styles: { header: CSSProperties; title: CSSProperties } = {
   header: {

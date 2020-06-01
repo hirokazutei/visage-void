@@ -3,6 +3,9 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@babel/runtime": "^7.10.2",
+    "@material-ui/core": "^4.10.0",
+    "@material-ui/icons": "^4.9.1",
     "@tensorflow-models/coco-ssd": "^2.0.3",
     "@tensorflow/tfjs-converter": "^2.0.0",
     "@tensorflow/tfjs-core": "^2.0.0",
@@ -13,6 +16,7 @@
     "@types/node": "^12.0.0",
     "@types/react": "^16.9.0",
     "@types/react-dom": "^16.9.0",
+    "emotion": "^10.0.27",
     "face-api.js": "^0.22.2",
     "p5": "^1.0.0",
     "react": "^16.13.1",
@@ -22,6 +26,7 @@
     "react-p5-wrapper": "^2.0.0",
     "react-scripts": "3.4.1",
     "react-spinners": "^0.8.3",
+    "typeface-roboto": "^0.0.75",
     "typescript": "~3.7.2"
   },
   "scripts": {

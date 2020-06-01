@@ -1,9 +1,11 @@
 import React, { Component, CSSProperties } from "react";
 import CanvasWrapper from "./CanvasWrapper";
-import { loadModels, getFullFaceDescription } from "../face-api/face";
-import { ImageInfo } from "./Body";
+import { loadModels, getFullFaceDescription } from "../../face-api/face";
+import { ContextType } from "../../types";
 import { GridLoader } from "react-spinners";
-import symbol from "../symbol";
+import symbol from "../../symbol";
+import { Paper } from "../atom/Paper";
+import { Caption } from "../atom/Text";
 
 type State = {
   detections: any;
@@ -11,21 +13,16 @@ type State = {
   modelsLoaded: boolean;
 };
 
-type Props = { imageInfo: ImageInfo };
+type Props = ContextType;
 
 const styles: {
   loader: CSSProperties;
-  text: CSSProperties;
 } = {
   loader: {
     alignItems: "center",
     display: "flex",
     flexDirection: "column",
     margin: 48,
-  },
-  text: {
-    color: symbol.COLOR.text,
-    marginBottom: 24,
   },
 };
 
@@ -42,13 +39,13 @@ class ImageDisplay extends Component<Props, State> {
   }
 
   componentDidUpdate = async (prevProps) => {
-    const { src } = this.props.imageInfo;
+    const { src } = this.props.context.imageInfo;
     const { modelsLoaded } = this.state;
     if (!modelsLoaded) {
       await loadModels();
       this.setState({ ...this.state, modelsLoaded: true });
     }
-    if (src && src !== prevProps.imageInfo.src) {
+    if (src && src !== prevProps.context.imageInfo.src) {
       await this.handleImage(src);
     }
   };
@@ -56,8 +53,8 @@ class ImageDisplay extends Component<Props, State> {
   handleImage = async (image) => {
     await getFullFaceDescription(image).then((fullDescription) => {
       if (!!fullDescription) {
-        this.setState({
-          fullDescription,
+        this.props.setContext({
+          ...this.props.context,
           detections: fullDescription.map((fd) => fd.detection),
         });
       }
@@ -65,25 +62,22 @@ class ImageDisplay extends Component<Props, State> {
   };
 
   render() {
-    const { detections } = this.state;
-    const { imageInfo } = this.props;
+    const { detections, imageInfo } = this.props.context;
 
     if (!imageInfo.src) {
       return null;
     }
 
     return (
-      <div style={symbol.STYLE.card}>
-        {imageInfo.src && detections && (
-          <CanvasWrapper imageInfo={imageInfo} detections={detections} />
-        )}
+      <Paper>
+        {imageInfo.src && detections && <CanvasWrapper />}
         {imageInfo.src && !detections && (
           <div style={styles.loader}>
-            <p style={styles.text}>DETECTING FACES</p>
+            <Caption>DETECTING FACES</Caption>
             <GridLoader color={symbol.COLOR.text} size={20} margin={4} />
           </div>
         )}
-      </div>
+      </Paper>
     );
   }
 }

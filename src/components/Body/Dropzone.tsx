@@ -1,14 +1,11 @@
-import React, { useCallback, CSSProperties } from "react";
+import React, { useCallback, CSSProperties, useContext } from "react";
 import { useDropzone } from "react-dropzone";
-import symbol from "../symbol";
-
-type Props = {
-  onImageUploaded: (ImageInfo) => void;
-};
+import symbol from "../../symbol";
+import Context from "../../context";
+import { Caption } from "../atom/Text";
 
 const styles: {
   textContainer: CSSProperties;
-  text: CSSProperties;
   dropzone: CSSProperties;
   button: CSSProperties;
   dropTextContainer: CSSProperties;
@@ -17,9 +14,6 @@ const styles: {
     alignItems: "center",
     display: "flex",
     flex: 1,
-  },
-  text: {
-    ...symbol.STYLE.text,
   },
   dropzone: {
     border: `dashed ${symbol.COLOR.text} 3px`,
@@ -34,8 +28,9 @@ const styles: {
   },
   button: {
     ...symbol.STYLE.button,
+    flex: 1,
     minHeight: 72,
-    width: 150,
+    width: 160,
     borderRadius: "0px 8px 8px 0px",
   },
   dropTextContainer: {
@@ -44,7 +39,8 @@ const styles: {
   },
 };
 
-const Dropzone = ({ onImageUploaded }: Props) => {
+const Dropzone = () => {
+  const { context, setContext } = useContext(Context);
   const onDrop = useCallback(
     (images) => {
       images.forEach((file: any) => {
@@ -60,13 +56,16 @@ const Dropzone = ({ onImageUploaded }: Props) => {
           image.src = entry.target.result;
           image.onload = () => {
             const { width, height } = image;
-            onImageUploaded({ src: URL.createObjectURL(file), height, width });
+            setContext({
+              ...context,
+              imageInfo: { src: URL.createObjectURL(file), height, width },
+            });
           };
         };
         reader.readAsDataURL(file);
       });
     },
-    [onImageUploaded]
+    [context, setContext]
   );
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
 
@@ -74,14 +73,14 @@ const Dropzone = ({ onImageUploaded }: Props) => {
     <div style={styles.dropzone} {...getRootProps()}>
       <input {...getInputProps()} accept=".jpg, .jpeg, .png" type="file" />
       {isDragActive ? (
-        <p style={styles.text}>DROP IMAGE HERE...</p>
+        <Caption>DROP IMAGE HERE...</Caption>
       ) : (
         <div style={styles.textContainer}>
           <div style={styles.dropTextContainer}>
-            <p style={styles.text}>DRAG & DROP IMAGE HERE</p>
+            <Caption>DRAG & DROP IMAGE HERE</Caption>
           </div>
           <div style={styles.button}>
-            <p style={symbol.STYLE.buttonText}>OR CLICK HERE</p>
+            <Caption>OR CLICK HERE</Caption>
           </div>
         </div>
       )}

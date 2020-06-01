@@ -3,6 +3,7 @@ const COLOR = {
   backgroundOffset: "#000000",
   text: "#dddddd",
   cards: "#2f2f2f",
+  expansion: "#444444",
   button: "#666666",
   buttonText: "#333333",
 };
