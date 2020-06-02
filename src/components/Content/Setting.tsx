@@ -107,7 +107,7 @@ const Setting = () => {
       <Space.Stack size="large" />
       {sliders.map(({ text, value, setter }) => {
         return (
-          <>
+          <div key={text}>
             <Label>{text}</Label>
             <Slider
               value={value}
@@ -123,7 +123,7 @@ const Setting = () => {
               valueLabelDisplay="auto"
             />
             <Space.Stack size="medium" />
-          </>
+          </div>
         );
       })}
       <ColorSetter color={color} setColor={setColor} />
