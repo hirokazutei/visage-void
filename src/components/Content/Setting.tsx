@@ -1,25 +1,21 @@
 import React, { useContext, CSSProperties } from "react";
-import {
-  Slider,
-  Button,
-  ButtonGroup,
-  ExpansionPanel,
-  ExpansionPanelSummary,
-  ExpansionPanelDetails,
-} from "@material-ui/core";
-import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import { Slider, Button, ButtonGroup } from "@material-ui/core";
 import Context from "../../context";
-import symbol from "../../symbol";
 import { COVER_TYPE } from "../../const";
 import { CoverType, ColorSetting } from "../../types";
-import { Paper } from "../atom/Paper";
-import { Label, SubTitle } from "../atom/Text";
+import { Label } from "../atom/Text";
 import Space from "../atom/Space";
+import ColorSetter from "./ColorSetter";
 
 const styles: {
+  buttonGroupContainer: CSSProperties;
   colorSliderContianer: CSSProperties;
   colorSetting: CSSProperties;
 } = {
+  buttonGroupContainer: {
+    display: "flex",
+    justifyContent: "center",
+  },
   colorSliderContianer: {
     display: "flex",
     minWidth: 200,
@@ -80,43 +76,34 @@ const Setting = () => {
     },
   ];
 
-  const colorSliders = [
-    {
-      text: "R",
-      value: color.red,
-      setter: (red) => setColor({ ...color, red }),
-    },
-    {
-      text: "G",
-      value: color.green,
-      setter: (green) => setColor({ ...color, green }),
-    },
-    {
-      text: "B",
-      value: color.blue,
-      setter: (blue) => setColor({ ...color, blue }),
-    },
-  ];
-
   return (
-    <Paper>
-      <SubTitle>SETTINGS</SubTitle>
-      <Space.Stack size="large" />
+    <>
+      <Space.Stack size="medium" />
       <Label>COVER TYPE</Label>
-      <ButtonGroup color="primary" aria-label="outlined primary button group">
-        <Space.Stack size="medium" />
-        {COVER_TYPE.map((type) => {
-          return (
-            <Button
-              key={type}
-              variant={type === currentType ? "contained" : "outlined"}
-              onClick={() => setType(type)}
-            >
-              {type}
-            </Button>
-          );
-        })}
-      </ButtonGroup>
+      <Space.Stack size="medium" />
+      <div style={styles.buttonGroupContainer}>
+        <ButtonGroup color="primary" aria-label="outlined primary button group">
+          {COVER_TYPE.map((type, index) => {
+            const borderRadius = (() => {
+              if (index === 0) return "8px 0px 0px 8px";
+              else if (index === COVER_TYPE.length - 1) {
+                return "0px 8px 8px 0px";
+              }
+              return 0;
+            })();
+            return (
+              <Button
+                key={type}
+                variant={type === currentType ? "contained" : "outlined"}
+                onClick={() => setType(type)}
+                style={{ borderRadius }}
+              >
+                {type}
+              </Button>
+            );
+          })}
+        </ButtonGroup>
+      </div>
       <Space.Stack size="large" />
       {sliders.map(({ text, value, setter }) => {
         return (
@@ -139,48 +126,8 @@ const Setting = () => {
           </>
         );
       })}
-      <ExpansionPanel style={symbol.STYLE.contentWrapper}>
-        <ExpansionPanelSummary
-          expandIcon={<ExpandMoreIcon />}
-          aria-controls="panel1a-content"
-          id="panel1a-header"
-        >
-          <div
-            style={{
-              backgroundColor: `rgb(${color.red},${color.green},${color.blue})`,
-              borderRadius: 80,
-              width: 24,
-              height: 24,
-              marginRight: 12,
-            }}
-          />
-          <Label>CHANGE COLOR</Label>
-        </ExpansionPanelSummary>
-        <ExpansionPanelDetails>
-          <div style={styles.colorSetting}>
-            {colorSliders.map((props) => {
-              const { text, value, setter } = props;
-              return (
-                <div style={styles.colorSliderContianer} key={text}>
-                  <Label>{text}</Label>
-                  <Space.Queue size="medium" />
-                  <Slider
-                    value={value}
-                    onChange={(_, newValue) => {
-                      setter(Array.isArray(newValue) ? newValue[0] : newValue);
-                    }}
-                    aria-labelledby="continuous-slider"
-                    min={0}
-                    max={255}
-                    valueLabelDisplay="auto"
-                  />
-                </div>
-              );
-            })}
-          </div>
-        </ExpansionPanelDetails>
-      </ExpansionPanel>
-    </Paper>
+      <ColorSetter color={color} setColor={setColor} />
+    </>
   );
 };
 

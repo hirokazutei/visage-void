@@ -2,8 +2,8 @@ import React, { CSSProperties, useContext } from "react";
 import Dropzone from "./Dropzone";
 import ImageDisplay from "./ImageDisplay";
 import Context from "../../context";
-import Setting from "./Setting";
 import { Body } from "../atom/Text";
+import ActionSection from "./ActionSection";
 
 const styles: {
   mainContainer: CSSProperties;
@@ -51,7 +51,7 @@ const Content = () => {
           </div>
           <Dropzone />
         </div>
-        <Setting />
+        <ActionSection />
       </div>
       <div style={styles.imageDisplayContainer}>
         <ImageDisplay context={context} setContext={setContext} />

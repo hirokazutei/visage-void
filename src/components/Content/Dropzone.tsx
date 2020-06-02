@@ -13,28 +13,26 @@ const styles: {
   textContainer: {
     alignItems: "center",
     display: "flex",
+    padding: 0,
+    justifyContent: "space-between",
   },
   dropzone: {
     border: `dashed ${symbol.COLOR.text} 3px`,
     backgroundColor: symbol.COLOR.cards,
     borderRadius: 8,
-    minWidth: 460,
-    maxWidth: 460,
+    width: 460,
     height: 80,
     margin: 24,
-    display: "flex",
-    alignItems: "center",
-    justifyContent: "center",
   },
   button: {
     ...symbol.STYLE.button,
-    minHeight: 72,
+    height: 72,
     width: 160,
     borderRadius: "0px 8px 8px 0px",
   },
   dropTextContainer: {
-    marginLeft: 24,
-    marginRight: 24,
+    marginLeft: symbol.SPACE.huge,
+    marginRight: symbol.SPACE.huge,
   },
 };
 
@@ -71,18 +69,16 @@ const Dropzone = () => {
   return (
     <div style={styles.dropzone} {...getRootProps()}>
       <input {...getInputProps()} accept=".jpg, .jpeg, .png" type="file" />
-      {isDragActive ? (
-        <Caption>DROP IMAGE HERE...</Caption>
-      ) : (
-        <div style={styles.textContainer}>
-          <div style={styles.dropTextContainer}>
-            <Caption>DRAG & DROP IMAGE HERE</Caption>
-          </div>
-          <div style={styles.button}>
-            <Caption>OR CLICK HERE</Caption>
-          </div>
+      <div style={styles.textContainer}>
+        <div style={styles.dropTextContainer}>
+          <Caption>
+            {isDragActive ? "DROP IMAGE HERE..." : "DRAG & DROP IMAGE HERE"}
+          </Caption>
         </div>
-      )}
+        <div style={styles.button}>
+          <Caption>OR CLICK HERE</Caption>
+        </div>
+      </div>
     </div>
   );
 };

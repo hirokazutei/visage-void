@@ -1,13 +1,13 @@
 import React from "react";
 import { SizeKey } from "../../types";
-import { SIZE } from "../../const";
+import symbol from "../../symbol";
 
 const Stack = ({ size }: { size: SizeKey }) => {
-  return <div style={{ height: SIZE[size] }} />;
+  return <div style={{ height: symbol.SPACE[size] }} />;
 };
 
 const Queue = ({ size }: { size: SizeKey }) => {
-  return <div style={{ width: SIZE[size] }} />;
+  return <div style={{ width: symbol.SPACE[size] }} />;
 };
 
 export default { Stack, Queue };

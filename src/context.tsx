@@ -4,8 +4,8 @@ import { COVER_TYPE } from "./const";
 
 export const INITIAL_VALUE: ContextValue = {
   setting: {
-    heightMultiplier: 80,
-    widthMultiplier: 80,
+    heightMultiplier: 100,
+    widthMultiplier: 100,
     type: COVER_TYPE[0],
     color: {
       red: 0,
@@ -15,6 +15,7 @@ export const INITIAL_VALUE: ContextValue = {
   },
   imageInfo: {},
   showDialog: false,
+  currentTab: 0,
 };
 
 export const INITIAL_STATE: ContextType = {

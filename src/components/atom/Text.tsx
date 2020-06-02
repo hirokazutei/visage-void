@@ -34,40 +34,49 @@ const styles: {
   },
 };
 
-const Body = ({ children }) => {
+type Props = {
+  children: React.ReactNode;
+  customStyle?: CSSProperties;
+};
+
+const Body = ({ children, customStyle = {} }: Props) => {
   return (
-    <Typography variant="body1" style={styles.body}>
+    <Typography variant="body1" style={{ ...styles.body, ...customStyle }}>
       {children}
     </Typography>
   );
 };
 
-const Label = ({ children }) => {
+const Label = ({ children, customStyle = {} }: Props) => {
   return (
-    <Typography variant="body1" style={styles.label}>
+    <Typography variant="body1" style={{ ...styles.label, ...customStyle }}>
       {children}
     </Typography>
   );
 };
 
-const ButtonText = ({ children }) => {
+const ButtonText = ({ children, customStyle = {} }: Props) => {
   return (
-    <Typography variant="button" style={styles.buttonText}>
+    <Typography
+      variant="button"
+      style={{ ...styles.buttonText, ...customStyle }}
+    >
       {children}
     </Typography>
   );
 };
 
-const Caption = ({ children }) => {
+const Caption = ({ children, customStyle = {} }: Props) => {
   return (
-    <Typography variant="caption" style={styles.caption}>
+    <Typography variant="caption" style={{ ...styles.caption, ...customStyle }}>
       {children}
     </Typography>
   );
 };
-const SubTitle = ({ children }) => {
+
+const SubTitle = ({ children, customStyle = {} }: Props) => {
   return (
-    <Typography variant="h2" style={styles.caption}>
+    <Typography variant="h2" style={{ ...styles.caption, ...customStyle }}>
       {children}
     </Typography>
   );

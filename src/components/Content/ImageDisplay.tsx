@@ -8,8 +8,6 @@ import { Paper } from "../atom/Paper";
 import { Caption } from "../atom/Text";
 
 type State = {
-  detections: any;
-  fullDescription: any;
   modelsLoaded: boolean;
 };
 
@@ -31,8 +29,6 @@ const styles: {
 };
 
 const INITITAL_STATE: State = {
-  detections: null,
-  fullDescription: null,
   modelsLoaded: false,
 };
 
@@ -59,7 +55,15 @@ class ImageDisplay extends Component<Props, State> {
       if (!!fullDescription) {
         this.props.setContext({
           ...this.props.context,
-          detections: fullDescription.map((fd) => fd.detection),
+          detections: fullDescription.map((fd) => {
+            return {
+              height: Math.round(fd.detection.box.height),
+              width: Math.round(fd.detection.box.width),
+              x: Math.round(fd.detection.box.x),
+              y: Math.round(fd.detection.box.y),
+              hide: false,
+            };
+          }),
         });
       }
     });
@@ -78,7 +82,11 @@ class ImageDisplay extends Component<Props, State> {
         {imageInfo.src && !detections && (
           <div style={styles.loader}>
             <div style={styles.textWrapper}>
-              <Caption>DETECTING FACES</Caption>
+              {this.state.modelsLoaded ? (
+                <Caption>DETECTING FACES</Caption>
+              ) : (
+                <Caption>LOADING MODELS</Caption>
+              )}
             </div>
             <GridLoader color={symbol.COLOR.text} size={20} margin={4} />
           </div>

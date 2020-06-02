@@ -1,4 +1,5 @@
 import { COLOR } from "./color";
 import { STYLE } from "./style";
+import { SPACE } from "./space";
 
-export default { COLOR, STYLE };
+export default { COLOR, SPACE, STYLE };

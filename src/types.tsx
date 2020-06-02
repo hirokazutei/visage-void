@@ -21,13 +21,26 @@ export type ImageInfo = {
   height?: number;
 };
 
-export type Detections = Array<any>;
+export type PositionSize = {
+  height?: number;
+  width?: number;
+  x?: number;
+  y?: number;
+};
+
+export type Detection = {
+  hide: boolean;
+  color?: ColorSetting;
+} & Required<PositionSize>;
+
+export type Detections = Array<Detection>;
 
 export type ContextValue = {
   setting: Setting;
   imageInfo: ImageInfo;
   detections?: Detections;
   showDialog: boolean;
+  currentTab: number;
 };
 
 export type ContextType = {
