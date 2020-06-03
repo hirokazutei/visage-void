@@ -30,7 +30,7 @@ const CanvasWrapper = () => {
       // @ts-ignore: TS won't admit that this can't be undefined
       p5Object.loop();
     }
-  }, [{ p5Object, context, image }]);
+  }, [{ p5Object, context, image, detections }]);
 
   const mouseDragged = (p5) => {
     if (editingIndex !== undefined && detections) {
@@ -74,7 +74,7 @@ const CanvasWrapper = () => {
           }
         }
         if (loop > 1) {
-          p5.noLoop();
+          //p5.noLoop();
           setLoop(0);
         } else {
           setLoop(loop + 1);

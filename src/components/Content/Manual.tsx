@@ -39,7 +39,6 @@ const Manual = () => {
           width: Math.round(sumDetections.width / count),
         };
       })();
-      console.log(averageDetection);
       detections.push({
         ...averageDetection,
         hide: false,
