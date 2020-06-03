@@ -25,7 +25,11 @@ const EditView = () => {
   const { imageInfo, detections, editingIndex } = context;
 
   const doneEditing = () => {
-    setContext({ ...context, editingIndex: undefined });
+    setContext({
+      ...context,
+      editingIndex: undefined,
+      editCount: context.editCount + 1,
+    });
   };
 
   if (editingIndex === undefined) {
@@ -44,6 +48,7 @@ const EditView = () => {
       setContext({
         ...context,
         ...detections,
+        editCount: context.editCount + 1,
       });
     }
   };
@@ -57,6 +62,7 @@ const EditView = () => {
       setContext({
         ...context,
         ...detections,
+        editCount: context.editCount + 1,
       });
     }
   };

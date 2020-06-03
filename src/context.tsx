@@ -21,6 +21,7 @@ export const INITIAL_VALUE: ContextValue = {
   displaedMessages: {
     dragToChange: false,
   },
+  editCount: 0,
 };
 
 export const INITIAL_STATE: ContextType = {

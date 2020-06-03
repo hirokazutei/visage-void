@@ -39,18 +39,21 @@ const Setting = () => {
     setContext({
       ...context,
       setting: { ...context.setting, heightMultiplier },
+      editCount: context.editCount + 1,
     });
   };
   const setWidthMutiplier = (widthMultiplier: number) => {
     setContext({
       ...context,
       setting: { ...context.setting, widthMultiplier },
+      editCount: context.editCount + 1,
     });
   };
   const setType = (type: CoverType) => {
     setContext({
       ...context,
       setting: { ...context.setting, type },
+      editCount: context.editCount + 1,
     });
   };
   const setColor = (color: ColorSetting) => {
@@ -60,6 +63,7 @@ const Setting = () => {
         ...context.setting,
         color: { ...context.setting.color, ...color },
       },
+      editCount: context.editCount + 1,
     });
   };
 

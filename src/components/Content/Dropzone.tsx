@@ -56,6 +56,7 @@ const Dropzone = () => {
               ...context,
               detections: undefined,
               imageInfo: { src: URL.createObjectURL(file), height, width },
+              editCount: context.editCount + 1,
             });
           };
         };

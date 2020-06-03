@@ -15,7 +15,11 @@ const ActionSection = () => {
   const { context, setContext } = useContext(Context);
   const { currentTab } = context;
   const changeTab = (_, value) => {
-    setContext({ ...context, currentTab: value });
+    setContext({
+      ...context,
+      currentTab: value,
+      editCount: context.editCount + 1,
+    });
   };
   return (
     <Paper customStyle={{ paddingTop: 0 }}>

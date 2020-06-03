@@ -47,20 +47,32 @@ const DetectionView = () => {
     if (detections) {
       detections.splice(index, 1);
       const newDetections = [...detections];
-      setContext({ ...context, detections: newDetections });
+      setContext({
+        ...context,
+        detections: newDetections,
+        editCount: context.editCount + 1,
+      });
     }
   };
 
   const showHideDetection = (index) => {
     if (detections && detections[index]) {
       detections[index].hide = !detections[index].hide;
-      setContext({ ...context, ...detections });
+      setContext({
+        ...context,
+        ...detections,
+        editCount: context.editCount + 1,
+      });
     }
   };
 
   const onSelectedToEdit = (index) => {
     if (index === editingIndex) {
-      setContext({ ...context, editingIndex: undefined });
+      setContext({
+        ...context,
+        editingIndex: undefined,
+        editCount: context.editCount + 1,
+      });
     } else if (detections && detections[index]) {
       setContext({
         ...context,
@@ -71,6 +83,7 @@ const DetectionView = () => {
               displaedMessages: { dragToChange: true },
             }),
         editingIndex: index,
+        editCount: context.editCount + 1,
       });
     }
   };

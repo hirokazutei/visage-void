@@ -17,7 +17,11 @@ const Page = () => {
   const { snackBarMessage } = context;
 
   const handleClose = () => {
-    setContext({ ...context, snackBarMessage: "" });
+    setContext({
+      ...context,
+      snackBarMessage: "",
+      editCount: context.editCount + 1,
+    });
   };
 
   return (

@@ -34,7 +34,11 @@ const DonateModal = () => {
   const { context, setContext } = useContext(SettingContext);
   const closeDialog = (e) => {
     e.stopPropagation();
-    setContext({ ...context, showDialog: false });
+    setContext({
+      ...context,
+      showDialog: false,
+      editCount: context.editCount + 1,
+    });
   };
   if (!context.showDialog) {
     return null;

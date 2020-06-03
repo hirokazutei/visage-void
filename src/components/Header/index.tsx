@@ -29,7 +29,11 @@ const styles: { header: CSSProperties; title: CSSProperties } = {
 const Header = () => {
   const { context, setContext } = useContext(SettingContext);
   const showDialog = () => {
-    setContext({ ...context, showDialog: true });
+    setContext({
+      ...context,
+      showDialog: true,
+      editCount: context.editCount + 1,
+    });
   };
   return (
     <div style={styles.header}>

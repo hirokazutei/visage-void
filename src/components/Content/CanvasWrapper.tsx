@@ -1,12 +1,11 @@
 /* @flow */
-import React, { useState, useContext } from "react";
+import React, { useState, useContext, useEffect } from "react";
 import Sketch from "react-p5";
 import Context from "../../context";
-import useDeepCompareEffect from "use-deep-compare-effect";
 
 const CanvasWrapper = () => {
   const { context, setContext } = useContext(Context);
-  const { imageInfo, detections, setting, editingIndex } = context;
+  const { imageInfo, detections, setting, editingIndex, editCount } = context;
   const [p5Object, setP5Object] = useState();
   const { src, height, width } = imageInfo;
   const { heightMultiplier, widthMultiplier, type, color } = setting;
@@ -25,15 +24,25 @@ const CanvasWrapper = () => {
     p5.noStroke();
   };
 
-  useDeepCompareEffect(() => {
+  useEffect(() => {
     if (p5Object !== undefined) {
       // @ts-ignore: TS won't admit that this can't be undefined
       p5Object.loop();
     }
-  }, [{ p5Object, context, image, detections }]);
+  }, [p5Object, editCount]);
 
   const mouseDragged = (p5) => {
-    if (editingIndex !== undefined && detections) {
+    if (editingIndex !== undefined && detections && imageInfo !== undefined) {
+      if (
+        p5.mouseX < 0 ||
+        p5.mouseY < 0 ||
+        !imageInfo.width ||
+        !imageInfo.height ||
+        p5.mouseX > imageInfo.width ||
+        p5.mouseY > imageInfo.height
+      ) {
+        return;
+      }
       const { width, height } = detections[editingIndex];
       detections[editingIndex] = {
         ...detections[editingIndex],
@@ -41,7 +50,11 @@ const CanvasWrapper = () => {
         y: p5.mouseY - height / 2,
       };
       const newDetections = [...detections];
-      setContext({ ...context, detections: newDetections });
+      setContext({
+        ...context,
+        detections: newDetections,
+        editCount: context.editCount + 1,
+      });
       p5.loop();
     }
   };
@@ -74,7 +87,7 @@ const CanvasWrapper = () => {
           }
         }
         if (loop > 1) {
-          //p5.noLoop();
+          p5.noLoop();
           setLoop(0);
         } else {
           setLoop(loop + 1);

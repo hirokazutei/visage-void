@@ -46,6 +46,7 @@ export type ContextValue = {
   displaedMessages: {
     dragToChange: boolean;
   };
+  editCount: number;
 };
 
 export type ContextType = {

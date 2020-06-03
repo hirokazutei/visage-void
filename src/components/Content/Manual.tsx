@@ -7,13 +7,14 @@ import Space from "../atom/Space";
 import DetectionView from "./DetectionsView";
 import EditView from "./EditView";
 import { messages } from "../../strings";
+import { Detections } from "../../types";
 
 const Manual = () => {
   const { context, setContext } = useContext(Context);
   const { detections, imageInfo, editingIndex } = context;
 
   const addNew = () => {
-    if (detections) {
+    if (detections?.length) {
       const averageDetection = (() => {
         const sumDetections = detections.reduce(
           (a, b) => {
@@ -54,6 +55,29 @@ const Manual = () => {
               displaedMessages: { dragToChange: true },
             }),
         editingIndex: detections.length - 1,
+        editCount: context.editCount + 1,
+      });
+    } else {
+      const newDetection: Detections = [];
+      newDetection.push({
+        x: imageInfo.width ? Math.round(imageInfo.width / 2) : 0,
+        y: imageInfo.height ? Math.round(imageInfo.height / 2) : 0,
+        height: imageInfo.height ? Math.round(imageInfo.height / 10) : 50,
+        width: imageInfo.width ? Math.round(imageInfo.width / 10) : 50,
+        hide: false,
+        color: context.setting.color,
+      });
+      setContext({
+        ...context,
+        detections: newDetection,
+        ...(context.displaedMessages.dragToChange
+          ? {}
+          : {
+              snackBarMessage: messages.draggable,
+              displaedMessages: { dragToChange: true },
+            }),
+        editingIndex: 0,
+        editCount: context.editCount + 1,
       });
     }
   };

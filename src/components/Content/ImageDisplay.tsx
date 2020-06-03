@@ -64,6 +64,7 @@ class ImageDisplay extends Component<Props, State> {
               hide: false,
             };
           }),
+          editCount: this.props.context.editCount + 1,
         });
       }
     });
