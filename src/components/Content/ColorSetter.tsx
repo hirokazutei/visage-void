@@ -52,7 +52,7 @@ const ColorSetter = ({ color, setColor }: Props) => {
 
   return (
     <ExpansionPanel style={symbol.STYLE.contentWrapper}>
-      <ExpansionPanelSummary expandIcon={<ExpandMoreIcon />}>
+      <ExpansionPanelSummary expandIcon={<ExpandMoreIcon color="secondary" />}>
         <div
           style={{
             backgroundColor: `rgb(${color.red},${color.green},${color.blue})`,
