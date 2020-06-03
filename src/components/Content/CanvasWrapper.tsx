@@ -1,8 +1,12 @@
 /* @flow */
-import React, { useState, useContext, useEffect } from "react";
+import React, { useState, useContext, useEffect, CSSProperties } from "react";
+import { GetApp as DownloadIcon } from "@material-ui/icons";
 import Sketch from "react-p5";
 import Context from "../../context";
 import { Detection } from "../../types";
+import { Button } from "../atom/Button";
+import { Label } from "../atom/Text";
+import Space from "../atom/Space";
 
 const resizerRadius = 6.5;
 const resizerTolerance = 3;
@@ -22,10 +26,18 @@ const between: (num: number, min: number, max: number) => boolean = (
   max: number
 ) => num >= min && num < max;
 
+const styles: { downloadButton: CSSProperties } = {
+  downloadButton: {
+    display: "flex",
+    flexDirection: "row",
+  },
+};
+
 const CanvasWrapper = () => {
   const { context, setContext } = useContext(Context);
   const { imageInfo, detections, setting, editingIndex, editCount } = context;
   const [p5Object, setP5Object] = useState();
+  const [saveAfterNextDraw, setSaveAfterNextDraw] = useState<boolean>(false);
   const { src, height, width } = imageInfo;
   const { heightMultiplier, widthMultiplier, type, color } = setting;
   const [image, setImage] = useState();
@@ -52,11 +64,9 @@ const CanvasWrapper = () => {
   };
 
   useEffect(() => {
-    if (p5Object !== undefined) {
-      // @ts-ignore: TS won't admit that this can't be undefined
-      p5Object.loop();
-    }
-  }, [p5Object, editCount]);
+    // @ts-ignore: TS won't admit that this can't be undefined
+    p5Object?.loop();
+  }, [p5Object, editCount, saveAfterNextDraw]);
 
   const mousePressed = (p5) => {
     if (
@@ -69,6 +79,7 @@ const CanvasWrapper = () => {
     ) {
       return;
     }
+    p5.loop();
     if (editingIndex === undefined) {
       let i = 0;
       for (const detection of detections) {
@@ -308,6 +319,10 @@ const CanvasWrapper = () => {
             p5.cursor("ns-resize");
           }
         }
+        if (saveAfterNextDraw) {
+          p5.saveCanvas(`masked${Date.now()}`, "png");
+          setSaveAfterNextDraw(false);
+        }
         if (loop > 1) {
           p5.noLoop();
           setLoop(0);
@@ -318,14 +333,31 @@ const CanvasWrapper = () => {
     }
   };
 
+  const saveCanvas = () => {
+    setDragHandler(undefined);
+    setContext({ ...context, editingIndex: undefined });
+    // @ts-ignore: TS won't admit that this can't be undefined
+    p5Object?.redraw();
+    setSaveAfterNextDraw(true);
+  };
+
   return (
-    <Sketch
-      setup={setup}
-      draw={draw}
-      mouseMoved={(p5) => p5.loop()}
-      mousePressed={mousePressed}
-      mouseDragged={mouseDragged}
-    />
+    <>
+      <Button onClick={saveCanvas}>
+        <div style={styles.downloadButton}>
+          <Label>DOWNLOAD IMAGE</Label>
+          <Space.Queue size="small" />
+          <DownloadIcon color="secondary" />
+        </div>
+      </Button>
+      <Space.Stack size="small" />
+      <Sketch
+        setup={setup}
+        draw={draw}
+        mousePressed={mousePressed}
+        mouseDragged={mouseDragged}
+      />
+    </>
   );
 };
 
