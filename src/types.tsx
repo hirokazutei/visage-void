@@ -41,6 +41,11 @@ export type ContextValue = {
   detections?: Detections;
   showDialog: boolean;
   currentTab: number;
+  editingIndex?: number;
+  snackBarMessage: string;
+  displaedMessages: {
+    dragToChange: boolean;
+  };
 };
 
 export type ContextType = {

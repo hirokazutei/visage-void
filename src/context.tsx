@@ -16,6 +16,11 @@ export const INITIAL_VALUE: ContextValue = {
   imageInfo: {},
   showDialog: false,
   currentTab: 0,
+  editingIndex: undefined,
+  snackBarMessage: "",
+  displaedMessages: {
+    dragToChange: false,
+  },
 };
 
 export const INITIAL_STATE: ContextType = {

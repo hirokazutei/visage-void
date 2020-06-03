@@ -20,31 +20,25 @@ const styles: {
   },
 };
 
-type Props = {
-  selectedIndex?: number;
-  doneEditing: () => void;
-};
-
-const EditView = ({ selectedIndex, doneEditing }: Props) => {
+const EditView = () => {
   const { context, setContext } = useContext(Context);
-  const { imageInfo, detections } = context;
-  if (selectedIndex === undefined) {
+  const { imageInfo, detections, editingIndex } = context;
+
+  const doneEditing = () => {
+    setContext({ ...context, editingIndex: undefined });
+  };
+
+  if (editingIndex === undefined) {
     return null;
   }
 
   const selectedColor =
-    detections &&
-    selectedIndex !== undefined &&
-    detections[selectedIndex].color;
+    detections && editingIndex !== undefined && detections[editingIndex].color;
 
   const setColor = (color: ColorSetting) => {
-    if (
-      detections &&
-      selectedIndex !== undefined &&
-      detections[selectedIndex]
-    ) {
-      detections[selectedIndex] = {
-        ...detections[selectedIndex],
+    if (detections && editingIndex !== undefined && detections[editingIndex]) {
+      detections[editingIndex] = {
+        ...detections[editingIndex],
         ...{ color },
       };
       setContext({
@@ -55,13 +49,9 @@ const EditView = ({ selectedIndex, doneEditing }: Props) => {
   };
 
   const setDetection = (detection: PositionSize) => {
-    if (
-      detections &&
-      selectedIndex !== undefined &&
-      detections[selectedIndex]
-    ) {
-      detections[selectedIndex] = {
-        ...detections[selectedIndex],
+    if (detections && editingIndex !== undefined && detections[editingIndex]) {
+      detections[editingIndex] = {
+        ...detections[editingIndex],
         ...detection,
       };
       setContext({
@@ -77,34 +67,18 @@ const EditView = ({ selectedIndex, doneEditing }: Props) => {
     key: keyof PositionSize;
   }> = [
     {
-      text: "X",
-      value:
-        detections && selectedIndex !== undefined
-          ? detections[selectedIndex].x
-          : 0,
-      key: "x",
-    },
-    {
-      text: "Y",
-      value:
-        detections && selectedIndex !== undefined
-          ? detections[selectedIndex].y
-          : 0,
-      key: "y",
-    },
-    {
       text: "H",
       value:
-        detections && selectedIndex !== undefined
-          ? detections[selectedIndex].height
+        detections && editingIndex !== undefined
+          ? detections[editingIndex].height
           : 0,
       key: "height",
     },
     {
       text: "W",
       value:
-        detections && selectedIndex !== undefined
-          ? detections[selectedIndex].width
+        detections && editingIndex !== undefined
+          ? detections[editingIndex].width
           : 0,
       key: "width",
     },

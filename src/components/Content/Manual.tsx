@@ -1,4 +1,4 @@
-import React, { useContext, useState } from "react";
+import React, { useContext } from "react";
 import { Button } from "@material-ui/core";
 import Context from "../../context";
 import symbol from "../../symbol";
@@ -6,38 +6,11 @@ import { Label } from "../atom/Text";
 import Space from "../atom/Space";
 import DetectionView from "./DetectionsView";
 import EditView from "./EditView";
+import { messages } from "../../strings";
 
 const Manual = () => {
   const { context, setContext } = useContext(Context);
-  const [selectedIndex, setSelected] = useState<Partial<number>>();
-  const { detections, imageInfo } = context;
-
-  const removeDetection = (index) => {
-    if (detections) {
-      detections.splice(index, 1);
-      const newDetections = [...detections];
-      setContext({ ...context, detections: newDetections });
-    }
-  };
-
-  const showHideDetection = (index) => {
-    if (detections && detections[index]) {
-      detections[index].hide = !detections[index].hide;
-      setContext({ ...context, ...detections });
-    }
-  };
-
-  const onSelectedToEdit = (index) => {
-    if (index === selectedIndex) {
-      setSelected(undefined);
-    } else if (detections && detections[index]) {
-      setSelected(index);
-    }
-  };
-
-  const doneEditing = () => {
-    setSelected(undefined);
-  };
+  const { detections, imageInfo, editingIndex } = context;
 
   const addNew = () => {
     if (detections) {
@@ -75,6 +48,13 @@ const Manual = () => {
       setContext({
         ...context,
         ...detections,
+        ...(context.displaedMessages.dragToChange
+          ? {}
+          : {
+              snackBarMessage: messages.draggable,
+              displaedMessages: { dragToChange: true },
+            }),
+        editingIndex: detections.length - 1,
       });
     }
   };
@@ -82,15 +62,9 @@ const Manual = () => {
   return (
     <>
       <Space.Stack size="medium" />
-      <EditView selectedIndex={selectedIndex} doneEditing={doneEditing} />
-      <DetectionView
-        detections={detections}
-        selectedIndex={selectedIndex}
-        showHideDetection={showHideDetection}
-        onSelectedToEdit={onSelectedToEdit}
-        removeDetection={removeDetection}
-      />
-      {!!imageInfo.src && selectedIndex === undefined && (
+      <EditView />
+      <DetectionView />
+      {!!imageInfo.src && editingIndex === undefined && (
         <>
           <Space.Stack size="medium" />
           <Button

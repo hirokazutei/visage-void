@@ -1,10 +1,12 @@
-import React, { CSSProperties } from "react";
+import React, { CSSProperties, useContext } from "react";
 import { Button, Checkbox } from "@material-ui/core";
 import { Label, SubTitle } from "../atom/Text";
 import Space from "../atom/Space";
 import symbol from "../../symbol";
-import { Detections, Detection } from "../../types";
+import { Detection } from "../../types";
 import { PageMarker } from "../atom/Paper";
+import Context from "../../context";
+import { messages } from "../../strings";
 
 const styles: {
   baseView: CSSProperties;
@@ -37,22 +39,43 @@ const styles: {
   },
 };
 
-type Props = {
-  detections?: Detections;
-  selectedIndex?: number;
-  showHideDetection: (index: number) => void;
-  onSelectedToEdit: (index: number) => void;
-  removeDetection: (index: number) => void;
-};
+const DetectionView = () => {
+  const { context, setContext } = useContext(Context);
+  const { detections, editingIndex } = context;
 
-const DetectionView = ({
-  detections,
-  selectedIndex,
-  showHideDetection,
-  onSelectedToEdit,
-  removeDetection,
-}: Props) => {
-  if (!detections || selectedIndex !== undefined) {
+  const removeDetection = (index) => {
+    if (detections) {
+      detections.splice(index, 1);
+      const newDetections = [...detections];
+      setContext({ ...context, detections: newDetections });
+    }
+  };
+
+  const showHideDetection = (index) => {
+    if (detections && detections[index]) {
+      detections[index].hide = !detections[index].hide;
+      setContext({ ...context, ...detections });
+    }
+  };
+
+  const onSelectedToEdit = (index) => {
+    if (index === editingIndex) {
+      setContext({ ...context, editingIndex: undefined });
+    } else if (detections && detections[index]) {
+      setContext({
+        ...context,
+        ...(context.displaedMessages.dragToChange
+          ? {}
+          : {
+              snackBarMessage: messages.draggable,
+              displaedMessages: { dragToChange: true },
+            }),
+        editingIndex: index,
+      });
+    }
+  };
+
+  if (!detections || editingIndex !== undefined) {
     return null;
   }
   return (
@@ -66,7 +89,7 @@ const DetectionView = ({
               <div key={index}>
                 <PageMarker
                   customStyle={{
-                    ...(selectedIndex === index
+                    ...(editingIndex === index
                       ? { backgroundColor: symbol.COLOR.button }
                       : {}),
                   }}

@@ -5,8 +5,8 @@ import Context from "../../context";
 import useDeepCompareEffect from "use-deep-compare-effect";
 
 const CanvasWrapper = () => {
-  const { context } = useContext(Context);
-  const { imageInfo, detections, setting } = context;
+  const { context, setContext } = useContext(Context);
+  const { imageInfo, detections, setting, editingIndex } = context;
   const [p5Object, setP5Object] = useState();
   const { src, height, width } = imageInfo;
   const { heightMultiplier, widthMultiplier, type, color } = setting;
@@ -27,9 +27,24 @@ const CanvasWrapper = () => {
 
   useDeepCompareEffect(() => {
     if (p5Object !== undefined) {
+      // @ts-ignore: TS won't admit that this can't be undefined
       p5Object.loop();
     }
   }, [{ p5Object, context, image }]);
+
+  const mouseDragged = (p5) => {
+    if (editingIndex !== undefined && detections) {
+      const { width, height } = detections[editingIndex];
+      detections[editingIndex] = {
+        ...detections[editingIndex],
+        x: p5.mouseX - width / 2,
+        y: p5.mouseY - height / 2,
+      };
+      const newDetections = [...detections];
+      setContext({ ...context, detections: newDetections });
+      p5.loop();
+    }
+  };
 
   const draw = (p5) => {
     if (image) {
@@ -68,7 +83,7 @@ const CanvasWrapper = () => {
     }
   };
 
-  return <Sketch setup={setup} draw={draw} />;
+  return <Sketch setup={setup} draw={draw} mouseDragged={mouseDragged} />;
 };
 
 export default CanvasWrapper;
