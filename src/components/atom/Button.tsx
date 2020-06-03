@@ -1,12 +1,12 @@
 import React from "react";
-import { Button as MUIBUtton } from "@material-ui/core";
+import { Button as MUIButton } from "@material-ui/core";
 import { ButtonText } from "./Text";
 
 const Button = ({ children, onClick }) => {
   return (
-    <MUIBUtton onClick={onClick}>
+    <MUIButton onClick={onClick}>
       <ButtonText>{children}</ButtonText>
-    </MUIBUtton>
+    </MUIButton>
   );
 };
 

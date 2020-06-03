@@ -1,55 +1,49 @@
 import React, { CSSProperties } from "react";
 import {
-  Slider,
   ExpansionPanel,
   ExpansionPanelSummary,
   ExpansionPanelDetails,
 } from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
+import { SketchPicker } from "react-color";
 import { Label } from "../atom/Text";
-import Space from "../atom/Space";
 import symbol from "../../symbol";
 import { ColorSetting } from "../../types";
 
 const styles: {
-  colorSliderContianer: CSSProperties;
-  colorSetting: CSSProperties;
+  padFixSetting: CSSProperties;
 } = {
-  colorSliderContianer: {
-    display: "flex",
-    minWidth: 200,
-    flexDirection: "row",
-  },
-  colorSetting: {
-    display: "flex",
-    flexDirection: "column",
+  padFixSetting: {
+    // react-color does not use "border-box: initial" yet sets a padding, so if
+    // we set the width to 100% without padding the container, it will go
+    // outside the bounds of its container.
+    paddingRight: 20,
   },
 };
 
 type Props = {
   color: ColorSetting;
-  setColor: (color) => any;
+  setColor: (color: ColorSetting) => void;
+};
+type ShortColor = {
+  r: number;
+  g: number;
+  b: number;
 };
 
-const ColorSetter = ({ color, setColor }: Props) => {
-  const colorSliders = [
-    {
-      text: "R",
-      value: color.red,
-      setter: (red) => setColor({ ...color, red }),
-    },
-    {
-      text: "G",
-      value: color.green,
-      setter: (green) => setColor({ ...color, green }),
-    },
-    {
-      text: "B",
-      value: color.blue,
-      setter: (blue) => setColor({ ...color, blue }),
-    },
-  ];
+const shortToLong = ({ r, g, b }: ShortColor) => ({
+  red: r,
+  green: g,
+  blue: b,
+});
 
+const longToShort = ({ red, green, blue }: ColorSetting) => ({
+  r: red,
+  g: green,
+  b: blue,
+});
+
+const ColorSetter = ({ color, setColor }: Props) => {
   return (
     <ExpansionPanel style={symbol.STYLE.contentWrapper}>
       <ExpansionPanelSummary expandIcon={<ExpandMoreIcon color="secondary" />}>
@@ -65,25 +59,13 @@ const ColorSetter = ({ color, setColor }: Props) => {
         <Label>CHANGE COLOR</Label>
       </ExpansionPanelSummary>
       <ExpansionPanelDetails>
-        <div style={styles.colorSetting}>
-          {colorSliders.map((props) => {
-            const { text, value, setter } = props;
-            return (
-              <div style={styles.colorSliderContianer} key={text}>
-                <Label>{text}</Label>
-                <Space.Queue size="medium" />
-                <Slider
-                  value={value}
-                  onChange={(_, newValue) => {
-                    setter(Array.isArray(newValue) ? newValue[0] : newValue);
-                  }}
-                  min={0}
-                  max={255}
-                  valueLabelDisplay="auto"
-                />
-              </div>
-            );
-          })}
+        <div style={styles.padFixSetting}>
+          <SketchPicker
+            width="100%"
+            color={longToShort(color)}
+            onChange={(color) => setColor(shortToLong(color.rgb))}
+            disableAlpha={true}
+          />
         </div>
       </ExpansionPanelDetails>
     </ExpansionPanel>

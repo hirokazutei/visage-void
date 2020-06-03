@@ -69,7 +69,11 @@ const Dropzone = () => {
 
   return (
     <div style={styles.dropzone} {...getRootProps()}>
-      <input {...getInputProps()} accept=".jpg, .jpeg, .png" type="file" />
+      <input
+        {...getInputProps()}
+        accept=".jpg, .jpeg, .png, .tiff, .bmp, .gif, .rawx"
+        type="file"
+      />
       <div style={styles.textContainer}>
         <div style={styles.dropTextContainer}>
           <Caption>

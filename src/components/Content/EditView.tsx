@@ -124,6 +124,7 @@ const EditView = () => {
             </div>
           );
         })}
+        <Space.Stack size="medium" />
         <ColorSetter
           color={selectedColor ? selectedColor : context.setting.color}
           setColor={setColor}

@@ -9,17 +9,11 @@ import ColorSetter from "./ColorSetter";
 
 const styles: {
   buttonGroupContainer: CSSProperties;
-  colorSliderContianer: CSSProperties;
   colorSetting: CSSProperties;
 } = {
   buttonGroupContainer: {
     display: "flex",
     justifyContent: "center",
-  },
-  colorSliderContianer: {
-    display: "flex",
-    minWidth: 200,
-    flexDirection: "row",
   },
   colorSetting: {
     display: "flex",
