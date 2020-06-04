@@ -7,6 +7,7 @@ import { Detection } from "../../types";
 import { PageMarker } from "../atom/Paper";
 import Context from "../../context";
 import { messages } from "../../strings";
+import stateChange from "../../functionalty/stateChagne";
 
 const styles: {
   baseView: CSSProperties;
@@ -42,18 +43,6 @@ const styles: {
 const DetectionView = () => {
   const { context, setContext } = useContext(Context);
   const { detections, editingIndex } = context;
-
-  const removeDetection = (index) => {
-    if (detections) {
-      detections.splice(index, 1);
-      const newDetections = [...detections];
-      setContext({
-        ...context,
-        detections: newDetections,
-        editCount: context.editCount + 1,
-      });
-    }
-  };
 
   const showHideDetection = (index) => {
     if (detections && detections[index]) {
@@ -131,7 +120,14 @@ const DetectionView = () => {
                           backgroundColor: symbol.COLOR.error,
                           color: symbol.COLOR.white,
                         }}
-                        onClick={() => removeDetection(index)}
+                        onClick={() =>
+                          stateChange.deleteDetection({
+                            detections,
+                            index,
+                            context,
+                            setContext,
+                          })
+                        }
                       >
                         REMOVE
                       </Button>

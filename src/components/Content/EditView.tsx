@@ -6,6 +6,7 @@ import { PositionSize, ColorSetting } from "../../types";
 import { Label } from "../atom/Text";
 import Space from "../atom/Space";
 import ColorSetter from "./ColorSetter";
+import stateChange from "../../functionalty/stateChagne";
 
 const styles: {
   sliderContainer: CSSProperties;
@@ -131,13 +132,40 @@ const EditView = () => {
         />
       </Paper>
       <Space.Stack size="medium" />
-      <Button
-        style={{ backgroundColor: symbol.COLOR.button }}
-        variant="contained"
-        onClick={doneEditing}
+      <div
+        style={{
+          display: "flex",
+          flexDirection: "row",
+          justifyContent: "space-between",
+        }}
       >
-        <Label>DONE EDITING</Label>
-      </Button>
+        <Button
+          style={{ backgroundColor: symbol.COLOR.button }}
+          variant="contained"
+          onClick={doneEditing}
+        >
+          <Label>DONE EDITING</Label>
+        </Button>
+        <Button
+          variant="contained"
+          style={{
+            backgroundColor: symbol.COLOR.error,
+            color: symbol.COLOR.white,
+          }}
+          onClick={() => {
+            if (detections && editingIndex !== undefined) {
+              stateChange.deleteDetection({
+                detections,
+                index: editingIndex,
+                context,
+                setContext,
+              });
+            }
+          }}
+        >
+          DELETE
+        </Button>
+      </div>
     </>
   );
 };

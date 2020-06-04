@@ -7,12 +7,20 @@ import { Detection } from "../../types";
 import { Button } from "../atom/Button";
 import { Label } from "../atom/Text";
 import Space from "../atom/Space";
+import stateChange from "../../functionalty/stateChagne";
 
 const resizerRadius = 6.5;
 const resizerTolerance = 3;
 // We enforce a minimum size of the boxes so there never ambiguity on which
 // side we are resizing from.
 const minDimension = 10;
+
+const KEYS = {
+  backspace: 8,
+  tab: 9,
+  escape: 27,
+  delete: 46,
+};
 
 const clamp: (num: number, min: number, max: number) => number = (
   num: number,
@@ -220,6 +228,43 @@ const CanvasWrapper = () => {
     }
   };
 
+  const keyPressed = (p5) => {
+    switch (p5.keyCode) {
+      // Delete the sselected detection
+      case KEYS.backspace:
+      case KEYS.delete:
+        if (detections && editingIndex !== undefined) {
+          stateChange.deleteDetection({
+            detections,
+            index: editingIndex,
+            context,
+            setContext,
+          });
+        }
+        break;
+      // Switch the selected detection
+      case KEYS.tab:
+        if (detections && editingIndex !== undefined) {
+          stateChange.changeDetection({
+            detections,
+            index: editingIndex,
+            context,
+            setContext,
+          });
+        }
+        break;
+      // Defocus the selected detection
+      case KEYS.escape:
+        stateChange.defocusDetection({
+          context,
+          setContext,
+        });
+        break;
+      default:
+        return;
+    }
+  };
+
   const draw = (p5) => {
     if (image) {
       p5.image(image, 0, 0);
@@ -323,7 +368,7 @@ const CanvasWrapper = () => {
           p5.saveCanvas(`masked${Date.now()}`, "png");
           setSaveAfterNextDraw(false);
         }
-        if (loop > 1) {
+        if (loop > 2) {
           p5.noLoop();
           setLoop(0);
         } else {
@@ -356,6 +401,7 @@ const CanvasWrapper = () => {
         draw={draw}
         mousePressed={mousePressed}
         mouseDragged={mouseDragged}
+        keyPressed={keyPressed}
       />
     </>
   );
