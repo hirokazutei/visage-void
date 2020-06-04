@@ -66,7 +66,6 @@ const Dropzone = () => {
     [context, setContext]
   );
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
-
   return (
     <div style={styles.dropzone} {...getRootProps()}>
       <input
