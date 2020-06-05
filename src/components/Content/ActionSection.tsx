@@ -22,7 +22,7 @@ const ActionSection = () => {
     });
   };
   return (
-    <Paper customStyle={{ paddingTop: 0 }}>
+    <Paper customStyle={{ paddingTop: 0, maxWidth: 320 }}>
       <Tabs
         value={currentTab}
         indicatorColor="primary"

@@ -13,16 +13,14 @@ const styles: {
   textContainer: {
     alignItems: "center",
     display: "flex",
-    padding: 0,
     justifyContent: "space-between",
   },
   dropzone: {
     border: `dashed ${symbol.COLOR.text} 3px`,
     backgroundColor: symbol.COLOR.cards,
     borderRadius: 8,
-    width: 460,
+    width: 400,
     height: 80,
-    margin: 24,
   },
   button: {
     ...symbol.STYLE.button,
@@ -76,7 +74,7 @@ const Dropzone = () => {
       <div style={styles.textContainer}>
         <div style={styles.dropTextContainer}>
           <Caption>
-            {isDragActive ? "DROP IMAGE HERE..." : "DRAG & DROP IMAGE HERE"}
+            {isDragActive ? "DROP IT HERE!" : "DROP IMAGE HERE..."}
           </Caption>
         </div>
         <div style={styles.button}>

@@ -8,7 +8,6 @@ const styles: { paper: CSSProperties; pageMarker: CSSProperties } = {
     backgroundColor: COLOR.cards,
     padding: symbol.SPACE.huge,
     borderRadius: 8,
-    margin: symbol.SPACE.huge,
   },
   pageMarker: {
     backgroundColor: COLOR.pageMarker,
