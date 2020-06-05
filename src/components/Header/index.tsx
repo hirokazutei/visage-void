@@ -3,8 +3,13 @@ import React, { CSSProperties, useContext } from "react";
 import symbol from "../../symbol";
 import SettingContext from "../../context";
 import { Button } from "../atom/Button";
+import Space from "../atom/Space";
+import { Title } from "../atom/Text";
+import stateChagne from "../../functionalty/stateChange";
 
-const styles: { header: CSSProperties; title: CSSProperties } = {
+type StyleKey = "header";
+
+const styles: Record<StyleKey, CSSProperties> = {
   header: {
     alignContent: "flex-end",
     justifyContent: "space-between",
@@ -13,33 +18,20 @@ const styles: { header: CSSProperties; title: CSSProperties } = {
     display: "flex",
     flex: 1,
     flexDirection: "row",
-    maxHeight: 75,
-    paddingTop: 15,
-    paddingLeft: 30,
-    paddingRight: 50,
-    paddingBottom: 10,
-  },
-  title: {
-    alignSelf: "center",
-    fontSize: 35,
-    color: symbol.COLOR.text,
+    maxHeight: 35,
   },
 };
 
 const Header = () => {
   const { context, setContext } = useContext(SettingContext);
   const showDialog = () => {
-    setContext({
-      ...context,
-      showDialog: true,
-      editCount: context.editCount + 1,
-    });
+    stateChagne.showDialog({ context, setContext });
   };
   return (
-    <div style={styles.header}>
-      <h1 style={styles.title}>VISAGE VOID</h1>
+    <Space.Inset style={styles.header} vertical="medium" horizontal="large">
+      <Title>VISAGE VOID</Title>
       <Button onClick={showDialog}>DONATE</Button>
-    </div>
+    </Space.Inset>
   );
 };
 

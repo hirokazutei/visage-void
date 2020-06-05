@@ -7,10 +7,9 @@ import { Label } from "../atom/Text";
 import Space from "../atom/Space";
 import ColorSetter from "./ColorSetter";
 
-const styles: {
-  buttonGroupContainer: CSSProperties;
-  colorSetting: CSSProperties;
-} = {
+type StyleKey = "buttonGroupContainer" | "colorSetting";
+
+const styles: Record<StyleKey, CSSProperties> = {
   buttonGroupContainer: {
     display: "flex",
     justifyContent: "center",

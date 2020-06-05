@@ -1,9 +1,5 @@
-import { Detections, ContextType } from "../types";
-
-type DetectionIndexParams = {
-  detections: Detections;
-  index: number;
-} & ContextType;
+import { DetectionIndexParams } from "./types";
+import { ContextType } from "../types";
 
 const deleteDetection = ({
   detections,
@@ -48,8 +44,24 @@ const defocusDetection = ({ context, setContext }: ContextType) => {
   });
 };
 
+const closeSnackBar = ({ context, setContext }: ContextType) => {
+  setContext({
+    ...context,
+    snackBarMessage: "",
+  });
+};
+
+const showDialog = ({ context, setContext }: ContextType) => {
+  setContext({
+    ...context,
+    showDialog: true,
+  });
+};
+
 export default {
   changeDetection,
+  closeSnackBar,
   defocusDetection,
   deleteDetection,
+  showDialog,
 };

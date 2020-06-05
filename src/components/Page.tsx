@@ -1,50 +1,22 @@
-import React, { CSSProperties, useContext } from "react";
-import Context from "../context";
-import { Snackbar, IconButton } from "@material-ui/core";
-import { Alert } from "@material-ui/lab";
-import { Close as CloseIcon } from "@material-ui/icons/";
+import React, { CSSProperties } from "react";
+import Header from "./Header";
+import Content from "./Content";
+import Modal from "./Modal";
+import Snackbar from "./SnackBar";
 
-import Header from "./Header/index";
-import Content from "./Content/Content";
-import DonateModal from "./Modal/DonateModal";
+type StyleKey = "mainContent";
 
-const styles: { mainContent: CSSProperties } = {
+const styles: Record<StyleKey, CSSProperties> = {
   mainContent: { flex: 1, display: "flex", flexDirection: "column" },
 };
 
 const Page = () => {
-  const { context, setContext } = useContext(Context);
-  const { snackBarMessage } = context;
-
-  const handleClose = () => {
-    setContext({
-      ...context,
-      snackBarMessage: "",
-      editCount: context.editCount + 1,
-    });
-  };
-
   return (
     <div style={styles.mainContent}>
       <Header />
       <Content />
-      <DonateModal />
-      <Snackbar
-        anchorOrigin={{
-          vertical: "bottom",
-          horizontal: "left",
-        }}
-        open={!!snackBarMessage}
-        autoHideDuration={10000}
-        onClose={handleClose}
-        action={
-          <IconButton size="small" onClick={handleClose}>
-            <CloseIcon fontSize="small" />
-          </IconButton>
-        }
-      >
-        <Alert severity="info">{snackBarMessage}</Alert>
-      </Snackbar>
+      <Modal />
+      <Snackbar />
     </div>
   );
 };

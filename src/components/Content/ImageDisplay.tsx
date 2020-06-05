@@ -13,10 +13,9 @@ type State = {
 
 type Props = ContextType;
 
-const styles: {
-  loader: CSSProperties;
-  textWrapper: CSSProperties;
-} = {
+type StyleKey = "loader" | "textWrapper";
+
+const styles: Record<StyleKey, CSSProperties> = {
   loader: {
     alignItems: "center",
     display: "flex",

@@ -3,7 +3,9 @@ import { Paper as MUIPaper } from "@material-ui/core";
 import { COLOR } from "../../symbol/color";
 import symbol from "../../symbol";
 
-const styles: { paper: CSSProperties; pageMarker: CSSProperties } = {
+type StyleKey = "paper" | "pageMarker";
+
+const styles: Record<StyleKey, CSSProperties> = {
   paper: {
     backgroundColor: COLOR.cards,
     padding: symbol.SPACE.huge,

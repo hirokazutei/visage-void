@@ -7,18 +7,19 @@ import { Detection } from "../../types";
 import { PageMarker } from "../atom/Paper";
 import Context from "../../context";
 import { messages } from "../../strings";
-import stateChange from "../../functionalty/stateChagne";
+import stateChange from "../../functionalty/stateChange";
 
-const styles: {
-  baseView: CSSProperties;
-  detectionPageMarkerContent: CSSProperties;
-  showToggleContainer: CSSProperties;
-  buttonContainer: CSSProperties;
-} = {
+type StyleKey =
+  | "baseView"
+  | "detectionPageMarkerContent"
+  | "showToggleContainer"
+  | "buttonContainer";
+
+const styles: Record<StyleKey, CSSProperties> = {
   baseView: {
     display: "flex",
     flexDirection: "column",
-    height: 250,
+    height: 190,
     overflow: "scroll",
     boxShadow: "inset 0 0 15px #000000",
     padding: symbol.SPACE.small,
@@ -65,7 +66,7 @@ const DetectionView = () => {
     } else if (detections && detections[index]) {
       setContext({
         ...context,
-        ...(context.displaedMessages.dragToChange
+        ...(context.displayedMessages.dragToChange
           ? {}
           : {
               snackBarMessage: messages.draggable,

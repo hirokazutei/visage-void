@@ -43,7 +43,7 @@ export type ContextValue = {
   currentTab: number;
   editingIndex?: number;
   snackBarMessage: string;
-  displaedMessages: {
+  displayedMessages: {
     dragToChange: boolean;
   };
   editCount: number;

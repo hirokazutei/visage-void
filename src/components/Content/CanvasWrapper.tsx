@@ -7,7 +7,7 @@ import { Detection } from "../../types";
 import { Button } from "../atom/Button";
 import { Label } from "../atom/Text";
 import Space from "../atom/Space";
-import stateChange from "../../functionalty/stateChagne";
+import stateChange from "../../functionalty/stateChange";
 
 const resizerRadius = 6.5;
 const resizerTolerance = 3;
@@ -22,6 +22,15 @@ const KEYS = {
   delete: 46,
 };
 
+type StyleKey = "downloadButton";
+
+const styles: Record<StyleKey, CSSProperties> = {
+  downloadButton: {
+    display: "flex",
+    flexDirection: "row",
+  },
+};
+
 const clamp: (num: number, min: number, max: number) => number = (
   num: number,
   min: number,
@@ -33,13 +42,6 @@ const between: (num: number, min: number, max: number) => boolean = (
   min: number,
   max: number
 ) => num >= min && num < max;
-
-const styles: { downloadButton: CSSProperties } = {
-  downloadButton: {
-    display: "flex",
-    flexDirection: "row",
-  },
-};
 
 const CanvasWrapper = () => {
   const { context, setContext } = useContext(Context);
@@ -396,13 +398,15 @@ const CanvasWrapper = () => {
         </div>
       </Button>
       <Space.Stack size="small" />
-      <Sketch
-        setup={setup}
-        draw={draw}
-        mousePressed={mousePressed}
-        mouseDragged={mouseDragged}
-        keyPressed={keyPressed}
-      />
+      <div style={{ display: "hidden" }}>
+        <Sketch
+          setup={setup}
+          draw={draw}
+          mousePressed={mousePressed}
+          mouseDragged={mouseDragged}
+          keyPressed={keyPressed}
+        />
+      </div>
     </>
   );
 };

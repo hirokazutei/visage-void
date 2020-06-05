@@ -4,12 +4,9 @@ import symbol from "../../symbol";
 import Context from "../../context";
 import { Caption } from "../atom/Text";
 
-const styles: {
-  textContainer: CSSProperties;
-  dropzone: CSSProperties;
-  button: CSSProperties;
-  dropTextContainer: CSSProperties;
-} = {
+type StyleKey = "textContainer" | "dropzone" | "button" | "dropTextContainer";
+
+const styles: Record<StyleKey, CSSProperties> = {
   textContainer: {
     alignItems: "center",
     display: "flex",
@@ -23,7 +20,11 @@ const styles: {
     height: 80,
   },
   button: {
-    ...symbol.STYLE.button,
+    backgroundColor: symbol.COLOR.button,
+    margin: 4,
+    display: "flex",
+    justifyContent: "center",
+    alignItems: "center",
     height: 72,
     width: 160,
     borderRadius: "0px 8px 8px 0px",

@@ -6,12 +6,11 @@ import { PositionSize, ColorSetting } from "../../types";
 import { Label } from "../atom/Text";
 import Space from "../atom/Space";
 import ColorSetter from "./ColorSetter";
-import stateChange from "../../functionalty/stateChagne";
+import stateChange from "../../functionalty/stateChange";
 
-const styles: {
-  sliderContainer: CSSProperties;
-  textContainer: CSSProperties;
-} = {
+type StyleKey = "sliderContainer" | "textContainer";
+
+const styles: Record<StyleKey, CSSProperties> = {
   sliderContainer: {
     display: "flex",
     flexDirection: "row",

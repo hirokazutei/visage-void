@@ -6,33 +6,27 @@ import { Body } from "../atom/Text";
 import ActionSection from "./ActionSection";
 import Space from "../atom/Space";
 import symbol from "../../symbol";
+import { messages } from "../../strings";
 
-const styles: {
-  mainContainer: CSSProperties;
-  topContentContainer: CSSProperties;
-  imageDisplayContainer: CSSProperties;
-  leftContainer: CSSProperties;
-} = {
+type StyleKey = "mainContainer" | "topContentContainer" | "leftContainer";
+
+const styles: Record<StyleKey, CSSProperties> = {
   mainContainer: {
     alignItems: "center",
+    alignSelf: "center",
     display: "flex",
+    flex: 1,
     flexDirection: "column",
     height: "100%",
-    padding: 24,
+    maxWidth: 960,
     width: "100%",
-    flex: 1,
-    alignSelf: "center",
-    maxWidth: 840,
   },
   topContentContainer: {
     display: "flex",
-    flexDirection: "row",
     flex: 1,
+    flexDirection: "row",
     flexWrap: "wrap",
     justifyContent: "center",
-  },
-  imageDisplayContainer: {
-    margin: 10,
   },
   leftContainer: {
     maxWidth: 400,
@@ -44,26 +38,21 @@ const styles: {
 const Content = () => {
   const { context, setContext } = useContext(Context);
   return (
-    <div style={styles.mainContainer}>
+    <Space.Inset all="huge" style={styles.mainContainer}>
       <div style={styles.topContentContainer}>
         <div style={styles.leftContainer}>
           <Space.Stack size="large" />
-          <Body>
-            Upload a photo and keep identities of those in the picture hidden.
-            VISAGE VOID detects faces and draws over the pixels with 100%
-            opacity. The picture is not uploaded onto any server and all the
-            processing is done on the client.
-          </Body>
+          <Body>{messages.about}</Body>
           <Space.Stack size="large" />
           <Dropzone />
           <Space.Stack size="huge" />
         </div>
         <ActionSection />
       </div>
-      <div style={styles.imageDisplayContainer}>
+      <Space.Inset all="medium">
         <ImageDisplay context={context} setContext={setContext} />
-      </div>
-    </div>
+      </Space.Inset>
+    </Space.Inset>
   );
 };
 

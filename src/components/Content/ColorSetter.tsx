@@ -10,9 +10,9 @@ import { Label } from "../atom/Text";
 import symbol from "../../symbol";
 import { ColorSetting } from "../../types";
 
-const styles: {
-  padFixSetting: CSSProperties;
-} = {
+type StyleKey = "padFixSetting";
+
+const styles: Record<StyleKey, CSSProperties> = {
   padFixSetting: {
     // react-color does not use "border-box: initial" yet sets a padding, so if
     // we set the width to 100% without padding the container, it will go
@@ -45,7 +45,7 @@ const longToShort = ({ red, green, blue }: ColorSetting) => ({
 
 const ColorSetter = ({ color, setColor }: Props) => {
   return (
-    <ExpansionPanel style={symbol.STYLE.contentWrapper}>
+    <ExpansionPanel style={{ backgroundColor: symbol.COLOR.expansion }}>
       <ExpansionPanelSummary expandIcon={<ExpandMoreIcon color="secondary" />}>
         <div
           style={{

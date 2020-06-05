@@ -18,7 +18,7 @@ export const INITIAL_VALUE: ContextValue = {
   currentTab: 0,
   editingIndex: undefined,
   snackBarMessage: "",
-  displaedMessages: {
+  displayedMessages: {
     dragToChange: false,
   },
   editCount: 0,

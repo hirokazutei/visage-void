@@ -2,13 +2,15 @@ import React, { CSSProperties } from "react";
 import { Typography } from "@material-ui/core";
 import { COLOR } from "../../symbol/color";
 
-const styles: {
-  body: CSSProperties;
-  label: CSSProperties;
-  buttonText: CSSProperties;
-  caption: CSSProperties;
-  subTitle: CSSProperties;
-} = {
+type StyleKey =
+  | "body"
+  | "label"
+  | "buttonText"
+  | "caption"
+  | "subTitle"
+  | "title";
+
+const styles: Record<StyleKey, CSSProperties> = {
   body: {
     color: COLOR.text,
     fontSize: 14,
@@ -31,6 +33,10 @@ const styles: {
     color: COLOR.text,
     fontSize: 20,
     fontWeight: "bold",
+  },
+  title: {
+    color: COLOR.text,
+    fontSize: 34,
   },
 };
 
@@ -82,4 +88,12 @@ const SubTitle = ({ children, customStyle = {} }: Props) => {
   );
 };
 
-export { Body, Label, ButtonText, Caption, SubTitle };
+const Title = ({ children, customStyle = {} }: Props) => {
+  return (
+    <Typography variant="h1" style={{ ...styles.title, ...customStyle }}>
+      {children}
+    </Typography>
+  );
+};
+
+export { Body, Label, ButtonText, Caption, SubTitle, Title };

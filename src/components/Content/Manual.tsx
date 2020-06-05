@@ -48,7 +48,7 @@ const Manual = () => {
       setContext({
         ...context,
         ...detections,
-        ...(context.displaedMessages.dragToChange
+        ...(context.displayedMessages.dragToChange
           ? {}
           : {
               snackBarMessage: messages.draggable,
@@ -70,7 +70,7 @@ const Manual = () => {
       setContext({
         ...context,
         detections: newDetection,
-        ...(context.displaedMessages.dragToChange
+        ...(context.displayedMessages.dragToChange
           ? {}
           : {
               snackBarMessage: messages.draggable,
