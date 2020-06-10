@@ -19,6 +19,8 @@ export type ImageInfo = {
   src?: string;
   width?: number;
   height?: number;
+  maxRatio?: number;
+  currentRatio: number;
 };
 
 export type PositionSize = {
