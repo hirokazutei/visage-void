@@ -170,17 +170,12 @@ export const handleCursor = ({
   context,
   adjDetections,
 }: P5Context & { adjDetections: Detections }) => {
-  console.log(p5);
   const { mouseX, mouseY } = p5;
   const { editingIndex } = context;
   p5?.cursor("default");
-  console.log("AA");
   if (adjDetections) {
-    console.log("B");
     if (editingIndex === undefined) {
-      console.log("C");
       for (const detection of adjDetections) {
-        console.log("X");
         const insideX = between(
           mouseX,
           detection.x,
@@ -192,12 +187,10 @@ export const handleCursor = ({
           detection.y + detection.height
         );
         if (insideX && insideY) {
-          console.log("Y");
           p5.cursor("pointer");
         }
       }
     } else {
-      console.log("D");
       const detection = adjDetections[editingIndex];
       const insideX = between(
         mouseX,
@@ -210,7 +203,6 @@ export const handleCursor = ({
         detection.y + detection.height
       );
       if (insideX && insideY) {
-        console.log("E");
         p5.cursor("move");
       }
       const nearW =
@@ -223,7 +215,6 @@ export const handleCursor = ({
       const nearS =
         Math.abs(detection.y + detection.height - mouseY) <=
         constants.resizerTolerance;
-      console.log("F");
       if ((nearN && nearW) || (nearS && nearE)) {
         p5.cursor("nwse-resize");
       } else if ((nearN && nearE) || (nearS && nearW)) {

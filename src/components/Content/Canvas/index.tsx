@@ -1,6 +1,10 @@
 /* @flow */
 import React, { useState, useContext, useEffect, CSSProperties } from "react";
-import { GetApp as DownloadIcon } from "@material-ui/icons";
+import {
+  GetApp as DownloadIcon,
+  ZoomIn as ZoomInIcon,
+  ZoomOut as ZoomOutIcon,
+} from "@material-ui/icons";
 import Sketch from "react-p5";
 import Context from "../../../context";
 import { ContextType } from "../../../types";
@@ -19,10 +23,19 @@ import {
 import constants from "./const";
 import { P5 } from "./type";
 
-type StyleKey = "downloadButton";
+type StyleKey = "downloadButton" | "imageOptions" | "sizeAdjustContainer";
 
 const styles: Record<StyleKey, CSSProperties> = {
   downloadButton: {
+    display: "flex",
+    flexDirection: "row",
+  },
+  imageOptions: {
+    display: "flex",
+    flexDirection: "row",
+    justifyContent: "space-between",
+  },
+  sizeAdjustContainer: {
     display: "flex",
     flexDirection: "row",
   },
@@ -77,6 +90,25 @@ const CanvasWrapper = () => {
     setContext({ ...context, editingIndex: undefined });
     p5Object?.redraw();
     setSaveAfterNextDraw(true);
+  };
+
+  const zoomIn = () => {
+    const newCurrentRatio =
+      currentRatio <= 1 ? currentRatio / 2 : currentRatio - 1;
+    setContext({
+      ...context,
+      imageInfo: { ...imageInfo, currentRatio: newCurrentRatio },
+    });
+    p5Object?.redraw();
+  };
+  const zoomOut = () => {
+    const newCurrentRatio =
+      currentRatio <= 1 ? currentRatio * 2 : currentRatio + 1;
+    setContext({
+      ...context,
+      imageInfo: { ...imageInfo, currentRatio: newCurrentRatio },
+    });
+    p5Object?.redraw();
   };
 
   const setup = (p5: P5, canvasParentRef) => {
@@ -161,13 +193,24 @@ const CanvasWrapper = () => {
 
   return (
     <>
-      <Button onClick={saveCanvas}>
-        <div style={styles.downloadButton}>
-          <Label>DOWNLOAD IMAGE</Label>
+      <div style={styles.imageOptions}>
+        <div style={styles.sizeAdjustContainer}>
+          <Button onClick={zoomIn}>
+            <ZoomInIcon color="secondary" />
+          </Button>
           <Space.Queue size="small" />
-          <DownloadIcon color="secondary" />
+          <Button onClick={zoomOut}>
+            <ZoomOutIcon color="secondary" />
+          </Button>
         </div>
-      </Button>
+        <Button onClick={saveCanvas}>
+          <div style={styles.downloadButton}>
+            <Label>DOWNLOAD IMAGE</Label>
+            <Space.Queue size="small" />
+            <DownloadIcon color="secondary" />
+          </div>
+        </Button>
+      </div>
       <Space.Stack size="small" />
       <div style={{ display: "hidden" }}>
         <Sketch
