@@ -13,7 +13,7 @@ export const INITIAL_VALUE: ContextValue = {
       green: 0,
     },
   },
-  imageInfo: {},
+  imageInfo: { currentRatio: 1 },
   showDialog: false,
   currentTab: 0,
   editingIndex: undefined,

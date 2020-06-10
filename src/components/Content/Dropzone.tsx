@@ -51,10 +51,28 @@ const Dropzone = () => {
           image.src = entry.target.result;
           image.onload = () => {
             const { width, height } = image;
+            const maxRatio = (() => {
+              const windowWidth = window.innerWidth;
+              const windowHeight = window.innerHeight;
+              let maxRatio = 1;
+              while (
+                height / maxRatio > windowHeight &&
+                width / maxRatio > windowWidth
+              ) {
+                maxRatio++;
+              }
+              return maxRatio;
+            })();
             setContext({
               ...context,
               detections: undefined,
-              imageInfo: { src: URL.createObjectURL(file), height, width },
+              imageInfo: {
+                src: URL.createObjectURL(file),
+                height,
+                width,
+                maxRatio,
+                currentRatio: maxRatio,
+              },
               editCount: context.editCount + 1,
             });
           };

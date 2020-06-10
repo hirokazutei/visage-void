@@ -1,5 +1,5 @@
 import React, { Component, CSSProperties } from "react";
-import CanvasWrapper from "./CanvasWrapper";
+import CanvasWrapper from "./Canvas";
 import { loadModels, getFullFaceDescription } from "../../face-api/face";
 import { ContextType } from "../../types";
 import { GridLoader } from "react-spinners";

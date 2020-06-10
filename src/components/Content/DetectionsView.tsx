@@ -123,7 +123,6 @@ const DetectionView = () => {
                         }}
                         onClick={() =>
                           stateChange.deleteDetection({
-                            detections,
                             index,
                             context,
                             setContext,

@@ -154,7 +154,6 @@ const EditView = () => {
           onClick={() => {
             if (detections && editingIndex !== undefined) {
               stateChange.deleteDetection({
-                detections,
                 index: editingIndex,
                 context,
                 setContext,
