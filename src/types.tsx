@@ -49,6 +49,7 @@ export type ContextValue = {
     dragToChange: boolean;
   };
   editCount: number;
+  inputSize: number;
 };
 
 export type ContextType = {

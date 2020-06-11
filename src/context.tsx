@@ -22,6 +22,7 @@ export const INITIAL_VALUE: ContextValue = {
     dragToChange: false,
   },
   editCount: 0,
+  inputSize: 1024,
 };
 
 export const INITIAL_STATE: ContextType = {

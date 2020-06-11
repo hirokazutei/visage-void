@@ -6,6 +6,7 @@ import { GridLoader } from "react-spinners";
 import symbol from "../../symbol";
 import { Paper } from "../atom/Paper";
 import { Caption } from "../atom/Text";
+import stateChange from "../../functionalty/stateChange";
 
 type State = {
   modelsLoaded: boolean;
@@ -50,32 +51,24 @@ class ImageDisplay extends Component<Props, State> {
   };
 
   handleImage = async (image) => {
-    await getFullFaceDescription(image).then((fullDescription) => {
-      if (!!fullDescription) {
-        this.props.setContext({
-          ...this.props.context,
-          detections: fullDescription.map((fd) => {
-            return {
-              height: Math.round(fd.detection.box.height),
-              width: Math.round(fd.detection.box.width),
-              x: Math.round(fd.detection.box.x),
-              y: Math.round(fd.detection.box.y),
-              hide: false,
-            };
-          }),
-          editCount: this.props.context.editCount + 1,
-        });
+    await getFullFaceDescription(image, this.props.context.inputSize).then(
+      (fullDescription) => {
+        if (!!fullDescription) {
+          stateChange.updateDetections({
+            context: this.props.context,
+            setContext: this.props.setContext,
+            fullDescription,
+          });
+        }
       }
-    });
+    );
   };
 
   render() {
     const { detections, imageInfo } = this.props.context;
-
     if (!imageInfo.src) {
       return null;
     }
-
     return (
       <Paper>
         {imageInfo.src && detections && <CanvasWrapper />}

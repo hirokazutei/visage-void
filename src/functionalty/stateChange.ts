@@ -4,6 +4,12 @@ import {
   ChangeDetectionParams,
 } from "./types";
 import { ContextType } from "../types";
+import {
+  WithFaceDescriptor,
+  WithFaceLandmarks,
+  FaceDetection,
+  FaceLandmarks68,
+} from "face-api.js";
 
 const changeDetection = ({
   context,
@@ -87,10 +93,83 @@ const showDialog = ({ context, setContext }: ContextType) => {
   });
 };
 
+const updateDetections = ({
+  context,
+  setContext,
+  fullDescription,
+}: ContextType & {
+  fullDescription: WithFaceDescriptor<
+    WithFaceLandmarks<
+      {
+        detection: FaceDetection;
+      },
+      FaceLandmarks68
+    >
+  >[];
+}) => {
+  setContext({
+    ...context,
+    detections: fullDescription.map((fd) => {
+      return {
+        height: Math.round(fd.detection.box.height),
+        width: Math.round(fd.detection.box.width),
+        x: Math.round(fd.detection.box.x),
+        y: Math.round(fd.detection.box.y),
+        hide: false,
+      };
+    }),
+    editCount: context.editCount + 1,
+  });
+};
+
+const appendDetections = ({
+  context,
+  setContext,
+  fullDescription,
+}: ContextType & {
+  fullDescription: WithFaceDescriptor<
+    WithFaceLandmarks<
+      {
+        detection: FaceDetection;
+      },
+      FaceLandmarks68
+    >
+  >[];
+}) => {
+  const oldDetections = context.detections ? context.detections : [];
+  setContext({
+    ...context,
+    detections: [
+      ...oldDetections,
+      ...fullDescription.map((fd) => {
+        return {
+          height: Math.round(fd.detection.box.height),
+          width: Math.round(fd.detection.box.width),
+          x: Math.round(fd.detection.box.x),
+          y: Math.round(fd.detection.box.y),
+          hide: false,
+        };
+      }),
+    ],
+    editCount: context.editCount + 1,
+  });
+};
+
+const updateInputSize = ({
+  context,
+  setContext,
+  inputSize,
+}: ContextType & { inputSize: number }) => {
+  setContext({ ...context, inputSize });
+};
+
 export default {
   // Detection
   changeDetection,
   deleteDetection,
+  updateDetections,
+  updateInputSize,
+  appendDetections,
   // Editing Index
   incrementDetection,
   defocusDetection,
