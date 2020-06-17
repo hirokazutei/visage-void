@@ -1,20 +1,11 @@
 import React, { useCallback, CSSProperties, useContext } from "react";
 import { useDropzone } from "react-dropzone";
-import symbol from "../../symbol";
-import Context from "../../context";
-import { Caption, Body } from "../atom/Text";
-import Space from "../atom/Space";
-import { ContainedButton } from "../atom/Button";
-import { getFullFaceDescription } from "../../face-api/face";
-import stateChange from "../../functionalty/stateChange";
-import { Slider } from "@material-ui/core";
+import symbol from "../../../symbol";
+import Context from "../../../context";
+import { Caption } from "../../atom/Text";
+import Space from "../../atom/Space";
 
-type StyleKey =
-  | "textContainer"
-  | "dropzone"
-  | "button"
-  | "dropTextContainer"
-  | "rescanButtons";
+type StyleKey = "textContainer" | "dropzone" | "button" | "dropTextContainer";
 
 const styles: Record<StyleKey, CSSProperties> = {
   textContainer: {
@@ -42,11 +33,6 @@ const styles: Record<StyleKey, CSSProperties> = {
   dropTextContainer: {
     marginLeft: symbol.SPACE.huge,
     marginRight: symbol.SPACE.huge,
-  },
-  rescanButtons: {
-    alignItems: "center",
-    display: "flex",
-    flexDirection: "row",
   },
 };
 
@@ -99,34 +85,6 @@ const Dropzone = () => {
     [context, setContext]
   );
 
-  const rescan = async () => {
-    await getFullFaceDescription(context.imageInfo.src, context.inputSize).then(
-      (fullDescription) => {
-        if (!!fullDescription) {
-          stateChange.updateDetections({
-            context,
-            setContext,
-            fullDescription,
-          });
-        }
-      }
-    );
-  };
-
-  const overlapScan = async () => {
-    await getFullFaceDescription(context.imageInfo.src, context.inputSize).then(
-      (fullDescription) => {
-        if (!!fullDescription) {
-          stateChange.appendDetections({
-            context,
-            setContext,
-            fullDescription,
-          });
-        }
-      }
-    );
-  };
-
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
   return (
     <>
@@ -148,36 +106,6 @@ const Dropzone = () => {
         </div>
       </div>
       <Space.Stack size="huge" />
-      <Body>
-        If the facial detection is not accurate, you can rescan or overlap with
-        previous scans.
-      </Body>
-      <Space.Stack size="small" />
-      <Body>
-        The higher the value, the more precise the detections are, but slower.
-      </Body>
-      <Slider
-        value={context.inputSize}
-        step={32}
-        onChange={(_, newValue) => {
-          stateChange.updateInputSize({
-            context,
-            setContext,
-            inputSize: Array.isArray(newValue) ? newValue[0] : newValue,
-          });
-        }}
-        min={32}
-        max={2048}
-        valueLabelDisplay="auto"
-      />
-      <Space.Stack size="medium" />
-      <div style={styles.rescanButtons}>
-        <ContainedButton onClick={rescan}>REDO SCANS</ContainedButton>
-        <Space.Queue size="huge" />
-        <ContainedButton onClick={overlapScan}>
-          OVERLAP NEW SCANS
-        </ContainedButton>
-      </div>
     </>
   );
 };

@@ -24,13 +24,13 @@ const styles: Record<StyleKey, CSSProperties> = {
 
 const Header = () => {
   const { context, setContext } = useContext(SettingContext);
-  const showDialog = () => {
-    stateChagne.showDialog({ context, setContext });
+  const showModal = () => {
+    stateChagne.showDonateModal({ context, setContext });
   };
   return (
     <Space.Inset style={styles.header} vertical="medium" horizontal="large">
       <Title>VISAGE VOID</Title>
-      <Button onClick={showDialog}>DONATE</Button>
+      <Button onClick={showModal}>DONATE</Button>
     </Space.Inset>
   );
 };

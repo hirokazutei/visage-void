@@ -81,8 +81,8 @@ const convertPaddingToStyle = (padding: PaddingProps): CSSProperties => {
     return {
       paddingTop: symbol.SPACE[(padding as Vertical).vertical],
       paddingBottom: symbol.SPACE[(padding as Vertical).vertical],
-      right: rightKey && symbol.SPACE[rightKey],
-      left: leftKey && symbol.SPACE[leftKey],
+      paddingRight: rightKey && symbol.SPACE[rightKey],
+      paddingLeft: leftKey && symbol.SPACE[leftKey],
     };
 
     // Horizontal & Top & Bottom
@@ -92,8 +92,8 @@ const convertPaddingToStyle = (padding: PaddingProps): CSSProperties => {
     return {
       paddingLeft: symbol.SPACE[(padding as Horizontal).horizontal],
       paddingRight: symbol.SPACE[(padding as Horizontal).horizontal],
-      top: topKey && symbol.SPACE[topKey],
-      bottom: bottomKey && symbol.SPACE[bottomKey],
+      paddingTop: topKey && symbol.SPACE[topKey],
+      paddingBottom: bottomKey && symbol.SPACE[bottomKey],
     };
 
     // Top & Right & Bottom & Left

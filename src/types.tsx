@@ -41,7 +41,8 @@ export type ContextValue = {
   setting: Setting;
   imageInfo: ImageInfo;
   detections?: Detections;
-  showDialog: boolean;
+  showDonateModal: boolean;
+  showInfoModal: boolean;
   currentTab: number;
   editingIndex?: number;
   snackBarMessage: string;

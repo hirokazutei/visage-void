@@ -7,8 +7,9 @@ import React, {
 import Context from "../context";
 import Header from "./Header";
 import Content from "./Content";
-import Modal from "./Modal";
+import DonateModal from "./DonateModal";
 import Snackbar from "./SnackBar";
+import InfoModal from "./InfoModal";
 
 type StyleKey = "mainContent";
 
@@ -45,7 +46,8 @@ const Page = () => {
     <div style={styles.mainContent}>
       <Header />
       <Content />
-      <Modal />
+      <DonateModal />
+      <InfoModal />
       <Snackbar />
     </div>
   );

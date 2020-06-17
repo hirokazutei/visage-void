@@ -86,10 +86,31 @@ const closeSnackBar = ({ context, setContext }: ContextType) => {
   });
 };
 
-const showDialog = ({ context, setContext }: ContextType) => {
+const showDonateModal = ({ context, setContext }: ContextType) => {
   setContext({
     ...context,
-    showDialog: true,
+    showDonateModal: true,
+  });
+};
+
+const hideDonateModal = ({ context, setContext }: ContextType) => {
+  setContext({
+    ...context,
+    showDonateModal: false,
+  });
+};
+
+const showInfoModal = ({ context, setContext }: ContextType) => {
+  setContext({
+    ...context,
+    showInfoModal: true,
+  });
+};
+
+const hideInfoModal = ({ context, setContext }: ContextType) => {
+  setContext({
+    ...context,
+    showInfoModal: false,
   });
 };
 
@@ -176,6 +197,9 @@ export default {
   focusDetection,
   // SnackBar
   closeSnackBar,
-  // Dialog
-  showDialog,
+  // Modal
+  showDonateModal,
+  hideDonateModal,
+  showInfoModal,
+  hideInfoModal,
 };

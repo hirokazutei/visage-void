@@ -1,14 +1,11 @@
 import React, { CSSProperties, useContext } from "react";
-import Dropzone from "./Dropzone";
+import LeftPane from "./LeftPane";
 import ImageDisplay from "./ImageDisplay";
 import Context from "../../context";
-import { Body } from "../atom/Text";
 import ActionSection from "./ActionSection";
 import Space from "../atom/Space";
-import symbol from "../../symbol";
-import { messages } from "../../strings";
 
-type StyleKey = "mainContainer" | "topContentContainer" | "leftContainer";
+type StyleKey = "mainContainer" | "topContentContainer";
 
 const styles: Record<StyleKey, CSSProperties> = {
   mainContainer: {
@@ -28,11 +25,6 @@ const styles: Record<StyleKey, CSSProperties> = {
     flexWrap: "wrap",
     justifyContent: "center",
   },
-  leftContainer: {
-    maxWidth: 400,
-    marginRight: symbol.SPACE.huge,
-    marginLeft: symbol.SPACE.huge,
-  },
 };
 
 const Content = () => {
@@ -40,13 +32,7 @@ const Content = () => {
   return (
     <Space.Inset all="huge" style={styles.mainContainer}>
       <div style={styles.topContentContainer}>
-        <div style={styles.leftContainer}>
-          <Space.Stack size="large" />
-          <Body>{messages.about}</Body>
-          <Space.Stack size="large" />
-          <Dropzone />
-          <Space.Stack size="huge" />
-        </div>
+        <LeftPane />
         <ActionSection />
       </div>
       <Space.Inset all="medium">

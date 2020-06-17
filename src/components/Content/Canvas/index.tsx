@@ -5,6 +5,7 @@ import {
   ZoomIn as ZoomInIcon,
   ZoomOut as ZoomOutIcon,
 } from "@material-ui/icons";
+import { Tooltip } from "@material-ui/core";
 import Sketch from "react-p5";
 import Context from "../../../context";
 import { ContextType } from "../../../types";
@@ -196,18 +197,23 @@ const CanvasWrapper = () => {
       <div style={styles.imageOptions}>
         <div style={styles.sizeAdjustContainer}>
           <Button onClick={zoomIn}>
-            <ZoomInIcon color="secondary" />
+            <Tooltip title="Zoom In">
+              <ZoomInIcon color="secondary" />
+            </Tooltip>
           </Button>
-          <Space.Queue size="small" />
           <Button onClick={zoomOut}>
-            <ZoomOutIcon color="secondary" />
+            <Tooltip title="Zoom Out">
+              <ZoomOutIcon color="secondary" />
+            </Tooltip>
           </Button>
         </div>
         <Button onClick={saveCanvas}>
           <div style={styles.downloadButton}>
             <Label>DOWNLOAD IMAGE</Label>
             <Space.Queue size="small" />
-            <DownloadIcon color="secondary" />
+            <Tooltip title="Download">
+              <DownloadIcon color="secondary" />
+            </Tooltip>
           </div>
         </Button>
       </div>

@@ -4,6 +4,7 @@ import SettingContext from "../../context";
 import { SubTitle, Body, Label } from "../atom/Text";
 import { Paper } from "../atom/Paper";
 import Space from "../atom/Space";
+import stateChange from "../../functionalty/stateChange";
 
 type StyleKey = "modalContainer" | "contentContainer";
 
@@ -31,19 +32,15 @@ const styles: Record<StyleKey, CSSProperties> = {
 
 const DonateModal = () => {
   const { context, setContext } = useContext(SettingContext);
-  const closeDialog = (e) => {
+  const closeModal = (e) => {
     e.stopPropagation();
-    setContext({
-      ...context,
-      showDialog: false,
-      editCount: context.editCount + 1,
-    });
+    stateChange.hideDonateModal({ context, setContext });
   };
-  if (!context.showDialog) {
+  if (!context.showDonateModal) {
     return null;
   }
   return (
-    <div style={styles.modalContainer} onClick={closeDialog}>
+    <div style={styles.modalContainer} onClick={closeModal}>
       <Space.Inset all="large">
         <div onClick={(e) => e.stopPropagation()}>
           <Paper>
