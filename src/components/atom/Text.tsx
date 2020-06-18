@@ -1,6 +1,6 @@
 import React, { CSSProperties } from "react";
 import { Typography } from "@material-ui/core";
-import { COLOR } from "../../symbol/color";
+import symbol from "../../symbol";
 
 type StyleKey =
   | "body"
@@ -12,30 +12,30 @@ type StyleKey =
 
 const styles: Record<StyleKey, CSSProperties> = {
   body: {
-    color: COLOR.text,
+    color: symbol.COLOR.text,
     fontSize: 14,
   },
   label: {
-    color: COLOR.text,
+    color: symbol.COLOR.text,
     fontSize: 16,
   },
   buttonText: {
-    color: COLOR.buttonText,
+    color: symbol.COLOR.buttonText,
     fontSize: 18,
     fontWeight: "bold",
   },
   caption: {
-    color: COLOR.text,
+    color: symbol.COLOR.text,
     fontSize: 18,
     fontWeight: "bold",
   },
   subTitle: {
-    color: COLOR.text,
+    color: symbol.COLOR.text,
     fontSize: 20,
     fontWeight: "bold",
   },
   title: {
-    color: COLOR.text,
+    color: symbol.COLOR.text,
     fontSize: 34,
   },
 };

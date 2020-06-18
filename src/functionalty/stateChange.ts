@@ -89,28 +89,42 @@ const closeSnackBar = ({ context, setContext }: ContextType) => {
 const showDonateModal = ({ context, setContext }: ContextType) => {
   setContext({
     ...context,
-    showDonateModal: true,
+    modals: { showDonateModal: true },
   });
 };
 
 const hideDonateModal = ({ context, setContext }: ContextType) => {
   setContext({
     ...context,
-    showDonateModal: false,
+    modals: { showDonateModal: false },
   });
 };
 
 const showInfoModal = ({ context, setContext }: ContextType) => {
   setContext({
     ...context,
-    showInfoModal: true,
+    modals: { showInfoModal: true },
   });
 };
 
 const hideInfoModal = ({ context, setContext }: ContextType) => {
   setContext({
     ...context,
-    showInfoModal: false,
+    modals: { showInfoModal: false },
+  });
+};
+
+const showContactModal = ({ context, setContext }: ContextType) => {
+  setContext({
+    ...context,
+    modals: { showContactModal: true },
+  });
+};
+
+const hideContactModal = ({ context, setContext }: ContextType) => {
+  setContext({
+    ...context,
+    modals: { showContactModal: false },
   });
 };
 
@@ -202,4 +216,6 @@ export default {
   hideDonateModal,
   showInfoModal,
   hideInfoModal,
+  showContactModal,
+  hideContactModal,
 };

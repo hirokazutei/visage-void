@@ -14,8 +14,6 @@ export const INITIAL_VALUE: ContextValue = {
     },
   },
   imageInfo: { currentRatio: 1 },
-  showInfoModal: false,
-  showDonateModal: false,
   currentTab: 0,
   editingIndex: undefined,
   snackBarMessage: "",
@@ -24,6 +22,7 @@ export const INITIAL_VALUE: ContextValue = {
   },
   editCount: 0,
   inputSize: 1024,
+  modals: {},
 };
 
 export const INITIAL_STATE: ContextType = {

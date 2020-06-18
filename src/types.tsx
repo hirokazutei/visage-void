@@ -41,8 +41,6 @@ export type ContextValue = {
   setting: Setting;
   imageInfo: ImageInfo;
   detections?: Detections;
-  showDonateModal: boolean;
-  showInfoModal: boolean;
   currentTab: number;
   editingIndex?: number;
   snackBarMessage: string;
@@ -51,6 +49,11 @@ export type ContextValue = {
   };
   editCount: number;
   inputSize: number;
+  modals: {
+    showContactModal?: boolean;
+    showDonateModal?: boolean;
+    showInfoModal?: boolean;
+  };
 };
 
 export type ContextType = {

@@ -49,7 +49,7 @@ const InfoModal = () => {
     e.stopPropagation();
     stateChange.hideInfoModal({ context, setContext });
   };
-  if (!context.showInfoModal) {
+  if (!context.modals.showInfoModal) {
     return null;
   }
   return (

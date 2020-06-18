@@ -12,8 +12,9 @@ import Space from "../../atom/Space";
 import { Paper } from "../../atom/Paper";
 import stateChange from "../../../functionalty/stateChange";
 import { Tooltip } from "@material-ui/core";
+import symbol from "../../../symbol";
 
-type StyleKey = "iconText" | "infoContainer";
+type StyleKey = "iconText" | "infoContainer" | "paper";
 
 const styles: Record<StyleKey, CSSProperties> = {
   iconText: {
@@ -25,12 +26,13 @@ const styles: Record<StyleKey, CSSProperties> = {
     flexDirection: "row",
     justifyContent: "space-between",
   },
+  paper: { padding: symbol.SPACE.large },
 };
 
 const InfoSection = () => {
   const { context, setContext } = useContext(SettingContext);
   return (
-    <Paper>
+    <Paper customStyle={styles.paper}>
       <div style={styles.infoContainer}>
         <div>
           <div style={styles.iconText}>

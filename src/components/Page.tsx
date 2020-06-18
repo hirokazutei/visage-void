@@ -10,6 +10,7 @@ import Content from "./Content";
 import DonateModal from "./Modals/DonateModal";
 import Snackbar from "./SnackBar";
 import InfoModal from "./Modals/InfoModal";
+import ContactModal from "./Modals/ContactModal";
 
 type StyleKey = "mainContent";
 
@@ -46,6 +47,7 @@ const Page = () => {
     <div style={styles.mainContent}>
       <Header />
       <Content />
+      <ContactModal />
       <DonateModal />
       <InfoModal />
       <Snackbar />

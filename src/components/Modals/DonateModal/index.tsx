@@ -20,7 +20,7 @@ const styles: Record<StyleKey, CSSProperties> = {
     zIndex: 1,
   },
   contentContainer: {
-    maxWidth: 500,
+    maxWidth: 600,
     margin: 24,
     height: "100%",
     justifyContent: "center",
@@ -36,7 +36,7 @@ const DonateModal = () => {
     e.stopPropagation();
     stateChange.hideDonateModal({ context, setContext });
   };
-  if (!context.showDonateModal) {
+  if (!context.modals.showDonateModal) {
     return null;
   }
   return (
