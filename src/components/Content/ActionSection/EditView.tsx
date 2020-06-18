@@ -1,12 +1,12 @@
 import React, { useContext, CSSProperties } from "react";
 import { Slider, Button, Paper } from "@material-ui/core";
-import Context from "../../context";
-import symbol from "../../symbol";
-import { PositionSize, ColorSetting } from "../../types";
-import { Label } from "../atom/Text";
-import Space from "../atom/Space";
+import Context from "../../../context";
+import symbol from "../../../symbol";
+import { PositionSize, ColorSetting } from "../../../types";
+import { Label } from "../../atom/Text";
+import Space from "../../atom/Space";
 import ColorSetter from "./ColorSetter";
-import stateChange from "../../functionalty/stateChange";
+import stateChange from "../../../functionalty/stateChange";
 
 type StyleKey = "sliderContainer" | "textContainer";
 

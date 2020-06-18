@@ -7,9 +7,9 @@ import React, {
 import Context from "../context";
 import Header from "./Header";
 import Content from "./Content";
-import DonateModal from "./DonateModal";
+import DonateModal from "./Modals/DonateModal";
 import Snackbar from "./SnackBar";
-import InfoModal from "./InfoModal";
+import InfoModal from "./Modals/InfoModal";
 
 type StyleKey = "mainContent";
 

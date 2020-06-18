@@ -1,13 +1,13 @@
 import React, { useContext } from "react";
 import { Button } from "@material-ui/core";
-import Context from "../../context";
-import symbol from "../../symbol";
-import { Label } from "../atom/Text";
-import Space from "../atom/Space";
+import Context from "../../../context";
+import symbol from "../../../symbol";
+import { Label } from "../../atom/Text";
+import Space from "../../atom/Space";
 import DetectionView from "./DetectionsView";
 import EditView from "./EditView";
-import { messages } from "../../strings";
-import { Detections } from "../../types";
+import { messages } from "../../../strings";
+import { Detections } from "../../../types";
 
 const Manual = () => {
   const { context, setContext } = useContext(Context);

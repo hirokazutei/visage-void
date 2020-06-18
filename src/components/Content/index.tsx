@@ -32,8 +32,12 @@ const Content = () => {
   return (
     <Space.Inset all="huge" style={styles.mainContainer}>
       <div style={styles.topContentContainer}>
-        <LeftPane />
-        <ActionSection />
+        <Space.Inset horizontal="large" bottom="huge">
+          <LeftPane />
+        </Space.Inset>
+        <Space.Inset horizontal="large">
+          <ActionSection />
+        </Space.Inset>
       </div>
       <Space.Inset all="medium">
         <ImageDisplay context={context} setContext={setContext} />

@@ -3,7 +3,6 @@ import { useDropzone } from "react-dropzone";
 import symbol from "../../../symbol";
 import Context from "../../../context";
 import { Caption } from "../../atom/Text";
-import Space from "../../atom/Space";
 
 type StyleKey = "textContainer" | "dropzone" | "button" | "dropTextContainer";
 
@@ -105,7 +104,6 @@ const Dropzone = () => {
           </div>
         </div>
       </div>
-      <Space.Stack size="huge" />
     </>
   );
 };

@@ -1,13 +1,13 @@
 import React, { CSSProperties, useContext } from "react";
 import { Button, Checkbox } from "@material-ui/core";
-import { Label, SubTitle } from "../atom/Text";
-import Space from "../atom/Space";
-import symbol from "../../symbol";
-import { Detection } from "../../types";
-import { PageMarker } from "../atom/Paper";
-import Context from "../../context";
-import { messages } from "../../strings";
-import stateChange from "../../functionalty/stateChange";
+import { Label, SubTitle } from "../../atom/Text";
+import Space from "../../atom/Space";
+import symbol from "../../../symbol";
+import { Detection } from "../../../types";
+import { PageMarker } from "../../atom/Paper";
+import Context from "../../../context";
+import { messages } from "../../../strings";
+import stateChange from "../../../functionalty/stateChange";
 
 type StyleKey =
   | "baseView"

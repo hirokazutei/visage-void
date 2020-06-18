@@ -6,13 +6,13 @@ import {
   Build as BuildIcon,
   CloudOff as CloudOffIcon,
 } from "@material-ui/icons";
-import SettingContext from "../../context";
-import { SubTitle, Body, Label } from "../atom/Text";
-import { Paper } from "../atom/Paper";
-import Space from "../atom/Space";
-import stateChange from "../../functionalty/stateChange";
+import SettingContext from "../../../context";
+import { SubTitle, Body, Label } from "../../atom/Text";
+import { Paper } from "../../atom/Paper";
+import Space from "../../atom/Space";
+import stateChange from "../../../functionalty/stateChange";
 
-type StyleKey = "modalContainer" | "contentContainer" | "iconText";
+type StyleKey = "modalContainer" | "contentContainer" | "iconText" | "paper";
 
 const styles: Record<StyleKey, CSSProperties> = {
   modalContainer: {
@@ -38,6 +38,9 @@ const styles: Record<StyleKey, CSSProperties> = {
     display: "flex",
     flexDirection: "row",
   },
+  paper: {
+    maxWidth: 600,
+  },
 };
 
 const InfoModal = () => {
@@ -53,9 +56,19 @@ const InfoModal = () => {
     <div style={styles.modalContainer} onClick={closeModal}>
       <Space.Inset all="large">
         <div onClick={(e) => e.stopPropagation()}>
-          <Paper>
+          <Paper customStyle={styles.paper}>
             <SubTitle>About Visage Void</SubTitle>
             <Space.Stack size="medium" />
+            <Body>
+              Visage Void is a non-profit project seeking to raise awareness
+              about protecting the privacy of protesters, and making obscuring
+              identifiable features easier. The police and vigilantes have been
+              known to use photos taken during the protest against the
+              protesters. Please be sure to cover any identifiable features of
+              the protesters in your photos and scrub the meta-data before
+              posting them online.
+            </Body>
+            <Space.Stack size="large" />
             <div style={styles.iconText}>
               <FaceIcon color="secondary" />
               <Space.Queue size="small" />
@@ -82,7 +95,7 @@ const InfoModal = () => {
                 The app uses
                 <Link href="https://p5js.org/">{" p5.js "}</Link>
                 to redraw the picture onto an html canvas so the new image
-                created has no metadata of the previous picture.
+                created has no metadata of the uploaded picture.
               </Body>
             </Space.Inset>
             <Space.Stack size="small" />

@@ -1,10 +1,10 @@
 import React, { useContext, CSSProperties } from "react";
 import { Link } from "@material-ui/core";
-import SettingContext from "../../context";
-import { SubTitle, Body, Label } from "../atom/Text";
-import { Paper } from "../atom/Paper";
-import Space from "../atom/Space";
-import stateChange from "../../functionalty/stateChange";
+import SettingContext from "../../../context";
+import { SubTitle, Body, Label } from "../../atom/Text";
+import { Paper } from "../../atom/Paper";
+import Space from "../../atom/Space";
+import stateChange from "../../../functionalty/stateChange";
 
 type StyleKey = "modalContainer" | "contentContainer";
 

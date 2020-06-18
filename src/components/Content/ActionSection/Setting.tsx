@@ -1,10 +1,10 @@
 import React, { useContext, CSSProperties } from "react";
 import { Slider, Button, ButtonGroup } from "@material-ui/core";
-import Context from "../../context";
-import { COVER_TYPE } from "../../const";
-import { CoverType, ColorSetting } from "../../types";
-import { Label } from "../atom/Text";
-import Space from "../atom/Space";
+import Context from "../../../context";
+import { COVER_TYPE } from "../../../const";
+import { CoverType, ColorSetting } from "../../../types";
+import { Label } from "../../atom/Text";
+import Space from "../../atom/Space";
 import ColorSetter from "./ColorSetter";
 
 type StyleKey = "buttonGroupContainer" | "colorSetting";

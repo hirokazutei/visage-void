@@ -1,8 +1,8 @@
 import React, { useContext } from "react";
 import { Tabs, Tab } from "@material-ui/core";
-import Context from "../../context";
-import { Paper } from "../atom/Paper";
-import symbol from "../../symbol";
+import Context from "../../../context";
+import { Paper } from "../../atom/Paper";
+import symbol from "../../../symbol";
 import Setting from "./Setting";
 import Manual from "./Manual";
 
