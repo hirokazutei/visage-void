@@ -72,29 +72,35 @@ const ContactModal = () => {
             </Space.Inset>
             <div style={styles.verticalExpander}>
               <Space.Inset all="large" style={styles.iconsContainer}>
-                <Tooltip title="Twitter">
-                  <TwitterIcon
-                    href="https://twitter.com/aSublimeAddict"
-                    color="secondary"
-                    fontSize="large"
-                  />
-                </Tooltip>
+                <a
+                  href="https://twitter.com/aSublimeAddict"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Tooltip title="Twitter">
+                    <TwitterIcon color="secondary" fontSize="large" />
+                  </Tooltip>
+                </a>
                 <Space.Queue size="large" />
-                <Tooltip title="LinkedIn">
-                  <LinkedInIcon
-                    href="https://www.linkedin.com/in/hirokazutei"
-                    color="secondary"
-                    fontSize="large"
-                  />
-                </Tooltip>
+                <a
+                  href="https://www.linkedin.com/in/hirokazutei"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Tooltip title="LinkedIn">
+                    <LinkedInIcon color="secondary" fontSize="large" />
+                  </Tooltip>
+                </a>
                 <Space.Queue size="large" />
-                <Tooltip title="GitHub">
-                  <GitHubIcon
-                    href="https://github.com/hirokazutei/visage-void"
-                    color="secondary"
-                    fontSize="large"
-                  />
-                </Tooltip>
+                <a
+                  href="https://github.com/hirokazutei/visage-void"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                >
+                  <Tooltip title="GitHub">
+                    <GitHubIcon color="secondary" fontSize="large" />
+                  </Tooltip>
+                </a>
               </Space.Inset>
             </div>
           </Paper>
