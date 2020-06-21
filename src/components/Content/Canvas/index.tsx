@@ -1,5 +1,5 @@
 /* @flow */
-import React, { useState, useContext, useEffect, CSSProperties } from "react";
+import React, { useState, useEffect, CSSProperties } from "react";
 import {
   GetApp as DownloadIcon,
   ZoomIn as ZoomInIcon,
@@ -7,12 +7,9 @@ import {
 } from "@material-ui/icons";
 import { Tooltip } from "@material-ui/core";
 import Sketch from "react-p5";
-import Context from "../../../context";
-import { ContextType } from "../../../types";
 import { Button } from "../../atom/Button";
 import { Label } from "../../atom/Text";
 import Space from "../../atom/Space";
-import stateChange from "../../../functionalty/stateChange";
 import { withinArea, adjustDetections } from "./utils";
 import {
   handleFocusDetection,
@@ -23,6 +20,8 @@ import {
 } from "./canvasActions";
 import constants from "./const";
 import { P5 } from "./type";
+import { useStore } from "../../../store";
+import { ContextType } from "../../../store/types";
 
 type StyleKey = "downloadButton" | "imageOptions" | "sizeAdjustContainer";
 
@@ -44,8 +43,8 @@ const styles: Record<StyleKey, CSSProperties> = {
 
 const CanvasWrapper = () => {
   // Context
-  const { context, setContext } = useContext(Context);
-  const { imageInfo, detections, editingIndex, editCount } = context;
+  const { state, actions } = useStore();
+  const { imageInfo, detections, editingIndex, editCount } = state;
   const { src, height, width, currentRatio } = imageInfo;
   // Local State
   const [p5Object, setP5Object] = useState<P5>();
@@ -88,7 +87,7 @@ const CanvasWrapper = () => {
   };
   const saveCanvas = () => {
     setDragHandler(undefined);
-    setContext({ ...context, editingIndex: undefined });
+    actions.defocusDetection();
     p5Object?.redraw();
     setSaveAfterNextDraw(true);
   };
@@ -96,19 +95,13 @@ const CanvasWrapper = () => {
   const zoomIn = () => {
     const newCurrentRatio =
       currentRatio <= 1 ? currentRatio / 2 : currentRatio - 1;
-    setContext({
-      ...context,
-      imageInfo: { ...imageInfo, currentRatio: newCurrentRatio },
-    });
+    actions.setCurrentRatio({ currentRatio: newCurrentRatio });
     p5Object?.redraw();
   };
   const zoomOut = () => {
     const newCurrentRatio =
       currentRatio <= 1 ? currentRatio * 2 : currentRatio + 1;
-    setContext({
-      ...context,
-      imageInfo: { ...imageInfo, currentRatio: newCurrentRatio },
-    });
+    actions.setCurrentRatio({ currentRatio: newCurrentRatio });
     p5Object?.redraw();
   };
 
@@ -124,8 +117,8 @@ const CanvasWrapper = () => {
     // Function: Drag Items
     if (mouseInCanvas(p5)) {
       p5.loop();
-      handleFocusDetection({ p5, context, setContext, adjDetections });
-      handleScaling({ p5, context, setContext, setDragHandler, adjDetections });
+      handleFocusDetection({ p5, state, actions, adjDetections });
+      handleScaling({ p5, state, actions, setDragHandler, adjDetections });
     } else {
       setDragHandler(undefined);
     }
@@ -135,7 +128,7 @@ const CanvasWrapper = () => {
     if (mouseInCanvas(p5)) {
       p5.loop();
       if (dragHandler && dragHandler.handler) {
-        dragHandler.handler({ p5, context, setContext });
+        dragHandler.handler({ p5, state, actions });
       }
     }
   };
@@ -146,26 +139,18 @@ const CanvasWrapper = () => {
       case constants.keys.backspace:
       case constants.keys.delete:
         if (detections && editingIndex !== undefined) {
-          stateChange.deleteDetection({
+          actions.deleteDetection({
             index: editingIndex,
-            context,
-            setContext,
           });
         }
         break;
       // Switch the selected detection
       case constants.keys.tab:
-        stateChange.incrementDetection({
-          context,
-          setContext,
-        });
+        actions.incrementEditingDetection();
         break;
       // Defocus the selected detection
       case constants.keys.escape:
-        stateChange.defocusDetection({
-          context,
-          setContext,
-        });
+        actions.defocusDetection();
         break;
       default:
         return;
@@ -175,9 +160,9 @@ const CanvasWrapper = () => {
   const draw = (p5: P5) => {
     if (image) {
       p5.image(image, 0, 0, adjWidth, adjHeight);
-      handleCursor({ p5, context, setContext, adjDetections });
-      drawDetections({ p5, context, setContext, adjDetections });
-      drawSelectedDetection({ p5, context, setContext, adjDetections });
+      handleCursor({ p5, state, actions, adjDetections });
+      drawDetections({ p5, state, actions, adjDetections });
+      drawSelectedDetection({ p5, state, actions, adjDetections });
       if (saveAfterNextDraw) {
         p5.saveCanvas(`masked${Date.now()}`, "png");
         setSaveAfterNextDraw(false);

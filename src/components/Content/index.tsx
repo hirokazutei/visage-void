@@ -1,9 +1,9 @@
-import React, { CSSProperties, useContext } from "react";
+import React, { CSSProperties } from "react";
 import LeftPane from "./LeftPane";
 import ImageDisplay from "./ImageDisplay";
-import Context from "../../context";
 import ActionSection from "./ActionSection";
 import Space from "../atom/Space";
+import { useStore } from "../../store";
 
 type StyleKey = "mainContainer" | "topContentContainer";
 
@@ -28,7 +28,7 @@ const styles: Record<StyleKey, CSSProperties> = {
 };
 
 const Content = () => {
-  const { context, setContext } = useContext(Context);
+  const { state, actions } = useStore();
   return (
     <Space.Inset all="huge" style={styles.mainContainer}>
       <div style={styles.topContentContainer}>
@@ -40,7 +40,7 @@ const Content = () => {
         </Space.Inset>
       </div>
       <Space.Inset all="medium">
-        <ImageDisplay context={context} setContext={setContext} />
+        <ImageDisplay state={state} actions={actions} />
       </Space.Inset>
     </Space.Inset>
   );

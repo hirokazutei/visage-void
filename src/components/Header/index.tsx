@@ -1,12 +1,11 @@
 /* @flow */
-import React, { CSSProperties, useContext } from "react";
+import React, { CSSProperties } from "react";
 import symbol from "../../symbol";
-import SettingContext from "../../context";
 import { Button } from "../atom/Button";
 import Space from "../atom/Space";
 import { Title } from "../atom/Text";
-import stateChagne from "../../functionalty/stateChange";
 import Divider from "../atom/Divider";
+import { useStore } from "../../store";
 
 type StyleKey = "header" | "titleContainer" | "buttonContainer";
 
@@ -29,15 +28,15 @@ const styles: Record<StyleKey, CSSProperties> = {
 };
 
 const Header = () => {
-  const { context, setContext } = useContext(SettingContext);
+  const { actions } = useStore();
   const showInfoModal = () => {
-    stateChagne.showInfoModal({ context, setContext });
+    actions.showInfoModal();
   };
   const showDonateModal = () => {
-    stateChagne.showDonateModal({ context, setContext });
+    actions.showDonateModal();
   };
   const showContactModal = () => {
-    stateChagne.showContactModal({ context, setContext });
+    actions.showContactModal();
   };
   return (
     <Space.Inset style={styles.header} vertical="medium" horizontal="large">

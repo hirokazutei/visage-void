@@ -1,17 +1,16 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Snackbar as MUISnackBar, IconButton } from "@material-ui/core";
 import { Alert } from "@material-ui/lab";
 import { Close as CloseIcon } from "@material-ui/icons/";
-import Context from "../../context";
-import stateChagne from "../../functionalty/stateChange";
+import { useStore } from "../../store";
 
 const MESSAGE_AUTOHIDE_DURATION = 10000;
 
 const Snackbar = () => {
-  const { context, setContext } = useContext(Context);
-  const { snackBarMessage } = context;
+  const { state, actions } = useStore();
+  const { snackBarMessage } = state;
   const closeSnackBar = () => {
-    stateChagne.closeSnackBar({ context, setContext });
+    actions.closeSnackBar();
   };
 
   return (

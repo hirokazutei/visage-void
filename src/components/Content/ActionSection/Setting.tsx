@@ -1,11 +1,11 @@
-import React, { useContext, CSSProperties } from "react";
+import React, { CSSProperties } from "react";
 import { Slider, Button, ButtonGroup } from "@material-ui/core";
-import Context from "../../../context";
 import { COVER_TYPE } from "../../../const";
 import { CoverType, ColorSetting } from "../../../types";
 import { Label } from "../../atom/Text";
 import Space from "../../atom/Space";
 import ColorSetter from "./ColorSetter";
+import { useStore } from "../../../store";
 
 type StyleKey = "buttonGroupContainer" | "colorSetting";
 
@@ -21,43 +21,24 @@ const styles: Record<StyleKey, CSSProperties> = {
 };
 
 const Setting = () => {
-  const { context, setContext } = useContext(Context);
+  const { state, actions } = useStore();
   const {
     heightMultiplier,
     widthMultiplier,
     type: currentType,
     color,
-  } = context.setting;
+  } = state.setting;
   const setHeightMultipler = (heightMultiplier: number) => {
-    setContext({
-      ...context,
-      setting: { ...context.setting, heightMultiplier },
-      editCount: context.editCount + 1,
-    });
+    actions.setHeightMultiplier({ heightMultiplier });
   };
   const setWidthMutiplier = (widthMultiplier: number) => {
-    setContext({
-      ...context,
-      setting: { ...context.setting, widthMultiplier },
-      editCount: context.editCount + 1,
-    });
+    actions.setWidthMultiplier({ widthMultiplier });
   };
-  const setType = (type: CoverType) => {
-    setContext({
-      ...context,
-      setting: { ...context.setting, type },
-      editCount: context.editCount + 1,
-    });
+  const setType = (coverType: CoverType) => {
+    actions.setType({ coverType });
   };
   const setColor = (color: ColorSetting) => {
-    setContext({
-      ...context,
-      setting: {
-        ...context.setting,
-        color: { ...context.setting.color, ...color },
-      },
-      editCount: context.editCount + 1,
-    });
+    actions.setColor({ color });
   };
 
   const sliders = [

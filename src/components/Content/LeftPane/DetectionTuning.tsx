@@ -1,14 +1,13 @@
-import React, { CSSProperties, useContext } from "react";
+import React, { CSSProperties } from "react";
 import { Slider, Button, ClickAwayListener, Tooltip } from "@material-ui/core";
 import { Info as InfoIcon } from "@material-ui/icons";
 import symbol from "../../../symbol";
-import Context from "../../../context";
 import { Body, SubTitle } from "../../atom/Text";
 import Space from "../../atom/Space";
 import { ContainedButton } from "../../atom/Button";
 import { getFullFaceDescription } from "../../../face-api/face";
-import stateChange from "../../../functionalty/stateChange";
 import { Paper } from "../../atom/Paper";
+import { useStore } from "../../../store";
 
 type StyleKey = "rescanButtons";
 
@@ -21,14 +20,15 @@ const styles: Record<StyleKey, CSSProperties> = {
 };
 
 const DetectionTuning = () => {
-  const { context, setContext } = useContext(Context);
+  const { state, actions } = useStore();
+  const { imageInfo, inputSize } = state;
+  const [open, setOpen] = React.useState(false);
+
   const rescan = async () => {
-    await getFullFaceDescription(context.imageInfo.src, context.inputSize).then(
+    await getFullFaceDescription(imageInfo.src, inputSize).then(
       (fullDescription) => {
         if (!!fullDescription) {
-          stateChange.updateDetections({
-            context,
-            setContext,
+          actions.updateDetections({
             fullDescription,
           });
         }
@@ -37,20 +37,16 @@ const DetectionTuning = () => {
   };
 
   const overlapScan = async () => {
-    await getFullFaceDescription(context.imageInfo.src, context.inputSize).then(
+    await getFullFaceDescription(imageInfo.src, inputSize).then(
       (fullDescription) => {
         if (!!fullDescription) {
-          stateChange.appendDetections({
-            context,
-            setContext,
+          actions.appendDetections({
             fullDescription,
           });
         }
       }
     );
   };
-
-  const [open, setOpen] = React.useState(false);
 
   const handleClick = () => {
     setOpen((prev) => !prev);
@@ -84,12 +80,10 @@ const DetectionTuning = () => {
       </ClickAwayListener>
 
       <Slider
-        value={context.inputSize}
+        value={inputSize}
         step={32}
         onChange={(_, newValue) => {
-          stateChange.updateInputSize({
-            context,
-            setContext,
+          actions.updateInputSize({
             inputSize: Array.isArray(newValue) ? newValue[0] : newValue,
           });
         }}
@@ -98,13 +92,15 @@ const DetectionTuning = () => {
         valueLabelDisplay="auto"
       />
       <Space.Stack size="medium" />
-      <div style={styles.rescanButtons}>
-        <ContainedButton onClick={rescan}>REDO SCANS</ContainedButton>
-        <Space.Queue size="huge" />
-        <ContainedButton onClick={overlapScan}>
-          OVERLAP NEW SCANS
-        </ContainedButton>
-      </div>
+      {imageInfo.src && (
+        <div style={styles.rescanButtons}>
+          <ContainedButton onClick={rescan}>REDO SCANS</ContainedButton>
+          <Space.Queue size="huge" />
+          <ContainedButton onClick={overlapScan}>
+            OVERLAP NEW SCANS
+          </ContainedButton>
+        </div>
+      )}
     </>
   );
 };

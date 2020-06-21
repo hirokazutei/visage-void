@@ -1,13 +1,11 @@
-import React, { CSSProperties, useContext } from "react";
+import React, { CSSProperties } from "react";
 import { Button, Checkbox } from "@material-ui/core";
 import { Label, SubTitle } from "../../atom/Text";
 import Space from "../../atom/Space";
 import symbol from "../../../symbol";
 import { Detection } from "../../../types";
 import { PageMarker } from "../../atom/Paper";
-import Context from "../../../context";
-import { messages } from "../../../strings";
-import stateChange from "../../../functionalty/stateChange";
+import { useStore } from "../../../store";
 
 type StyleKey =
   | "baseView"
@@ -42,39 +40,21 @@ const styles: Record<StyleKey, CSSProperties> = {
 };
 
 const DetectionView = () => {
-  const { context, setContext } = useContext(Context);
-  const { detections, editingIndex } = context;
+  const { state, actions } = useStore();
+  const { detections, editingIndex } = state;
 
   const showHideDetection = (index) => {
     if (detections && detections[index]) {
       detections[index].hide = !detections[index].hide;
-      setContext({
-        ...context,
-        ...detections,
-        editCount: context.editCount + 1,
-      });
+      actions.setDetections({ detections });
     }
   };
 
   const onSelectedToEdit = (index) => {
     if (index === editingIndex) {
-      setContext({
-        ...context,
-        editingIndex: undefined,
-        editCount: context.editCount + 1,
-      });
+      actions.defocusDetection();
     } else if (detections && detections[index]) {
-      setContext({
-        ...context,
-        ...(context.displayedMessages.dragToChange
-          ? {}
-          : {
-              snackBarMessage: messages.draggable,
-              displaedMessages: { dragToChange: true },
-            }),
-        editingIndex: index,
-        editCount: context.editCount + 1,
-      });
+      actions.focusDetection({ index });
     }
   };
 
@@ -121,13 +101,7 @@ const DetectionView = () => {
                           backgroundColor: symbol.COLOR.error,
                           color: symbol.COLOR.white,
                         }}
-                        onClick={() =>
-                          stateChange.deleteDetection({
-                            index,
-                            context,
-                            setContext,
-                          })
-                        }
+                        onClick={() => actions.deleteDetection({ index })}
                       >
                         REMOVE
                       </Button>

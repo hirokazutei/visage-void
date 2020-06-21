@@ -1,12 +1,11 @@
-import React, { useContext, CSSProperties } from "react";
+import React, { CSSProperties } from "react";
 import { Slider, Button, Paper } from "@material-ui/core";
-import Context from "../../../context";
 import symbol from "../../../symbol";
 import { PositionSize, ColorSetting } from "../../../types";
 import { Label } from "../../atom/Text";
 import Space from "../../atom/Space";
 import ColorSetter from "./ColorSetter";
-import stateChange from "../../../functionalty/stateChange";
+import { useStore } from "../../../store";
 
 type StyleKey = "sliderContainer" | "textContainer";
 
@@ -21,15 +20,11 @@ const styles: Record<StyleKey, CSSProperties> = {
 };
 
 const EditView = () => {
-  const { context, setContext } = useContext(Context);
-  const { imageInfo, detections, editingIndex } = context;
+  const { state, actions } = useStore();
+  const { imageInfo, detections, editingIndex, setting } = state;
 
   const doneEditing = () => {
-    setContext({
-      ...context,
-      editingIndex: undefined,
-      editCount: context.editCount + 1,
-    });
+    actions.defocusDetection();
   };
 
   if (editingIndex === undefined) {
@@ -45,11 +40,7 @@ const EditView = () => {
         ...detections[editingIndex],
         ...{ color },
       };
-      setContext({
-        ...context,
-        ...detections,
-        editCount: context.editCount + 1,
-      });
+      actions.setDetections({ detections });
     }
   };
 
@@ -59,11 +50,7 @@ const EditView = () => {
         ...detections[editingIndex],
         ...detection,
       };
-      setContext({
-        ...context,
-        ...detections,
-        editCount: context.editCount + 1,
-      });
+      actions.setDetections({ detections });
     }
   };
 
@@ -126,7 +113,7 @@ const EditView = () => {
         })}
         <Space.Stack size="medium" />
         <ColorSetter
-          color={selectedColor ? selectedColor : context.setting.color}
+          color={selectedColor ? selectedColor : setting.color}
           setColor={setColor}
         />
       </Paper>
@@ -153,10 +140,8 @@ const EditView = () => {
           }}
           onClick={() => {
             if (detections && editingIndex !== undefined) {
-              stateChange.deleteDetection({
+              actions.deleteDetection({
                 index: editingIndex,
-                context,
-                setContext,
               });
             }
           }}

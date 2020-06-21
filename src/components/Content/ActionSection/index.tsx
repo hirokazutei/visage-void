@@ -1,10 +1,12 @@
-import React, { useContext } from "react";
+import React from "react";
 import { Tabs, Tab } from "@material-ui/core";
-import Context from "../../../context";
 import { Paper } from "../../atom/Paper";
 import symbol from "../../../symbol";
 import Setting from "./Setting";
 import Manual from "./Manual";
+import { useStore } from "../../../store";
+import { SubTitle } from "../../atom/Text";
+import Space from "../../atom/Space";
 
 function TabPanel(props) {
   const { value, index, children } = props;
@@ -12,14 +14,10 @@ function TabPanel(props) {
 }
 
 const ActionSection = () => {
-  const { context, setContext } = useContext(Context);
-  const { currentTab } = context;
-  const changeTab = (_, value) => {
-    setContext({
-      ...context,
-      currentTab: value,
-      editCount: context.editCount + 1,
-    });
+  const { state, actions } = useStore();
+  const { currentTab, imageInfo } = state;
+  const changeTab = (_, tab) => {
+    actions.changeTab({ tab });
   };
   return (
     <Paper customStyle={{ paddingTop: 0, maxWidth: 320 }}>
@@ -52,7 +50,13 @@ const ActionSection = () => {
         <Setting />
       </TabPanel>
       <TabPanel value={currentTab} index={1}>
-        <Manual />
+        {imageInfo.src ? (
+          <Manual />
+        ) : (
+          <Space.Inset top="large">
+            <SubTitle>NO IMAGE HAS BEEN LOADED</SubTitle>
+          </Space.Inset>
+        )}
       </TabPanel>
     </Paper>
   );

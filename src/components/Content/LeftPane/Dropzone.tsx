@@ -1,8 +1,8 @@
-import React, { useCallback, CSSProperties, useContext } from "react";
+import React, { useCallback, CSSProperties } from "react";
 import { useDropzone } from "react-dropzone";
 import symbol from "../../../symbol";
-import Context from "../../../context";
 import { Caption } from "../../atom/Text";
+import { useStore } from "../../../store";
 
 type StyleKey = "textContainer" | "dropzone" | "button" | "dropTextContainer";
 
@@ -36,7 +36,7 @@ const styles: Record<StyleKey, CSSProperties> = {
 };
 
 const Dropzone = () => {
-  const { context, setContext } = useContext(Context);
+  const { actions } = useStore();
 
   const onDrop = useCallback(
     (images) => {
@@ -64,24 +64,14 @@ const Dropzone = () => {
               }
               return maxRatio;
             })();
-            setContext({
-              ...context,
-              detections: undefined,
-              imageInfo: {
-                src: URL.createObjectURL(file),
-                height,
-                width,
-                maxRatio,
-                currentRatio: maxRatio,
-              },
-              editCount: context.editCount + 1,
-            });
+            const src = URL.createObjectURL(file);
+            actions.setImageInfo({ src, height, width, maxRatio });
           };
         };
         reader.readAsDataURL(file);
       });
     },
-    [context, setContext]
+    [actions]
   );
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });

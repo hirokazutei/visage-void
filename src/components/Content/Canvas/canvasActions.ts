@@ -1,16 +1,16 @@
-import { ContextType, Detections } from "../../../types";
+import { Detections } from "../../../types";
 import { between, clamp, unadjustDetection } from "./utils";
-import stateChange from "../../../functionalty/stateChange";
 import constants from "./const";
-import { P5Context } from "./type";
+import { CanvasHandler } from "./type";
+import { ContextType } from "../../../store/types";
 
 export const handleFocusDetection = ({
   p5,
-  context,
-  setContext,
+  state,
+  actions,
   adjDetections,
-}: P5Context & { adjDetections: Detections }) => {
-  const { editingIndex } = context;
+}: CanvasHandler & { adjDetections: Detections }) => {
+  const { editingIndex } = state;
   if (editingIndex === undefined && adjDetections) {
     adjDetections.forEach((detection, editingIndex) => {
       const insideX = between(
@@ -24,7 +24,7 @@ export const handleFocusDetection = ({
         detection.y + detection.height
       );
       if (insideX && insideY) {
-        stateChange.focusDetection({ context, setContext, editingIndex });
+        actions.focusDetection({ index: editingIndex });
         return;
       }
     });
@@ -33,17 +33,17 @@ export const handleFocusDetection = ({
 
 export const handleScaling = ({
   p5,
-  context,
-  setContext,
+  state,
+  actions,
   setDragHandler,
   adjDetections,
-}: P5Context & {
+}: CanvasHandler & {
   setDragHandler: (dragHander?: {
     handler?: (args: { p5: any } & ContextType) => void;
   }) => void;
   adjDetections: Detections;
 }): void => {
-  const { editingIndex, imageInfo } = context;
+  const { editingIndex, imageInfo } = state;
   const { width, height } = imageInfo;
   const { mouseX, mouseY } = p5;
   if (!width || !height || !adjDetections) {
@@ -73,15 +73,15 @@ export const handleScaling = ({
 
     if (!(insideX || nearE || nearW) || !(insideY || nearN || nearS)) {
       setDragHandler(undefined);
-      stateChange.defocusDetection({ context, setContext });
+      actions.defocusDetection();
       return;
     }
     setDragHandler({
       // React doesn't like states that are functions, so we wrap it in an
       // object with a property.
-      handler: ({ p5, context, setContext }: P5Context) => {
+      handler: ({ p5, state, actions }: CanvasHandler) => {
         const { mouseX, mouseY } = p5;
-        const { imageInfo, editingIndex } = context;
+        const { imageInfo, editingIndex } = state;
         const { width, height, currentRatio } = imageInfo;
         if (!width || !height || !adjDetections || editingIndex === undefined) {
           return;
@@ -155,11 +155,7 @@ export const handleScaling = ({
           currentRatio
         );
 
-        stateChange.changeDetection({
-          context,
-          setContext,
-          detections: unadjustedDetections,
-        });
+        actions.setDetections({ detections: unadjustedDetections });
       },
     });
   }
@@ -167,11 +163,11 @@ export const handleScaling = ({
 
 export const handleCursor = ({
   p5,
-  context,
+  state,
   adjDetections,
-}: P5Context & { adjDetections: Detections }) => {
+}: CanvasHandler & { adjDetections: Detections }) => {
   const { mouseX, mouseY } = p5;
-  const { editingIndex } = context;
+  const { editingIndex } = state;
   p5?.cursor("default");
   if (adjDetections) {
     if (editingIndex === undefined) {
@@ -230,10 +226,10 @@ export const handleCursor = ({
 
 export const drawDetections = ({
   p5,
-  context,
+  state,
   adjDetections,
-}: P5Context & { adjDetections: Detections }) => {
-  const { setting } = context;
+}: CanvasHandler & { adjDetections: Detections }) => {
+  const { setting } = state;
   const { heightMultiplier, widthMultiplier, type, color } = setting;
   if (adjDetections) {
     for (const detection of adjDetections) {
@@ -265,10 +261,10 @@ export const drawDetections = ({
 
 export const drawSelectedDetection = ({
   p5,
-  context,
+  state,
   adjDetections,
-}: P5Context & { adjDetections: Detections }) => {
-  const { editingIndex } = context;
+}: CanvasHandler & { adjDetections: Detections }) => {
+  const { editingIndex } = state;
   if (editingIndex !== undefined && adjDetections) {
     const detection = adjDetections[editingIndex];
     p5.stroke(0, 0, 0);

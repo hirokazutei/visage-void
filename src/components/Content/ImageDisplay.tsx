@@ -1,12 +1,11 @@
 import React, { Component, CSSProperties } from "react";
 import CanvasWrapper from "./Canvas";
 import { loadModels, getFullFaceDescription } from "../../face-api/face";
-import { ContextType } from "../../types";
 import { GridLoader } from "react-spinners";
 import symbol from "../../symbol";
 import { Paper } from "../atom/Paper";
 import { Caption } from "../atom/Text";
-import stateChange from "../../functionalty/stateChange";
+import { ContextType } from "../../store/types";
 
 type State = {
   modelsLoaded: boolean;
@@ -39,24 +38,22 @@ class ImageDisplay extends Component<Props, State> {
   }
 
   componentDidUpdate = async (prevProps) => {
-    const { src } = this.props.context.imageInfo;
+    const { src } = this.props.state.imageInfo;
     const { modelsLoaded } = this.state;
     if (!modelsLoaded) {
       await loadModels();
       this.setState({ ...this.state, modelsLoaded: true });
     }
-    if (src && src !== prevProps.context.imageInfo.src) {
+    if (src && src !== prevProps.state.imageInfo.src) {
       await this.handleImage(src);
     }
   };
 
   handleImage = async (image) => {
-    await getFullFaceDescription(image, this.props.context.inputSize).then(
+    await getFullFaceDescription(image, this.props.state.inputSize).then(
       (fullDescription) => {
         if (!!fullDescription) {
-          stateChange.updateDetections({
-            context: this.props.context,
-            setContext: this.props.setContext,
+          this.props.actions.updateDetections({
             fullDescription,
           });
         }
@@ -65,7 +62,7 @@ class ImageDisplay extends Component<Props, State> {
   };
 
   render() {
-    const { detections, imageInfo } = this.props.context;
+    const { detections, imageInfo } = this.props.state;
     if (!imageInfo.src) {
       return null;
     }

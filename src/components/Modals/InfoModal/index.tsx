@@ -1,4 +1,4 @@
-import React, { useContext, CSSProperties } from "react";
+import React, { CSSProperties } from "react";
 import { Link } from "@material-ui/core";
 import {
   Face as FaceIcon,
@@ -6,11 +6,10 @@ import {
   Build as BuildIcon,
   CloudOff as CloudOffIcon,
 } from "@material-ui/icons";
-import SettingContext from "../../../context";
 import { SubTitle, Body, Label } from "../../atom/Text";
 import { Paper } from "../../atom/Paper";
 import Space from "../../atom/Space";
-import stateChange from "../../../functionalty/stateChange";
+import { useStore } from "../../../store";
 
 type StyleKey = "modalContainer" | "contentContainer" | "iconText" | "paper";
 
@@ -44,12 +43,12 @@ const styles: Record<StyleKey, CSSProperties> = {
 };
 
 const InfoModal = () => {
-  const { context, setContext } = useContext(SettingContext);
+  const { state, actions } = useStore();
   const closeModal = (e) => {
     e.stopPropagation();
-    stateChange.hideInfoModal({ context, setContext });
+    actions.hideInfoModal();
   };
-  if (!context.modals.showInfoModal) {
+  if (!state.modals.showInfoModal) {
     return null;
   }
   return (

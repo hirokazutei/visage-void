@@ -1,16 +1,11 @@
-import React, {
-  CSSProperties,
-  useEffect,
-  useContext,
-  useCallback,
-} from "react";
-import Context from "../context";
+import React, { CSSProperties, useEffect, useCallback } from "react";
 import Header from "./Header";
 import Content from "./Content";
 import DonateModal from "./Modals/DonateModal";
 import Snackbar from "./SnackBar";
 import InfoModal from "./Modals/InfoModal";
 import ContactModal from "./Modals/ContactModal";
+import { useStore } from "../store";
 
 type StyleKey = "mainContent";
 
@@ -19,8 +14,8 @@ const styles: Record<StyleKey, CSSProperties> = {
 };
 
 const Page = () => {
-  const { context, setContext } = useContext(Context);
-  const { imageInfo, editCount } = context;
+  const { state, actions } = useStore();
+  const { imageInfo } = state;
   const { width, height } = imageInfo;
   const handleResize = useCallback(() => {
     if (width && height) {
@@ -31,13 +26,9 @@ const Page = () => {
       })();
       const currentRatio =
         maxRatio > imageInfo.currentRatio ? maxRatio : imageInfo.currentRatio;
-      setContext({
-        ...context,
-        imageInfo: { ...imageInfo, currentRatio, maxRatio },
-        editCount: editCount + 1,
-      });
+      actions.resize({ maxRatio, currentRatio });
     }
-  }, [height, imageInfo, setContext, width, context, editCount]);
+  }, [height, imageInfo, width, actions]);
   useEffect(() => {
     window.addEventListener("resize", handleResize);
     return () => window.removeEventListener("resize", handleResize);

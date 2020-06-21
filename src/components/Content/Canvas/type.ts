@@ -1,7 +1,5 @@
-import { ContextType } from "../../../types";
+import { ContextType } from "../../../store/types";
 
 export type P5 = any;
 
-export type P5Context = {
-  p5: P5;
-} & ContextType;
+export type CanvasHandler = { p5: P5 } & ContextType;

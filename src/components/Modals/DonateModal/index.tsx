@@ -1,10 +1,9 @@
-import React, { useContext, CSSProperties } from "react";
+import React, { CSSProperties } from "react";
 import { Link } from "@material-ui/core";
-import SettingContext from "../../../context";
 import { SubTitle, Body, Label } from "../../atom/Text";
 import { Paper } from "../../atom/Paper";
 import Space from "../../atom/Space";
-import stateChange from "../../../functionalty/stateChange";
+import { useStore } from "../../../store";
 
 type StyleKey = "modalContainer" | "contentContainer";
 
@@ -31,12 +30,12 @@ const styles: Record<StyleKey, CSSProperties> = {
 };
 
 const DonateModal = () => {
-  const { context, setContext } = useContext(SettingContext);
+  const { state, actions } = useStore();
   const closeModal = (e) => {
     e.stopPropagation();
-    stateChange.hideDonateModal({ context, setContext });
+    actions.hideDonateModal();
   };
-  if (!context.modals.showDonateModal) {
+  if (!state.modals.showDonateModal) {
     return null;
   }
   return (

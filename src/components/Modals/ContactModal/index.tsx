@@ -1,15 +1,14 @@
-import React, { useContext, CSSProperties } from "react";
+import React, { CSSProperties } from "react";
 import { Tooltip } from "@material-ui/core";
 import {
   GitHub as GitHubIcon,
   LinkedIn as LinkedInIcon,
   Twitter as TwitterIcon,
 } from "@material-ui/icons";
-import SettingContext from "../../../context";
 import { SubTitle } from "../../atom/Text";
 import { Paper } from "../../atom/Paper";
 import Space from "../../atom/Space";
-import stateChange from "../../../functionalty/stateChange";
+import { useStore } from "../../../store";
 
 type StyleKey =
   | "modalContainer"
@@ -55,12 +54,12 @@ const styles: Record<StyleKey, CSSProperties> = {
 };
 
 const ContactModal = () => {
-  const { context, setContext } = useContext(SettingContext);
+  const { state, actions } = useStore();
   const closeModal = (e) => {
     e.stopPropagation();
-    stateChange.hideContactModal({ context, setContext });
+    actions.hideContactModal();
   };
-  if (!context.modals.showContactModal) {
+  if (!state.modals.showContactModal) {
     return null;
   }
   return (
