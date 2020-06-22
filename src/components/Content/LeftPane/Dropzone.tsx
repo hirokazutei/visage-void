@@ -66,6 +66,7 @@ const Dropzone = () => {
             })();
             const src = URL.createObjectURL(file);
             actions.setImageInfo({ src, height, width, maxRatio });
+            actions.refreshCanvas();
           };
         };
         reader.readAsDataURL(file);

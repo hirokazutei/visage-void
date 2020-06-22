@@ -83,6 +83,13 @@ export type Actions = {
   setColor: ({ color }: { color: ColorSetting }) => void;
   addDetection: () => void;
   changeTab: ({ tab }: { tab: number }) => void;
+  setGlobalEmoji: ({ globalEmoji }: { globalEmoji: string }) => void;
+  setEmojiSizeMultiplier: ({
+    emojiSizeMultiplier,
+  }: {
+    emojiSizeMultiplier: number;
+  }) => void;
+  refreshCanvas: () => void;
 };
 
 export type ActionKeys =
@@ -109,6 +116,9 @@ export type ActionKeys =
   | "SET_TYPE"
   | "SET_COLOR"
   | "ADD_DETECTION"
-  | "CHANGE_TAB";
+  | "CHANGE_TAB"
+  | "SET_GLOBAL_EMOJI"
+  | "SET_EMOJI_SIZE_MULTIPLIER"
+  | "REFRESH_CANVAS";
 
 export type ContextType = { state: State; actions: Actions };

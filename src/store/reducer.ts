@@ -25,12 +25,14 @@ export function reducer(state: State, action: any) {
     case actions.UPDATE_DETECTIONS:
       return {
         ...state,
-        detections: action.fullDescription.map((description) => {
+        detections: action.fullDescription.map(({ detection }) => {
+          const { height, width, x, y } = detection.box;
           return {
-            height: Math.round(description.detection.box.height),
-            width: Math.round(description.detection.box.width),
-            x: Math.round(description.detection.box.x),
-            y: Math.round(description.detection.box.y),
+            height: Math.round(height),
+            width: Math.round(width),
+            emojiSize: Math.round(width > height ? width : height),
+            x: Math.round(x),
+            y: Math.round(y),
             hide: false,
           };
         }),
@@ -41,12 +43,14 @@ export function reducer(state: State, action: any) {
         ...state,
         detections: [
           ...oldDetections,
-          ...action.fullDescription.map((fd) => {
+          ...action.fullDescription.map(({ detection }) => {
+            const { height, width, x, y } = detection.box;
             return {
-              height: Math.round(fd.detection.box.height),
-              width: Math.round(fd.detection.box.width),
-              x: Math.round(fd.detection.box.x),
-              y: Math.round(fd.detection.box.y),
+              height: Math.round(height),
+              width: Math.round(width),
+              emojiSize: Math.round(width > height ? width : height),
+              x: Math.round(x),
+              y: Math.round(y),
               hide: false,
             };
           }),
@@ -147,7 +151,14 @@ export function reducer(state: State, action: any) {
     case actions.CHANGE_TAB:
       const { tab } = action;
       return { ...state, currentTab: tab };
-
+    case actions.SET_GLOBAL_EMOJI:
+      const { globalEmoji } = action;
+      return { ...state, setting: { ...state.setting, globalEmoji } };
+    case actions.SET_EMOJI_SIZE_MULTIPLIER:
+      const { emojiSizeMultiplier } = action;
+      return { ...state, setting: { ...state.setting, emojiSizeMultiplier } };
+    case actions.REFRESH_CANVAS:
+      return { ...state };
     default:
       throw new Error(`Invalid action ${action.type}`);
   }
@@ -227,6 +238,18 @@ export const mapReducer = (
     },
     changeTab: ({ tab }) => {
       dispatch({ type: actions.CHANGE_TAB, tab });
+    },
+    setGlobalEmoji: ({ globalEmoji }) => {
+      dispatch({ type: actions.SET_GLOBAL_EMOJI, globalEmoji });
+    },
+    setEmojiSizeMultiplier: ({ emojiSizeMultiplier }) => {
+      dispatch({
+        type: actions.SET_EMOJI_SIZE_MULTIPLIER,
+        emojiSizeMultiplier,
+      });
+    },
+    refreshCanvas: () => {
+      dispatch({ type: actions.REFRESH_CANVAS });
     },
   };
 };

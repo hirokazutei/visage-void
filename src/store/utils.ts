@@ -9,6 +9,7 @@ export const addToDetection = ({ detections, imageInfo, setting }: State) => {
           return {
             x: a.x + b.x,
             y: a.y + b.y,
+            emojiSize: a.emojiSize + b.emojiSize,
             height: a.height + b.height,
             width: a.width + b.width,
           };
@@ -16,6 +17,7 @@ export const addToDetection = ({ detections, imageInfo, setting }: State) => {
         {
           x: 0,
           y: 0,
+          emojiSize: 0,
           height: 0,
           width: 0,
         }
@@ -24,6 +26,7 @@ export const addToDetection = ({ detections, imageInfo, setting }: State) => {
       return {
         x: Math.round(sumDetections.x / count),
         y: Math.round(sumDetections.y / count),
+        emojiSize: Math.round(sumDetections.emojiSize / count),
         height: Math.round(sumDetections.height / count),
         width: Math.round(sumDetections.width / count),
       };
@@ -41,6 +44,7 @@ export const addToDetection = ({ detections, imageInfo, setting }: State) => {
       y: imageInfo.height ? Math.round(imageInfo.height / 2) : 0,
       height: imageInfo.height ? Math.round(imageInfo.height / 10) : 50,
       width: imageInfo.width ? Math.round(imageInfo.width / 10) : 50,
+      emojiSize: imageInfo.width ? Math.round(imageInfo.width / 10) : 50,
       hide: false,
       color: setting.color,
     });

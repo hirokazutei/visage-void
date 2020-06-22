@@ -230,7 +230,14 @@ export const drawDetections = ({
   adjDetections,
 }: CanvasHandler & { adjDetections: Detections }) => {
   const { setting } = state;
-  const { heightMultiplier, widthMultiplier, type, color } = setting;
+  const {
+    heightMultiplier,
+    widthMultiplier,
+    emojiSizeMultiplier,
+    type,
+    color,
+    globalEmoji,
+  } = setting;
   if (adjDetections) {
     for (const detection of adjDetections) {
       const red = detection?.color?.red ?? color.red;
@@ -243,14 +250,28 @@ export const drawDetections = ({
       }
       const height = (detection.height * heightMultiplier) / 100;
       const width = (detection.width * widthMultiplier) / 100;
+      const emojiSize = (detection.emojiSize * emojiSizeMultiplier) / 100;
       const x = detection.x + detection.width / 2;
       const y = detection.y + detection.height / 2;
-      switch (type) {
+      const emojiX =
+        detection.x +
+        detection.emojiSize / 2 -
+        (emojiSize - detection.emojiSize) / 4;
+      const emojiY =
+        detection.y +
+        detection.emojiSize / 2 -
+        (emojiSize - detection.emojiSize) / 4;
+      const detectionCoverType = detection?.type ?? type;
+      switch (detectionCoverType) {
         case "BOX":
           p5.rect(x, y, width, height);
           break;
         case "OVAL":
           p5.ellipse(x, y, width, height);
+          break;
+        case "EMOJI":
+          p5.textSize(emojiSize);
+          p5.text(detection?.emojiChar ?? globalEmoji, emojiX, emojiY);
           break;
         default:
           break;

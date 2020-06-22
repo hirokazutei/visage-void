@@ -17,6 +17,7 @@
     "@types/node": "^12.0.0",
     "@types/react": "^16.9.0",
     "@types/react-dom": "^16.9.0",
+    "emoji-mart": "^3.0.0",
     "emotion": "^10.0.27",
     "face-api.js": "^0.22.2",
     "p5": "^1.0.0",
