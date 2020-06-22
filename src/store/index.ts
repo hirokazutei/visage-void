@@ -7,12 +7,14 @@ export const INITIAL_STATE: State = {
   setting: {
     heightMultiplier: 100,
     widthMultiplier: 100,
+    emojiSizeMultiplier: 100,
     type: COVER_TYPE[0],
     color: {
       red: 0,
       blue: 0,
       green: 0,
     },
+    globalEmoji: "😃",
   },
   imageInfo: { currentRatio: 1 },
   currentTab: 0,

@@ -1,11 +1,11 @@
 import React, { CSSProperties } from "react";
-import { Slider, Button, ButtonGroup } from "@material-ui/core";
-import { COVER_TYPE } from "../../../const";
-import { CoverType, ColorSetting } from "../../../types";
+import { CoverType } from "../../../types";
 import { Label } from "../../atom/Text";
 import Space from "../../atom/Space";
-import ColorSetter from "./ColorSetter";
 import { useStore } from "../../../store";
+import SolidMaskSetting from "./SolidMaskSetting";
+import EmojiSetting from "./EmojiSetting";
+import CoverTypeSelector from "./CoverTypeSelector";
 
 type StyleKey = "buttonGroupContainer" | "colorSetting";
 
@@ -22,37 +22,11 @@ const styles: Record<StyleKey, CSSProperties> = {
 
 const Setting = () => {
   const { state, actions } = useStore();
-  const {
-    heightMultiplier,
-    widthMultiplier,
-    type: currentType,
-    color,
-  } = state.setting;
-  const setHeightMultipler = (heightMultiplier: number) => {
-    actions.setHeightMultiplier({ heightMultiplier });
-  };
-  const setWidthMutiplier = (widthMultiplier: number) => {
-    actions.setWidthMultiplier({ widthMultiplier });
-  };
-  const setType = (coverType: CoverType) => {
+  const { type } = state.setting;
+
+  const onSelectCoverType = (coverType: CoverType) => {
     actions.setType({ coverType });
   };
-  const setColor = (color: ColorSetting) => {
-    actions.setColor({ color });
-  };
-
-  const sliders = [
-    {
-      text: "HEIGHT MULTIPLIER",
-      value: heightMultiplier,
-      setter: setHeightMultipler,
-    },
-    {
-      text: "WIDTH MULTIPLIER",
-      value: widthMultiplier,
-      setter: setWidthMutiplier,
-    },
-  ];
 
   return (
     <>
@@ -60,51 +34,10 @@ const Setting = () => {
       <Label>COVER TYPE</Label>
       <Space.Stack size="medium" />
       <div style={styles.buttonGroupContainer}>
-        <ButtonGroup color="primary" aria-label="outlined primary button group">
-          {COVER_TYPE.map((type, index) => {
-            const borderRadius = (() => {
-              if (index === 0) return "8px 0px 0px 8px";
-              else if (index === COVER_TYPE.length - 1) {
-                return "0px 8px 8px 0px";
-              }
-              return 0;
-            })();
-            return (
-              <Button
-                key={type}
-                variant={type === currentType ? "contained" : "outlined"}
-                onClick={() => setType(type)}
-                style={{ borderRadius }}
-              >
-                {type}
-              </Button>
-            );
-          })}
-        </ButtonGroup>
+        <CoverTypeSelector coverType={type} setCoverType={onSelectCoverType} />
       </div>
       <Space.Stack size="large" />
-      {sliders.map(({ text, value, setter }) => {
-        return (
-          <div key={text}>
-            <Label>{text}</Label>
-            <Slider
-              value={value}
-              onChange={(_, newValue) => {
-                setter(Array.isArray(newValue) ? newValue[0] : newValue);
-              }}
-              aria-labelledby="continuous-slider"
-              valueLabelFormat={(value) => {
-                return `${value}%`;
-              }}
-              min={50}
-              max={200}
-              valueLabelDisplay="auto"
-            />
-            <Space.Stack size="medium" />
-          </div>
-        );
-      })}
-      <ColorSetter color={color} setColor={setColor} />
+      {type !== "EMOJI" ? <SolidMaskSetting /> : <EmojiSetting />}
     </>
   );
 };

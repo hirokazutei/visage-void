@@ -11,15 +11,17 @@ export type ColorSetting = {
   blue: number;
 };
 
-export type CoverType = "OVAL" | "BOX";
+export type CoverType = "OVAL" | "BOX" | "EMOJI";
 
 export type SizeKey = "tiny" | "small" | "medium" | "large" | "huge" | "macro";
 
 export type Setting = {
   heightMultiplier: number;
   widthMultiplier: number;
+  emojiSizeMultiplier: number;
   type: CoverType;
   color: ColorSetting;
+  globalEmoji: string;
 };
 
 export type ImageInfo = {
@@ -33,6 +35,7 @@ export type ImageInfo = {
 export type PositionSize = {
   height?: number;
   width?: number;
+  emojiSize?: number;
   x?: number;
   y?: number;
 };
@@ -40,6 +43,8 @@ export type PositionSize = {
 export type Detection = {
   hide: boolean;
   color?: ColorSetting;
+  type?: CoverType;
+  emojiChar?: string;
 } & Required<PositionSize>;
 
 export type Detections = Array<Detection>;

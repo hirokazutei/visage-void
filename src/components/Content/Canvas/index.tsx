@@ -111,6 +111,7 @@ const CanvasWrapper = () => {
     setImage(p5.loadImage(src));
     p5.rectMode(p5.CENTER);
     p5.noStroke();
+    p5.textAlign(p5.CENTER, p5.CENTER);
   };
 
   const mousePressed = (p5: P5) => {
@@ -168,7 +169,7 @@ const CanvasWrapper = () => {
         setSaveAfterNextDraw(false);
       }
       // Stops drawing when state isn't changing
-      if (loop > 2) {
+      if (loop > 5) {
         p5.noLoop();
         setLoop(0);
       } else {
