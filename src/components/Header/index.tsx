@@ -30,27 +30,27 @@ const styles: Record<StyleKey, CSSProperties> = {
 };
 
 const Header = () => {
-  const [anchorEl, setAnchorE1]= useState<true|false>(false);
 
-  console.log(typeof anchorEl)
+  const [anchorEl, setAnchorEl]= useState<true|false>(false);
+
   const handleClick=()=>{
-    setAnchorE1(true)
+    setAnchorEl(true)
   }
   const handleClose=()=>{
-    setAnchorE1(false)
+    setAnchorEl(false)
   }
   const { actions } = useStore();
   const showInfoModal = () => {
     actions.showInfoModal();
-    setAnchorE1(false)
+    setAnchorEl(false)
   };
   const showDonateModal = () => {
     actions.showDonateModal();
-    setAnchorE1(false)
+    setAnchorEl(false)
   };
   const showContactModal = () => {
     actions.showContactModal();
-    setAnchorE1(false)
+    setAnchorEl(false)
   };
 
   return (
@@ -66,11 +66,6 @@ const Header = () => {
         vertical: "top",
         horizontal: "left"
       }}
-      transformOrigin={{
-        vertical: "top",
-        horizontal: "left"
-      }}
-      anchorEl={anchorEl}
       keepMounted
       open={Boolean(anchorEl)}
       onClose={handleClose}
