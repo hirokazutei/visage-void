@@ -6,8 +6,8 @@ import Space from "../atom/Space";
 import { Title } from "../atom/Text";
 import Divider from "../atom/Divider";
 import { useStore } from "../../store";
-import {BrowserView, MobileView, isBrowser, isMobile} from "react-device-detect"
-import {Menu, MenuItem} from "@material-ui/core";
+import { BrowserView, MobileView } from "react-device-detect";
+import { Menu, MenuItem } from "@material-ui/core";
 
 type StyleKey = "header" | "titleContainer" | "buttonContainer";
 
@@ -30,70 +30,72 @@ const styles: Record<StyleKey, CSSProperties> = {
 };
 
 const Header = () => {
+  const [anchorEl, setAnchorEl] = useState<true | false>(false);
 
-  const [anchorEl, setAnchorEl]= useState<true|false>(false);
-
-  const handleClick=()=>{
-    setAnchorEl(true)
-  }
-  const handleClose=()=>{
-    setAnchorEl(false)
-  }
+  const handleClick = () => {
+    setAnchorEl(true);
+  };
+  const handleClose = () => {
+    setAnchorEl(false);
+  };
   const { actions } = useStore();
   const showInfoModal = () => {
     actions.showInfoModal();
-    setAnchorEl(false)
+    setAnchorEl(false);
   };
   const showDonateModal = () => {
     actions.showDonateModal();
-    setAnchorEl(false)
+    setAnchorEl(false);
   };
   const showContactModal = () => {
     actions.showContactModal();
-    setAnchorEl(false)
+    setAnchorEl(false);
   };
 
   return (
-<div>
-<MobileView>
-  <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
-    Menu
-  </Button>
-  <Menu
-      id="simple-menu"
-      getContentAnchorEl={null}
-      anchorOrigin={{
-        vertical: "top",
-        horizontal: "left"
-      }}
-      keepMounted
-      open={Boolean(anchorEl)}
-      onClose={handleClose}
-  >
-    <MenuItem onClick={showInfoModal}>ABOUT</MenuItem>
-    <MenuItem onClick={showContactModal}>CONTACT</MenuItem>
-    <MenuItem onClick={showDonateModal}>DONATE</MenuItem>
-  </Menu>
-</MobileView>
+    <div>
+      <MobileView>
+        <Button aria-controls="simple-menu" aria-haspopup="true" onClick={handleClick}>
+          Menu
+        </Button>
+        <Menu
+          id="simple-menu"
+          getContentAnchorEl={null}
+          anchorOrigin={{
+            vertical: "top",
+            horizontal: "left",
+          }}
+          keepMounted
+          open={Boolean(anchorEl)}
+          onClose={handleClose}
+        >
+          <MenuItem onClick={showInfoModal}>ABOUT</MenuItem>
+          <MenuItem onClick={showContactModal}>CONTACT</MenuItem>
+          <MenuItem onClick={showDonateModal}>DONATE</MenuItem>
+        </Menu>
+      </MobileView>
 
-<BrowserView>
-    <Space.Inset style={styles.header} vertical="medium" horizontal="large">
-      <div style={styles.titleContainer}>
-        <Title><div className='h3'>VISAGE VOID</div></Title>
-      </div>
-      <div style={styles.buttonContainer}>
-        <Button onClick={showInfoModal}>ABOUT</Button>
-        <Space.Queue size="small" />
-        <Divider.Vertical color="buttonText" />
-        <Space.Queue size="small" />
-        <Button onClick={showContactModal}>CONTACT</Button>
-        <Space.Queue size="small" />
-        <Divider.Vertical color="buttonText" />
-        <Space.Queue size="small" />
-        <Button onClick={showDonateModal}>DONATE</Button>
-      </div>
-    </Space.Inset>
-</BrowserView></div>
+      <BrowserView>
+        <Space.Inset style={styles.header} vertical="medium" horizontal="large">
+          <div style={styles.titleContainer}>
+            <Title>
+              <div className="h3">VISAGE VOID</div>
+            </Title>
+          </div>
+          <div style={styles.buttonContainer}>
+            <Button onClick={showInfoModal}>ABOUT</Button>
+            <Space.Queue size="small" />
+            <Divider.Vertical color="buttonText" />
+            <Space.Queue size="small" />
+            <Button onClick={showContactModal}>CONTACT</Button>
+            <Space.Queue size="small" />
+            <Divider.Vertical color="buttonText" />
+            <Space.Queue size="small" />
+            <Button onClick={showDonateModal}>DONATE</Button>
+          </div>
+        </Space.Inset>
+      </BrowserView>
+    </div>
   );
 };
 

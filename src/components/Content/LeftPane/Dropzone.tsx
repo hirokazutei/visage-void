@@ -3,6 +3,8 @@ import { useDropzone } from "react-dropzone";
 import symbol from "../../../symbol";
 import { Caption } from "../../atom/Text";
 import { useStore } from "../../../store";
+import Button from "@material-ui/core/Button";
+import { BrowserView, MobileView } from "react-device-detect";
 
 type StyleKey = "textContainer" | "dropzone" | "button" | "dropTextContainer";
 
@@ -48,7 +50,8 @@ const Dropzone = () => {
         reader.onload = (entry) => {
           // Do whatever you want with the file contents
           const image = new Image();
-          image.src = entry?.target?.result as string;
+          //@ts-ignore
+          image.src = entry.target.result;
           image.onload = () => {
             const { width, height } = image;
             const maxRatio = (() => {
@@ -73,19 +76,33 @@ const Dropzone = () => {
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
   return (
-    <>
-      <div style={styles.dropzone} {...getRootProps()}>
-        <input {...getInputProps()} accept=".jpg, .jpeg, .png, .tiff, .bmp, .gif, .rawx" type="file" />
-        <div style={styles.textContainer}>
-          <div style={styles.dropTextContainer}>
-            <Caption>{isDragActive ? "DROP IT HERE!" : "DROP IMAGE HERE..."}</Caption>
+    <div>
+      <MobileView>
+        <>
+          <div className="col-10" {...getRootProps()}>
+            <input {...getInputProps()} accept=".jpg, .jpeg, .png, .tiff, .bmp, .gif, .rawx" type="file" />
+            <Button variant="contained" color="primary">
+              <Caption>CLICK HERE TO UPLOAD</Caption>
+            </Button>
           </div>
-          <div style={styles.button}>
-            <Caption>OR CLICK HERE</Caption>
+        </>
+      </MobileView>
+      <BrowserView>
+        <>
+          <div style={styles.dropzone} {...getRootProps()}>
+            <input {...getInputProps()} accept=".jpg, .jpeg, .png, .tiff, .bmp, .gif, .rawx" type="file" />
+            <div style={styles.textContainer}>
+              <div style={styles.dropTextContainer}>
+                <Caption>{isDragActive ? "DROP IT HERE!" : "DROP IMAGE HERE..."}</Caption>
+              </div>
+              <div style={styles.button}>
+                <Caption>OR CLICK HERE</Caption>
+              </div>
+            </div>
           </div>
-        </div>
-      </div>
-    </>
+        </>
+      </BrowserView>
+    </div>
   );
 };
 
