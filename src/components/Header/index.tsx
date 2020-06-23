@@ -6,7 +6,7 @@ import Space from "../atom/Space";
 import { Title } from "../atom/Text";
 import Divider from "../atom/Divider";
 import { useStore } from "../../store";
-import {BrowserView, MobileView, isBrowser, isMobile} from "react-device-detect"
+import {BrowserView, MobileView} from "react-device-detect"
 import {Menu, MenuItem} from "@material-ui/core";
 
 type StyleKey = "header" | "titleContainer" | "buttonContainer";
