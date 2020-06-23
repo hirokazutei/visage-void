@@ -20,10 +20,11 @@
     "emoji-mart": "^3.0.0",
     "emotion": "^10.0.27",
     "face-api.js": "^0.22.2",
+    "material-ui": "^0.20.2",
     "p5": "^1.0.0",
     "react": "^16.13.1",
     "react-color": "^2.18.1",
-    "react-device-detect": "^1.12.1",
+    "react-device-detect": "^1.13.1",
     "react-dom": "^16.13.1",
     "react-dropzone": "^11.0.1",
     "react-p5": "^1.3.2",
@@ -31,7 +32,7 @@
     "react-scripts": "3.4.1",
     "react-spinners": "^0.8.3",
     "typeface-roboto": "^0.0.75",
-    "typescript": "~3.7.2",
+    "typescript": "^3.7.5",
     "use-deep-compare-effect": "^1.3.1"
   },
   "scripts": {
