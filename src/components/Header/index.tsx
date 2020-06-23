@@ -30,8 +30,13 @@ const styles: Record<StyleKey, CSSProperties> = {
 };
 
 const Header = () => {
-  const [anchorEl, setAnchorE1]=useState(false)
+  interface IsAnchorE1 {
+    success: boolean;
+    message: string;
+  }
+  const [anchorEl, setAnchorE1]= useState<true|false>(false);
 
+  console.log(typeof anchorEl)
   const handleClick=()=>{
     setAnchorE1(true)
   }
@@ -51,6 +56,7 @@ const Header = () => {
     actions.showContactModal();
     setAnchorE1(false)
   };
+
   return (
 <div>
 <MobileView>
@@ -68,8 +74,8 @@ const Header = () => {
         vertical: "top",
         horizontal: "left"
       }}
-      keepMounted
       anchorEl={anchorEl}
+      keepMounted
       open={Boolean(anchorEl)}
       onClose={handleClose}
   >
