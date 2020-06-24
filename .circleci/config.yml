@@ -40,7 +40,6 @@ jobs:
               circleci-agent step halt
           fi
 
-
 workflows:
   version: 2
   test:
@@ -49,6 +48,6 @@ workflows:
       - test_typing:
           requires:
             - checkout_code
-      - test_typing:
-        requires:
-          - checkout_code
+      - test_lint:
+          requires:
+            - checkout_code
