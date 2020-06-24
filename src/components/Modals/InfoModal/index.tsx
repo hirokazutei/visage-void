@@ -59,10 +59,7 @@ const InfoModal = () => {
             <SubTitle>About Visage Void</SubTitle>
             <Space.Stack size="medium" />
             <Body>
-              Visage Void is a non-profit project seeking to raise awareness about protecting the privacy of protesters,
-              and making obscuring identifiable features easier. The police and vigilantes have been known to use photos
-              taken during the protest against the protesters. Please be sure to cover any identifiable features of the
-              protesters in your photos and scrub the meta-data before posting them online.
+              Visage Voi.
             </Body>
             <Space.Stack size="large" />
             <div style={styles.iconText}>
