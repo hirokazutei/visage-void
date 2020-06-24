@@ -36,7 +36,8 @@ jobs:
       - run: cp -r src/ src2
       - run: yarn lint
       - run: |
-          if [ diff src/ src2/ | grep diff ]; then
+          if diff src/ src2/ -r | grep diff ; then
+              diff src/ src2/ -r
               circleci-agent step halt
           fi
 
