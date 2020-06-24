@@ -36,9 +36,9 @@ jobs:
       - run: cp -r src/ src2
       - run: yarn lint
       - run: |
-          if diff -r src/ src2/ | grep diff
+          if diff -r ./src ./src2 | grep diff
           then
-              diff -r src/ src2/
+              diff -r ./src ./src2
               exit 1
           else
               echo "No Diff Found"
