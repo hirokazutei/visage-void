@@ -37,8 +37,7 @@ const EditView = () => {
     return null;
   }
 
-  const selectedColor =
-    detections && editingIndex !== undefined && detections[editingIndex].color;
+  const selectedColor = detections && editingIndex !== undefined && detections[editingIndex].color;
 
   const setColor = (color: ColorSetting) => {
     if (detections && editingIndex !== undefined && detections[editingIndex]) {
@@ -65,9 +64,7 @@ const EditView = () => {
       const newDetection = {
         ...detections[editingIndex],
         type: coverType,
-        emojiChar: detections[editingIndex].emojiChar
-          ? detections[editingIndex].emojiChar
-          : setting.globalEmoji,
+        emojiChar: detections[editingIndex].emojiChar ? detections[editingIndex].emojiChar : setting.globalEmoji,
       };
       detections[editingIndex] = newDetection;
       actions.setDetections({ detections });
@@ -96,27 +93,15 @@ const EditView = () => {
     }
   };
 
-  const currentCoverType =
-    (detections &&
-      editingIndex !== undefined &&
-      detections[editingIndex]?.type) ||
-    setting.type;
+  const currentCoverType = (detections && editingIndex !== undefined && detections[editingIndex]?.type) || setting.type;
 
   const currentEmoji =
-    (detections &&
-      editingIndex !== undefined &&
-      detections[editingIndex]?.emojiChar) ||
-    setting.globalEmoji;
+    (detections && editingIndex !== undefined && detections[editingIndex]?.emojiChar) || setting.globalEmoji;
 
-  const currentEmojiSize =
-    detections && editingIndex !== undefined
-      ? detections[editingIndex]?.emojiSize
-      : 0;
+  const currentEmojiSize = detections && editingIndex !== undefined ? detections[editingIndex]?.emojiSize : 0;
 
   const emojiMaxValue =
-    imageInfo.width && imageInfo.height && imageInfo.width > imageInfo.height
-      ? imageInfo.width
-      : imageInfo.height;
+    imageInfo.width && imageInfo.height && imageInfo.width > imageInfo.height ? imageInfo.width : imageInfo.height;
 
   const multiplierSliders: Array<{
     text: string;
@@ -125,18 +110,12 @@ const EditView = () => {
   }> = [
     {
       text: "H",
-      value:
-        detections && editingIndex !== undefined
-          ? detections[editingIndex].height
-          : 0,
+      value: detections && editingIndex !== undefined ? detections[editingIndex].height : 0,
       key: "height",
     },
     {
       text: "W",
-      value:
-        detections && editingIndex !== undefined
-          ? detections[editingIndex].width
-          : 0,
+      value: detections && editingIndex !== undefined ? detections[editingIndex].width : 0,
       key: "width",
     },
   ];
@@ -147,10 +126,7 @@ const EditView = () => {
       <Label>COVER TYPE</Label>
       <Space.Stack size="medium" />
       <div style={styles.buttonContainer}>
-        <CoverTypeSelector
-          coverType={currentCoverType}
-          setCoverType={setCoverType}
-        />
+        <CoverTypeSelector coverType={currentCoverType} setCoverType={setCoverType} />
       </div>
       <Space.Stack size="small" />
       {currentCoverType === "EMOJI" ? (
@@ -172,8 +148,7 @@ const EditView = () => {
         </>
       ) : (
         multiplierSliders.map(({ text, value, key }) => {
-          const maxValue =
-            key === "x" || key === "width" ? imageInfo.width : imageInfo.height;
+          const maxValue = key === "x" || key === "width" ? imageInfo.width : imageInfo.height;
           return (
             <div style={styles.sliderContainer} key={key}>
               <div style={styles.textContainer}>
@@ -200,16 +175,9 @@ const EditView = () => {
       )}
       <Space.Stack size="medium" />
       {currentCoverType === "EMOJI" ? (
-        <EmojiSelecter
-          emoji={currentEmoji}
-          setEmoji={setEmoji}
-          title="SELECT EMOJI"
-        />
+        <EmojiSelecter emoji={currentEmoji} setEmoji={setEmoji} title="SELECT EMOJI" />
       ) : (
-        <ColorSetter
-          color={selectedColor ? selectedColor : setting.color}
-          setColor={setColor}
-        />
+        <ColorSetter color={selectedColor ? selectedColor : setting.color} setColor={setColor} />
       )}
       <Space.Stack size="medium" />
       <div
@@ -219,11 +187,7 @@ const EditView = () => {
           justifyContent: "space-between",
         }}
       >
-        <Button
-          style={{ backgroundColor: symbol.COLOR.button }}
-          variant="contained"
-          onClick={doneEditing}
-        >
+        <Button style={{ backgroundColor: symbol.COLOR.button }} variant="contained" onClick={doneEditing}>
           <Label>DONE EDITING</Label>
         </Button>
         <Button

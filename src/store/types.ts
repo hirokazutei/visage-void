@@ -1,11 +1,4 @@
-import {
-  Setting,
-  ImageInfo,
-  Detections,
-  FullDescription,
-  CoverType,
-  ColorSetting,
-} from "../types";
+import { Setting, ImageInfo, Detections, FullDescription, CoverType, ColorSetting } from "../types";
 
 export type State = {
   setting: Setting;
@@ -28,16 +21,8 @@ export type State = {
 
 export type Actions = {
   setDetections: ({ detections }: { detections: Detections }) => void;
-  updateDetections: ({
-    fullDescription,
-  }: {
-    fullDescription: FullDescription;
-  }) => void;
-  appendDetections: ({
-    fullDescription,
-  }: {
-    fullDescription: FullDescription;
-  }) => void;
+  updateDetections: ({ fullDescription }: { fullDescription: FullDescription }) => void;
+  appendDetections: ({ fullDescription }: { fullDescription: FullDescription }) => void;
   deleteDetection: ({ index }: { index: number }) => void;
   incrementEditingDetection: () => void;
   focusDetection: ({ index }: { index: number }) => void;
@@ -50,13 +35,7 @@ export type Actions = {
   showContactModal: () => void;
   hideContactModal: () => void;
   updateInputSize: ({ inputSize }: { inputSize: number }) => void;
-  resize: ({
-    currentRatio,
-    maxRatio,
-  }: {
-    currentRatio: number;
-    maxRatio: number;
-  }) => void;
+  resize: ({ currentRatio, maxRatio }: { currentRatio: number; maxRatio: number }) => void;
   setImageInfo: ({
     src,
     height,
@@ -69,26 +48,14 @@ export type Actions = {
     maxRatio: number;
   }) => void;
   setCurrentRatio: ({ currentRatio }: { currentRatio: number }) => void;
-  setHeightMultiplier: ({
-    heightMultiplier,
-  }: {
-    heightMultiplier: number;
-  }) => void;
-  setWidthMultiplier: ({
-    widthMultiplier,
-  }: {
-    widthMultiplier: number;
-  }) => void;
+  setHeightMultiplier: ({ heightMultiplier }: { heightMultiplier: number }) => void;
+  setWidthMultiplier: ({ widthMultiplier }: { widthMultiplier: number }) => void;
   setType: ({ coverType }: { coverType: CoverType }) => void;
   setColor: ({ color }: { color: ColorSetting }) => void;
   addDetection: () => void;
   changeTab: ({ tab }: { tab: number }) => void;
   setGlobalEmoji: ({ globalEmoji }: { globalEmoji: string }) => void;
-  setEmojiSizeMultiplier: ({
-    emojiSizeMultiplier,
-  }: {
-    emojiSizeMultiplier: number;
-  }) => void;
+  setEmojiSizeMultiplier: ({ emojiSizeMultiplier }: { emojiSizeMultiplier: number }) => void;
   refreshCanvas: () => void;
 };
 

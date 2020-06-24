@@ -59,13 +59,10 @@ const InfoModal = () => {
             <SubTitle>About Visage Void</SubTitle>
             <Space.Stack size="medium" />
             <Body>
-              Visage Void is a non-profit project seeking to raise awareness
-              about protecting the privacy of protesters, and making obscuring
-              identifiable features easier. The police and vigilantes have been
-              known to use photos taken during the protest against the
-              protesters. Please be sure to cover any identifiable features of
-              the protesters in your photos and scrub the meta-data before
-              posting them online.
+              Visage Void is a non-profit project seeking to raise awareness about protecting the privacy of protesters,
+              and making obscuring identifiable features easier. The police and vigilantes have been known to use photos
+              taken during the protest against the protesters. Please be sure to cover any identifiable features of the
+              protesters in your photos and scrub the meta-data before posting them online.
             </Body>
             <Space.Stack size="large" />
             <div style={styles.iconText}>
@@ -76,11 +73,8 @@ const InfoModal = () => {
             <Space.Inset horizontal="medium" vertical="small">
               <Body>
                 Visage Void uses
-                <Link href="https://github.com/justadudewhohacks/face-api.js/">
-                  {" face-api.js "}
-                </Link>
-                to detect faces in pictures and covers it up with a 100% opacity
-                mask.
+                <Link href="https://github.com/justadudewhohacks/face-api.js/">{" face-api.js "}</Link>
+                to detect faces in pictures and covers it up with a 100% opacity mask.
               </Body>
             </Space.Inset>
             <Space.Stack size="small" />
@@ -93,8 +87,8 @@ const InfoModal = () => {
               <Body>
                 The app uses
                 <Link href="https://p5js.org/">{" p5.js "}</Link>
-                to redraw the picture onto an html canvas so the new image
-                created has no metadata of the uploaded picture.
+                to redraw the picture onto an html canvas so the new image created has no metadata of the uploaded
+                picture.
               </Body>
             </Space.Inset>
             <Space.Stack size="small" />
@@ -104,13 +98,9 @@ const InfoModal = () => {
               <Label>Manually Cover and Adjust</Label>
             </div>
             <Space.Inset horizontal="medium" vertical="small">
+              <Body>You can add or delete masks in the "Manual" tab once the image is loaded.</Body>
               <Body>
-                You can add or delete masks in the "Manual" tab once the image
-                is loaded.
-              </Body>
-              <Body>
-                You can also adjust their position, size or color. More features
-                will be introduced in the near future.
+                You can also adjust their position, size or color. More features will be introduced in the near future.
               </Body>
             </Space.Inset>
             <Space.Stack size="small" />
@@ -120,16 +110,10 @@ const InfoModal = () => {
               <Label>Nothing Leaves the Browser</Label>
             </div>
             <Space.Inset horizontal="medium" vertical="small">
+              <Body>Everything happens in your browser and no data leaves the browser!</Body>
               <Body>
-                Everything happens in your browser and no data leaves the
-                browser!
-              </Body>
-              <Body>
-                You or someone who you know who understand code can adit the
-                code at this
-                <Link href="https://github.com/hirokazutei/visage-void">
-                  {" GitHub repository."}
-                </Link>
+                You or someone who you know who understand code can adit the code at this
+                <Link href="https://github.com/hirokazutei/visage-void">{" GitHub repository."}</Link>
               </Body>
             </Space.Inset>
             <Space.Stack size="small" />

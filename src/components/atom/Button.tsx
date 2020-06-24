@@ -4,17 +4,12 @@ import { ButtonText, Label } from "./Text";
 
 type ButtonProps = {
   children: React.ReactNode;
-  onClick: (args: any) => void;
+  onClick: (args: React.MouseEvent) => void;
   customStyle?: CSSProperties;
   customTextStyle?: CSSProperties;
 };
 
-const Button = ({
-  children,
-  onClick,
-  customStyle,
-  customTextStyle,
-}: ButtonProps) => {
+const Button = ({ children, onClick, customStyle, customTextStyle }: ButtonProps) => {
   return (
     <MUIButton onClick={onClick} style={customStyle}>
       <ButtonText customStyle={customTextStyle}>{children}</ButtonText>
@@ -22,19 +17,9 @@ const Button = ({
   );
 };
 
-const ContainedButton = ({
-  children,
-  onClick,
-  customStyle,
-  customTextStyle,
-}: ButtonProps) => {
+const ContainedButton = ({ children, onClick, customStyle, customTextStyle }: ButtonProps) => {
   return (
-    <MUIButton
-      onClick={onClick}
-      variant="contained"
-      color={"primary"}
-      style={customStyle}
-    >
+    <MUIButton onClick={onClick} variant="contained" color={"primary"} style={customStyle}>
       <Label customStyle={customTextStyle}>{children}</Label>
     </MUIButton>
   );

@@ -50,15 +50,13 @@ class ImageDisplay extends Component<Props, State> {
   };
 
   handleImage = async (image) => {
-    await getFullFaceDescription(image, this.props.state.inputSize).then(
-      (fullDescription) => {
-        if (!!fullDescription) {
-          this.props.actions.updateDetections({
-            fullDescription,
-          });
-        }
+    await getFullFaceDescription(image, this.props.state.inputSize).then((fullDescription) => {
+      if (!!fullDescription) {
+        this.props.actions.updateDetections({
+          fullDescription,
+        });
       }
-    );
+    });
   };
 
   render() {
@@ -72,11 +70,7 @@ class ImageDisplay extends Component<Props, State> {
         {imageInfo.src && !detections && (
           <div style={styles.loader}>
             <div style={styles.textWrapper}>
-              {this.state.modelsLoaded ? (
-                <Caption>DETECTING FACES</Caption>
-              ) : (
-                <Caption>LOADING MODELS</Caption>
-              )}
+              {this.state.modelsLoaded ? <Caption>DETECTING FACES</Caption> : <Caption>LOADING MODELS</Caption>}
             </div>
             <GridLoader color={symbol.COLOR.text} size={20} margin={4} />
           </div>

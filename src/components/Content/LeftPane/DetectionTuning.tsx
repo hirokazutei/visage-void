@@ -25,27 +25,23 @@ const DetectionTuning = () => {
   const [open, setOpen] = React.useState(false);
 
   const rescan = async () => {
-    await getFullFaceDescription(imageInfo.src, inputSize).then(
-      (fullDescription) => {
-        if (!!fullDescription) {
-          actions.updateDetections({
-            fullDescription,
-          });
-        }
+    await getFullFaceDescription(imageInfo.src, inputSize).then((fullDescription) => {
+      if (!!fullDescription) {
+        actions.updateDetections({
+          fullDescription,
+        });
       }
-    );
+    });
   };
 
   const overlapScan = async () => {
-    await getFullFaceDescription(imageInfo.src, inputSize).then(
-      (fullDescription) => {
-        if (!!fullDescription) {
-          actions.appendDetections({
-            fullDescription,
-          });
-        }
+    await getFullFaceDescription(imageInfo.src, inputSize).then((fullDescription) => {
+      if (!!fullDescription) {
+        actions.appendDetections({
+          fullDescription,
+        });
       }
-    );
+    });
   };
 
   const handleClick = () => {
@@ -70,9 +66,8 @@ const DetectionTuning = () => {
           {open ? (
             <Paper customStyle={{ padding: symbol.SPACE.medium }}>
               <Body>
-                If the facial detection is not accurate, you can rescan or
-                overlap with previous scans. The higher the value, the more
-                precise the detections are, but slower.
+                If the facial detection is not accurate, you can rescan or overlap with previous scans. The higher the
+                value, the more precise the detections are, but slower.
               </Body>
             </Paper>
           ) : null}
@@ -96,9 +91,7 @@ const DetectionTuning = () => {
         <div style={styles.rescanButtons}>
           <ContainedButton onClick={rescan}>REDO SCANS</ContainedButton>
           <Space.Queue size="huge" />
-          <ContainedButton onClick={overlapScan}>
-            OVERLAP NEW SCANS
-          </ContainedButton>
+          <ContainedButton onClick={overlapScan}>OVERLAP NEW SCANS</ContainedButton>
         </div>
       )}
     </>

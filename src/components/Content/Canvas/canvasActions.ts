@@ -1,7 +1,7 @@
 import { Detections } from "../../../types";
 import { between, clamp, unadjustDetection } from "./utils";
 import constants from "./const";
-import { CanvasHandler } from "./type";
+import { CanvasHandler, P5 } from "./type";
 import { ContextType } from "../../../store/types";
 
 export const handleFocusDetection = ({
@@ -13,16 +13,8 @@ export const handleFocusDetection = ({
   const { editingIndex } = state;
   if (editingIndex === undefined && adjDetections) {
     adjDetections.forEach((detection, editingIndex) => {
-      const insideX = between(
-        p5.mouseX,
-        detection.x,
-        detection.x + detection.width
-      );
-      const insideY = between(
-        p5.mouseY,
-        detection.y,
-        detection.y + detection.height
-      );
+      const insideX = between(p5.mouseX, detection.x, detection.x + detection.width);
+      const insideY = between(p5.mouseY, detection.y, detection.y + detection.height);
       if (insideX && insideY) {
         actions.focusDetection({ index: editingIndex });
         return;
@@ -38,9 +30,7 @@ export const handleScaling = ({
   setDragHandler,
   adjDetections,
 }: CanvasHandler & {
-  setDragHandler: (dragHander?: {
-    handler?: (args: { p5: any } & ContextType) => void;
-  }) => void;
+  setDragHandler: (dragHander?: { handler?: (args: { p5: P5 } & ContextType) => void }) => void;
   adjDetections: Detections;
 }): void => {
   const { editingIndex, imageInfo } = state;
@@ -55,21 +45,11 @@ export const handleScaling = ({
     // Copy it here so we can use it in its current state later on.
     const detection = { ...adjDetections[editingIndex] };
     const insideX = between(mouseX, detection.x, detection.x + detection.width);
-    const insideY = between(
-      mouseY,
-      detection.y,
-      detection.y + detection.height
-    );
-    const nearW =
-      Math.abs(detection.x - p5.mouseX) <= constants.resizerTolerance;
-    const nearE =
-      Math.abs(detection.x + detection.width - p5.mouseX) <=
-      constants.resizerTolerance;
-    const nearN =
-      Math.abs(detection.y - p5.mouseY) <= constants.resizerTolerance;
-    const nearS =
-      Math.abs(detection.y + detection.height - p5.mouseY) <=
-      constants.resizerTolerance;
+    const insideY = between(mouseY, detection.y, detection.y + detection.height);
+    const nearW = Math.abs(detection.x - p5.mouseX) <= constants.resizerTolerance;
+    const nearE = Math.abs(detection.x + detection.width - p5.mouseX) <= constants.resizerTolerance;
+    const nearN = Math.abs(detection.y - p5.mouseY) <= constants.resizerTolerance;
+    const nearS = Math.abs(detection.y + detection.height - p5.mouseY) <= constants.resizerTolerance;
 
     if (!(insideX || nearE || nearW) || !(insideY || nearN || nearS)) {
       setDragHandler(undefined);
@@ -123,16 +103,8 @@ export const handleScaling = ({
         }
         if (!didResize && insideX && insideY) {
           // Then it must be a move!
-          newDetection.x = clamp(
-            detection.x + deltaX,
-            0,
-            imageInfo!.width! - detection.width
-          );
-          newDetection.y = clamp(
-            detection.y + deltaY,
-            0,
-            imageInfo!.height! - detection.height
-          );
+          newDetection.x = clamp(detection.x + deltaX, 0, width - detection.width);
+          newDetection.y = clamp(detection.y + deltaY, 0, height - detection.height);
         }
         if (newDetection.width < 0) {
           newDetection.width = -newDetection.width;
@@ -142,18 +114,9 @@ export const handleScaling = ({
           newDetection.height = -newDetection.height;
           newDetection.y -= newDetection.height;
         }
-        newDetection.width = Math.max(
-          newDetection.width,
-          constants.minDimension
-        );
-        newDetection.height = Math.max(
-          newDetection.height,
-          constants.minDimension
-        );
-        const unadjustedDetections = unadjustDetection(
-          newDetections,
-          currentRatio
-        );
+        newDetection.width = Math.max(newDetection.width, constants.minDimension);
+        newDetection.height = Math.max(newDetection.height, constants.minDimension);
+        const unadjustedDetections = unadjustDetection(newDetections, currentRatio);
 
         actions.setDetections({ detections: unadjustedDetections });
       },
@@ -161,56 +124,30 @@ export const handleScaling = ({
   }
 };
 
-export const handleCursor = ({
-  p5,
-  state,
-  adjDetections,
-}: CanvasHandler & { adjDetections: Detections }) => {
+export const handleCursor = ({ p5, state, adjDetections }: CanvasHandler & { adjDetections: Detections }) => {
   const { mouseX, mouseY } = p5;
   const { editingIndex } = state;
   p5?.cursor("default");
   if (adjDetections) {
     if (editingIndex === undefined) {
       for (const detection of adjDetections) {
-        const insideX = between(
-          mouseX,
-          detection.x,
-          detection.x + detection.width
-        );
-        const insideY = between(
-          mouseY,
-          detection.y,
-          detection.y + detection.height
-        );
+        const insideX = between(mouseX, detection.x, detection.x + detection.width);
+        const insideY = between(mouseY, detection.y, detection.y + detection.height);
         if (insideX && insideY) {
           p5.cursor("pointer");
         }
       }
     } else {
       const detection = adjDetections[editingIndex];
-      const insideX = between(
-        mouseX,
-        detection.x,
-        detection.x + detection.width
-      );
-      const insideY = between(
-        mouseY,
-        detection.y,
-        detection.y + detection.height
-      );
+      const insideX = between(mouseX, detection.x, detection.x + detection.width);
+      const insideY = between(mouseY, detection.y, detection.y + detection.height);
       if (insideX && insideY) {
         p5.cursor("move");
       }
-      const nearW =
-        Math.abs(detection.x - mouseX) <= constants.resizerTolerance;
-      const nearE =
-        Math.abs(detection.x + detection.width - mouseX) <=
-        constants.resizerTolerance;
-      const nearN =
-        Math.abs(detection.y - mouseY) <= constants.resizerTolerance;
-      const nearS =
-        Math.abs(detection.y + detection.height - mouseY) <=
-        constants.resizerTolerance;
+      const nearW = Math.abs(detection.x - mouseX) <= constants.resizerTolerance;
+      const nearE = Math.abs(detection.x + detection.width - mouseX) <= constants.resizerTolerance;
+      const nearN = Math.abs(detection.y - mouseY) <= constants.resizerTolerance;
+      const nearS = Math.abs(detection.y + detection.height - mouseY) <= constants.resizerTolerance;
       if ((nearN && nearW) || (nearS && nearE)) {
         p5.cursor("nwse-resize");
       } else if ((nearN && nearE) || (nearS && nearW)) {
@@ -224,20 +161,9 @@ export const handleCursor = ({
   }
 };
 
-export const drawDetections = ({
-  p5,
-  state,
-  adjDetections,
-}: CanvasHandler & { adjDetections: Detections }) => {
+export const drawDetections = ({ p5, state, adjDetections }: CanvasHandler & { adjDetections: Detections }) => {
   const { setting } = state;
-  const {
-    heightMultiplier,
-    widthMultiplier,
-    emojiSizeMultiplier,
-    type,
-    color,
-    globalEmoji,
-  } = setting;
+  const { heightMultiplier, widthMultiplier, emojiSizeMultiplier, type, color, globalEmoji } = setting;
   if (adjDetections) {
     for (const detection of adjDetections) {
       const red = detection?.color?.red ?? color.red;
@@ -253,14 +179,8 @@ export const drawDetections = ({
       const emojiSize = (detection.emojiSize * emojiSizeMultiplier) / 100;
       const x = detection.x + detection.width / 2;
       const y = detection.y + detection.height / 2;
-      const emojiX =
-        detection.x +
-        detection.emojiSize / 2 -
-        (emojiSize - detection.emojiSize) / 4;
-      const emojiY =
-        detection.y +
-        detection.emojiSize / 2 -
-        (emojiSize - detection.emojiSize) / 4;
+      const emojiX = detection.x + detection.emojiSize / 2 - (emojiSize - detection.emojiSize) / 4;
+      const emojiY = detection.y + detection.emojiSize / 2 - (emojiSize - detection.emojiSize) / 4;
       const detectionCoverType = detection?.type ?? type;
       switch (detectionCoverType) {
         case "BOX":
@@ -280,35 +200,15 @@ export const drawDetections = ({
   }
 };
 
-export const drawSelectedDetection = ({
-  p5,
-  state,
-  adjDetections,
-}: CanvasHandler & { adjDetections: Detections }) => {
+export const drawSelectedDetection = ({ p5, state, adjDetections }: CanvasHandler & { adjDetections: Detections }) => {
   const { editingIndex } = state;
   if (editingIndex !== undefined && adjDetections) {
     const detection = adjDetections[editingIndex];
     p5.stroke(0, 0, 0);
     p5.fill(255, 255, 255);
-    p5.circle(
-      detection.x + detection.width / 2,
-      detection.y,
-      constants.resizerRadius
-    );
-    p5.circle(
-      detection.x + detection.width / 2,
-      detection.y + detection.height,
-      constants.resizerRadius
-    );
-    p5.circle(
-      detection.x,
-      detection.y + detection.height / 2,
-      constants.resizerRadius
-    );
-    p5.circle(
-      detection.x + detection.width,
-      detection.y + detection.height / 2,
-      constants.resizerRadius
-    );
+    p5.circle(detection.x + detection.width / 2, detection.y, constants.resizerRadius);
+    p5.circle(detection.x + detection.width / 2, detection.y + detection.height, constants.resizerRadius);
+    p5.circle(detection.x, detection.y + detection.height / 2, constants.resizerRadius);
+    p5.circle(detection.x + detection.width, detection.y + detection.height / 2, constants.resizerRadius);
   }
 };

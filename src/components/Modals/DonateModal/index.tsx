@@ -46,29 +46,19 @@ const DonateModal = () => {
             <SubTitle>Please Donate!</SubTitle>
             <Space.Stack size="medium" />
             <Body>People in the US are Fighting Against Opression!</Body>
-            <Body>
-              If you are able to, please donate to support their cause.
-            </Body>
+            <Body>If you are able to, please donate to support their cause.</Body>
             <Space.Stack size="small" />
             <Label>
-              <Link href="http://northstarhealthcollective.org/donate">
-                ・ Northstar Health Collective
-              </Link>
+              <Link href="http://northstarhealthcollective.org/donate">・ Northstar Health Collective</Link>
             </Label>
             <Label>
-              <Link href="http://secure.everyaction.com/zae4prEeKESHBy0MKXTIcQ2">
-                ・ Reclaim the Block
-              </Link>
+              <Link href="http://secure.everyaction.com/zae4prEeKESHBy0MKXTIcQ2">・ Reclaim the Block</Link>
             </Label>
             <Label>
-              <Link href="http://secure.everyaction.com/4omQDAR0oUiUagTu0EG-Ig2">
-                ・ Black Visions Collective
-              </Link>
+              <Link href="http://secure.everyaction.com/4omQDAR0oUiUagTu0EG-Ig2">・ Black Visions Collective</Link>
             </Label>
             <Label>
-              <Link href="https://minnesotafreedomfund.org">
-                ・ Minnesota Freedom Fund
-              </Link>
+              <Link href="https://minnesotafreedomfund.org">・ Minnesota Freedom Fund</Link>
             </Label>
           </Paper>
         </div>

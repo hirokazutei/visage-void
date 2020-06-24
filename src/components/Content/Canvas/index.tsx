@@ -1,10 +1,6 @@
 /* @flow */
 import React, { useState, useEffect, CSSProperties } from "react";
-import {
-  GetApp as DownloadIcon,
-  ZoomIn as ZoomInIcon,
-  ZoomOut as ZoomOutIcon,
-} from "@material-ui/icons";
+import { GetApp as DownloadIcon, ZoomIn as ZoomInIcon, ZoomOut as ZoomOutIcon } from "@material-ui/icons";
 import { Tooltip } from "@material-ui/core";
 import Sketch from "react-p5";
 import { Button } from "../../atom/Button";
@@ -53,7 +49,7 @@ const CanvasWrapper = () => {
   // Workaround for a bug where first iteration of image being drawn doesn't show it
   const [loop, setLoop] = useState<number>(0);
   const [dragHandler, setDragHandler] = useState<{
-    handler?: (args: { p5: any } & ContextType) => void;
+    handler?: (args: { p5: P5 } & ContextType) => void;
   }>();
 
   // Workout to loop the canvas drawng
@@ -62,9 +58,7 @@ const CanvasWrapper = () => {
   }, [p5Object, editCount, saveAfterNextDraw]);
 
   // Readjusting Sizes
-  const adjDetections = detections
-    ? adjustDetections(detections, currentRatio)
-    : [];
+  const adjDetections = detections ? adjustDetections(detections, currentRatio) : [];
   const adjHeight = height ? height / currentRatio : height;
   const adjWidth = width ? width / currentRatio : width;
 
@@ -93,14 +87,12 @@ const CanvasWrapper = () => {
   };
 
   const zoomIn = () => {
-    const newCurrentRatio =
-      currentRatio <= 1 ? currentRatio / 2 : currentRatio - 1;
+    const newCurrentRatio = currentRatio <= 1 ? currentRatio / 2 : currentRatio - 1;
     actions.setCurrentRatio({ currentRatio: newCurrentRatio });
     p5Object?.redraw();
   };
   const zoomOut = () => {
-    const newCurrentRatio =
-      currentRatio <= 1 ? currentRatio * 2 : currentRatio + 1;
+    const newCurrentRatio = currentRatio <= 1 ? currentRatio * 2 : currentRatio + 1;
     actions.setCurrentRatio({ currentRatio: newCurrentRatio });
     p5Object?.redraw();
   };
