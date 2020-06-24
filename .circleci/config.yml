@@ -37,7 +37,7 @@ jobs:
       - run: yarn lint
       - run: |
           DIFF=$(diff -r ./src ./src2 | grep diff) 
-          if [ $DIFF != "" ]
+          if [ "$DIFF" != "" ]
           then
               diff -r ./src ./src2
               echo "TESTING"
