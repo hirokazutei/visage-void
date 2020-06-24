@@ -2,13 +2,7 @@ import React, { CSSProperties } from "react";
 import { Typography } from "@material-ui/core";
 import symbol from "../../symbol";
 
-type StyleKey =
-  | "body"
-  | "label"
-  | "buttonText"
-  | "caption"
-  | "subTitle"
-  | "title";
+type StyleKey = "body" | "label" | "buttonText" | "caption" | "subTitle" | "title";
 
 const styles: Record<StyleKey, CSSProperties> = {
   body: {
@@ -63,10 +57,7 @@ const Label = ({ children, customStyle = {} }: Props) => {
 
 const ButtonText = ({ children, customStyle = {} }: Props) => {
   return (
-    <Typography
-      variant="button"
-      style={{ ...styles.buttonText, ...customStyle }}
-    >
+    <Typography variant="button" style={{ ...styles.buttonText, ...customStyle }}>
       {children}
     </Typography>
   );

@@ -23,11 +23,7 @@ const Manual = () => {
       {!!imageInfo.src && editingIndex === undefined && (
         <>
           <Space.Stack size="medium" />
-          <Button
-            style={{ backgroundColor: symbol.COLOR.button }}
-            variant="contained"
-            onClick={addNew}
-          >
+          <Button style={{ backgroundColor: symbol.COLOR.button }} variant="contained" onClick={addNew}>
             <Label>ADD NEW</Label>
           </Button>
         </>

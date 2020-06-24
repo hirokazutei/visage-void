@@ -10,15 +10,7 @@
     "@tensorflow-models/coco-ssd": "^2.0.3",
     "@tensorflow/tfjs-converter": "^2.0.0",
     "@tensorflow/tfjs-core": "^2.0.0",
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.3.2",
-    "@testing-library/user-event": "^7.1.2",
-    "@types/jest": "^24.0.0",
-    "@types/node": "^12.0.0",
-    "@types/react": "^16.9.0",
-    "@types/react-dom": "^16.9.0",
     "emoji-mart": "^3.0.0",
-    "emotion": "^10.0.27",
     "face-api.js": "^0.22.2",
     "p5": "^1.0.0",
     "react": "^16.13.1",
@@ -31,14 +23,30 @@
     "react-scripts": "3.4.1",
     "react-spinners": "^0.8.3",
     "typeface-roboto": "^0.0.75",
-    "typescript": "~3.7.2",
+    "typescript": "3.7.2",
     "use-deep-compare-effect": "^1.3.1"
+  },
+  "devDependencies": {
+    "@testing-library/jest-dom": "^4.2.4",
+    "@testing-library/react": "^9.3.2",
+    "@testing-library/user-event": "^7.1.2",
+    "@types/jest": "^24.0.0",
+    "@types/node": "^12.0.0",
+    "@types/react": "^16.9.0",
+    "@types/react-dom": "^16.9.0",
+    "@typescript-eslint/eslint-plugin": "3.4.0",
+    "@typescript-eslint/parser": "3.4.0",
+    "eslint-config-prettier": "^6.11.0",
+    "eslint-plugin-prettier": "^3.1.4",
+    "eslint-plugin-react": "^7.20.0",
+    "prettier": "^2.0.5"
   },
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "lint": "eslint 'src/**/*.{js,ts,tsx}' --fix"
   },
   "eslintConfig": {
     "extends": "react-app"

@@ -24,8 +24,7 @@ const Page = () => {
         const heightRatio = Math.ceil(height / window.innerHeight);
         return Math.max(widthRatio, heightRatio, 1);
       })();
-      const currentRatio =
-        maxRatio > imageInfo.currentRatio ? maxRatio : imageInfo.currentRatio;
+      const currentRatio = maxRatio > imageInfo.currentRatio ? maxRatio : imageInfo.currentRatio;
       actions.resize({ maxRatio, currentRatio });
     }
   }, [height, imageInfo, width, actions]);

@@ -7,11 +7,7 @@ import { Detection } from "../../../types";
 import { PageMarker } from "../../atom/Paper";
 import { useStore } from "../../../store";
 
-type StyleKey =
-  | "baseView"
-  | "detectionPageMarkerContent"
-  | "showToggleContainer"
-  | "buttonContainer";
+type StyleKey = "baseView" | "detectionPageMarkerContent" | "showToggleContainer" | "buttonContainer";
 
 const styles: Record<StyleKey, CSSProperties> = {
   baseView: {
@@ -72,9 +68,7 @@ const DetectionView = () => {
               <div key={index}>
                 <PageMarker
                   customStyle={{
-                    ...(editingIndex === index
-                      ? { backgroundColor: symbol.COLOR.button }
-                      : {}),
+                    ...(editingIndex === index ? { backgroundColor: symbol.COLOR.button } : {}),
                   }}
                 >
                   <div style={styles.detectionPageMarkerContent}>
@@ -87,11 +81,7 @@ const DetectionView = () => {
                       />
                     </div>
                     <div style={styles.buttonContainer}>
-                      <Button
-                        variant="contained"
-                        color="primary"
-                        onClick={() => onSelectedToEdit(index)}
-                      >
+                      <Button variant="contained" color="primary" onClick={() => onSelectedToEdit(index)}>
                         EDIT
                       </Button>
                       <Space.Queue size="small" />

@@ -30,7 +30,9 @@ export const INITIAL_STATE: State = {
 
 const INITIAL_CONTEXT: ContextType = {
   state: INITIAL_STATE,
-  actions: mapReducer(() => {}),
+  actions: mapReducer(() => {
+    /* PLACE HOLDER */
+  }),
 };
 
 export const Context = createContext<ContextType>(INITIAL_CONTEXT);

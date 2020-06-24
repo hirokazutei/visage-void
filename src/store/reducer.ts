@@ -164,12 +164,9 @@ export function reducer(state: State, action: any) {
   }
 }
 
-export const mapReducer = (
-  dispatch: Dispatch<{ type: ActionKeys } & any>
-): Actions => {
+export const mapReducer = (dispatch: Dispatch<{ type: ActionKeys } & any>): Actions => {
   return {
-    setDetections: ({ detections }) =>
-      dispatch({ type: actions.SET_DETECTIONS, detections }),
+    setDetections: ({ detections }) => dispatch({ type: actions.SET_DETECTIONS, detections }),
     updateDetections: ({ fullDescription }) => {
       dispatch({ type: actions.UPDATE_DETECTIONS, fullDescription });
     },

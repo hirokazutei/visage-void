@@ -22,9 +22,7 @@ const EmojiSetting = () => {
       <Slider
         value={emojiSizeMultiplier}
         onChange={(_, newValue) => {
-          setEmojiSizeMultiplier(
-            Array.isArray(newValue) ? newValue[0] : newValue
-          );
+          setEmojiSizeMultiplier(Array.isArray(newValue) ? newValue[0] : newValue);
         }}
         aria-labelledby="continuous-slider"
         valueLabelFormat={(value) => {
@@ -35,11 +33,7 @@ const EmojiSetting = () => {
         valueLabelDisplay="auto"
       />
       <Space.Stack size="medium" />
-      <EmojiSelecter
-        emoji={globalEmoji}
-        setEmoji={setGlobalEmoji}
-        title="GLOBAL EMOJI"
-      />
+      <EmojiSelecter emoji={globalEmoji} setEmoji={setGlobalEmoji} title="GLOBAL EMOJI" />
       <Space.Stack size="medium" />
       <EmojiRandomizer />
     </>

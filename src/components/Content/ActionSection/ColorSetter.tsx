@@ -1,9 +1,5 @@
 import React, { CSSProperties } from "react";
-import {
-  ExpansionPanel,
-  ExpansionPanelSummary,
-  ExpansionPanelDetails,
-} from "@material-ui/core";
+import { ExpansionPanel, ExpansionPanelSummary, ExpansionPanelDetails } from "@material-ui/core";
 import ExpandMoreIcon from "@material-ui/icons/ExpandMore";
 import { SketchPicker } from "react-color";
 import { Label } from "../../atom/Text";

@@ -20,7 +20,7 @@ export const addToDetection = ({ detections, imageInfo, setting }: State) => {
           emojiSize: 0,
           height: 0,
           width: 0,
-        }
+        },
       );
       const count = detections.length;
       return {

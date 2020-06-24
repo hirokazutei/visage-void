@@ -57,9 +57,7 @@ const EmojiRandomizer = () => {
             label={<Label>Face Emojis Only</Label>}
           />
           <Space.Stack size="medium" />
-          <ContainedButton onClick={() => randomizeEmojis()}>
-            RANDOMIZE EMOJIS
-          </ContainedButton>
+          <ContainedButton onClick={() => randomizeEmojis()}>RANDOMIZE EMOJIS</ContainedButton>
         </div>
       </ExpansionPanelDetails>
     </ExpansionPanel>

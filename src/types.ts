@@ -1,9 +1,4 @@
-import {
-  WithFaceDetection,
-  WithFaceLandmarks,
-  FaceDetection,
-  FaceLandmarks68,
-} from "face-api.js";
+import { WithFaceDetection, WithFaceLandmarks, FaceDetection, FaceLandmarks68 } from "face-api.js";
 
 export type ColorSetting = {
   red: number;

@@ -1,21 +1,12 @@
 import React, { CSSProperties } from "react";
 import { Tooltip } from "@material-ui/core";
-import {
-  GitHub as GitHubIcon,
-  LinkedIn as LinkedInIcon,
-  Twitter as TwitterIcon,
-} from "@material-ui/icons";
+import { GitHub as GitHubIcon, LinkedIn as LinkedInIcon, Twitter as TwitterIcon } from "@material-ui/icons";
 import { SubTitle } from "../../atom/Text";
 import { Paper } from "../../atom/Paper";
 import Space from "../../atom/Space";
 import { useStore } from "../../../store";
 
-type StyleKey =
-  | "modalContainer"
-  | "paper"
-  | "titleContainer"
-  | "verticalExpander"
-  | "iconsContainer";
+type StyleKey = "modalContainer" | "paper" | "titleContainer" | "verticalExpander" | "iconsContainer";
 
 const styles: Record<StyleKey, CSSProperties> = {
   modalContainer: {
@@ -72,31 +63,19 @@ const ContactModal = () => {
             </Space.Inset>
             <div style={styles.verticalExpander}>
               <Space.Inset all="large" style={styles.iconsContainer}>
-                <a
-                  href="https://twitter.com/aSublimeAddict"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
+                <a href="https://twitter.com/aSublimeAddict" target="_blank" rel="noopener noreferrer">
                   <Tooltip title="Twitter">
                     <TwitterIcon color="secondary" fontSize="large" />
                   </Tooltip>
                 </a>
                 <Space.Queue size="large" />
-                <a
-                  href="https://www.linkedin.com/in/hirokazutei"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
+                <a href="https://www.linkedin.com/in/hirokazutei" target="_blank" rel="noopener noreferrer">
                   <Tooltip title="LinkedIn">
                     <LinkedInIcon color="secondary" fontSize="large" />
                   </Tooltip>
                 </a>
                 <Space.Queue size="large" />
-                <a
-                  href="https://github.com/hirokazutei/visage-void"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                >
+                <a href="https://github.com/hirokazutei/visage-void" target="_blank" rel="noopener noreferrer">
                   <Tooltip title="GitHub">
                     <GitHubIcon color="secondary" fontSize="large" />
                   </Tooltip>

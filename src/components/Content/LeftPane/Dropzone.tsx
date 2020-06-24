@@ -47,19 +47,15 @@ const Dropzone = () => {
         reader.onerror = () => alert("file reading has failed");
         reader.onload = (entry) => {
           // Do whatever you want with the file contents
-          var image = new Image();
-          //@ts-ignore
-          image.src = entry.target.result;
+          const image = new Image();
+          image.src = entry?.target?.result as string;
           image.onload = () => {
             const { width, height } = image;
             const maxRatio = (() => {
               const windowWidth = window.innerWidth;
               const windowHeight = window.innerHeight;
               let maxRatio = 1;
-              while (
-                height / maxRatio > windowHeight &&
-                width / maxRatio > windowWidth
-              ) {
+              while (height / maxRatio > windowHeight && width / maxRatio > windowWidth) {
                 maxRatio++;
               }
               return maxRatio;
@@ -72,23 +68,17 @@ const Dropzone = () => {
         reader.readAsDataURL(file);
       });
     },
-    [actions]
+    [actions],
   );
 
   const { getRootProps, getInputProps, isDragActive } = useDropzone({ onDrop });
   return (
     <>
       <div style={styles.dropzone} {...getRootProps()}>
-        <input
-          {...getInputProps()}
-          accept=".jpg, .jpeg, .png, .tiff, .bmp, .gif, .rawx"
-          type="file"
-        />
+        <input {...getInputProps()} accept=".jpg, .jpeg, .png, .tiff, .bmp, .gif, .rawx" type="file" />
         <div style={styles.textContainer}>
           <div style={styles.dropTextContainer}>
-            <Caption>
-              {isDragActive ? "DROP IT HERE!" : "DROP IMAGE HERE..."}
-            </Caption>
+            <Caption>{isDragActive ? "DROP IT HERE!" : "DROP IMAGE HERE..."}</Caption>
           </div>
           <div style={styles.button}>
             <Caption>OR CLICK HERE</Caption>
