@@ -35,8 +35,12 @@ jobs:
           at: .
       - run: cp -r src/ src2
       - run: yarn lint
+      - run: diff -r src src2
+      - run: diff -r src src2 | grep diff
       - run: |
-          DIFF=$(diff -r ./src ./src2 | grep diff) 
+          DIFF=$(diff -r ./src ./src2 | grep diff)
+      - run: |
+          DIFF=$(diff -r ./src ./src2 | grep diff)
           if [ "$DIFF" != "" ]
           then
               diff -r ./src ./src2
