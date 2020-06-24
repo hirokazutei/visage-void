@@ -35,10 +35,7 @@ jobs:
           at: .
       - run: cp -r src/ src2
       - run: yarn lint
-      - run: |
-          if [ diff src/ src2/ | grep diff ]; then
-              circleci-agent step halt
-          fi
+      - run: diff -r src src2
 
 workflows:
   version: 2
