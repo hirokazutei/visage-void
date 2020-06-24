@@ -19,7 +19,8 @@ const Snackbar = () => {
         vertical: "bottom",
         horizontal: "left",
       }}
-      open={!!snackBarMessage}   autoHideDuration={MESSAGE_AUTOHIDE_DURATION}
+      open={!!snackBarMessage}
+      autoHideDuration={MESSAGE_AUTOHIDE_DURATION}
       onClose={closeSnackBar}
       action={
         <IconButton size="small" onClick={closeSnackBar}>

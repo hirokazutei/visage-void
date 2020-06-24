@@ -58,9 +58,7 @@ const InfoModal = () => {
           <Paper customStyle={styles.paper}>
             <SubTitle>About Visage Void</SubTitle>
             <Space.Stack size="medium" />
-            <Body>
-              Visage Voi.
-            </Body>
+            <Body>Visage Voi.</Body>
             <Space.Stack size="large" />
             <div style={styles.iconText}>
               <FaceIcon color="secondary" />
