@@ -41,10 +41,8 @@ jobs:
           then
               diff -r ./src ./src2
               echo "TESTING"
-              exit 1
           else
               echo "No Diff Found"
-              exit 0
           fi
 
 workflows:
