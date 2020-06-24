@@ -1,0 +1,54 @@
+version: 2
+
+jobs:
+  checkout_code:
+    docker:
+      - image: circleci/node:10.16
+    steps:
+      - checkout
+      - restore_cache:
+          key: yarn-cache-{{checksum "yarn.lock"}}-{{checksum "package.json"}}
+      - run: yarn
+      - save_cache:
+          key: yarn-cache-{{checksum "yarn.lock"}}-{{checksum "package.json"}}
+          paths:
+            - node_modules
+            - yarn_cache
+      - persist_to_workspace:
+          root: .
+          paths:
+            - .
+
+  test_typing:
+    docker:
+      - image: circleci/node:10.16
+    steps:
+      - attach_workspace:
+          at: .
+      - run: yarn typecheck
+
+  test_lint:
+    docker:
+      - image: circleci/node:10.16
+    steps:
+      - attach_workspace:
+          at: .
+      - run: cp -r src/ src2
+      - run: yarn lint
+      - run: |
+          if [ diff src/ src2/ | grep diff ]; then
+              circleci-agent step halt
+          fi
+
+
+workflows:
+  version: 2
+  test:
+    jobs:
+      - checkout_code
+      - test_typing:
+          requires:
+            - checkout_code
+      - test_typing:
+        requires:
+          - checkout_code
