@@ -50,8 +50,7 @@ const Dropzone = () => {
         reader.onload = (entry) => {
           // Do whatever you want with the file contents
           const image = new Image();
-          //@ts-ignore
-          image.src = entry.target.result;
+          image.src = entry?.target?.result as string;
           image.onload = () => {
             const { width, height } = image;
             const maxRatio = (() => {
