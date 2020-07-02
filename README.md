@@ -29,7 +29,7 @@ Visage Void is a non-profit project seeking to raise awareness about protecting 
 Check it out [HERE](https://nomore.icu/).
 
 <p align="center">
-  <img src="https://raw.githubusercontent.com/hirokazutei/visage-void/master/.github/images/screenshot.png" width="600" />
+  <img src="https://github.com/hirokazutei/visage-void/blob/master/.github/images/screeenshot.png" width="600" />
 </p>
 
 # Features
