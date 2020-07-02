@@ -81,7 +81,7 @@ const InfoModal = () => {
             <div style={styles.iconText}>
               <LocationOffIcon color="secondary" />
               <Space.Queue size="small" />
-              <Label>Scrubs The Photo's Metadata</Label>
+              <Label>Scrubs the Photo's Metadata</Label>
             </div>
             <Space.Inset horizontal="medium" vertical="small">
               <Body>
