@@ -1,44 +1,111 @@
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+<h1 align="center">
+    VISAGE VOID 
+</h1>
+<p align="center">
+    <a href="https://opensource.org/licenses/GPL-3.0">
+        <img src="https://img.shields.io/badge/License-gpl-blue.svg?style=for-the-badge" />
+    </a>
+    <a href="https://github.com/hirokazutei/visage-void/commits/master">
+        <img src="https://img.shields.io/github/last-commit/hirokazutei/visage-void.svg?style=for-the-badge" />
+    </a>
+    <a href="https://github.com/hirokazutei/visage-void/pulls">
+        <img src="https://img.shields.io/badge/PRs-welcome-brightgreen.svg?style=for-the-badge" />
+    </a>
+</p>
 
-## Available Scripts
+<p align="center">
+    <a href="https://facebook.github.io/react/">
+        <img src="https://img.shields.io/badge/-React-black.svg?style=for-the-badge&logo=react&logoColor=white&color=61DAFB">
+    </a>
+    <a href="https://www.typescriptlang.org/">
+        <img src="https://img.shields.io/badge/-Typescript-black.svg?style=for-the-badge&logo=typescript&color=007ACC">
+    </a>
+</p>
 
-In the project directory, you can run:
+# About
 
-### `yarn start`
+Visage Void is a non-profit project seeking to raise awareness about protecting the privacy of protesters, and making obscuring identifiable features easier. The police and vigilantes have been known to use photos taken during the protest against the protesters. Please be sure to cover any identifiable features of the protesters in your photos and scrub the meta-data before posting them online.
 
-Runs the app in the development mode.<br />
-Open [http://localhost:3000](http://localhost:3000) to view it in the browser.
+Check it out [HERE](https://nomore.icu/).
 
-The page will reload if you make edits.<br />
-You will also see any lint errors in the console.
+<p align="center">
+  <img src="https://raw.githubusercontent.com/hirokazutei/visage-void/master/.github/images/screenshot.png" width="600" />
+</p>
 
-### `yarn test`
+# Features
 
-Launches the test runner in the interactive watch mode.<br />
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### Face Detection
 
-### `yarn build`
+Using [face-api.js](https://github.com/justadudewhohacks/face-api.js/), the app detects faces in uploaded pictures and covers it up with an opaque mask as a way to obscure the individual's identity.
 
-Builds the app for production to the `build` folder.<br />
-It correctly bundles React in production mode and optimizes the build for the best performance.
+### Removes Photo's Metadata
 
-The build is minified and the filenames include the hashes.<br />
-Your app is ready to be deployed!
+The uploaded picture is redrawn with [p5.js](https://github.com/processing/p5.js/), removing any original metadata associated with the image.
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+### Everything Done on Client Side
 
-### `yarn eject`
+None of the uploaded files ever leave the client.
 
-**Note: this is a one-way operation. Once you `eject`, you can’t go back!**
+### Manual Adjustment
 
-If you aren’t satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+The detected masks can be manually resized, mobed, added, and removed. You are able to also replace them with emojis.
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you’re on your own.
+# Development
 
-You don’t have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn’t feel obligated to use this feature. However we understand that this tool wouldn’t be useful if you couldn’t customize it when you are ready for it.
+## Getting Started
 
-## Learn More
+**Clone the Repository**
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+```
+git@github.com:hirokazutei/visage-void.git
+```
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+**Install Node Modules**
+
+```
+cd visage-void && yarn
+```
+
+**Start Development Server**
+
+```
+yarn start
+```
+
+## Tests and Checks
+
+**CI Tests Checks For the Following**
+
+- ESLint linting and formatting.
+- TypeScript type checking.
+
+## Future Plans
+
+Please checkout the [Issues Section](https://github.com/hirokazutei/visage-void/issues)!
+
+## Questions, Feedback & Concerns
+
+Please do not hesitate to contact me on the contacts/social media links provided for any questions, feedback or concerns about the project.
+
+Thank you!
+
+<h2 align="center">
+    Contacts & Social Media
+</h2>
+<p align="center">
+    <a href="https://twitter.com/asublimeaddict">
+        <img src="https://img.shields.io/badge/-Twitter-black.svg?style=for-the-badge&logo=twitter&logoColor=white&color=1DA1F2">
+    </a>
+    <a href="https://www.linkedin.com/in/hirokazutei/">
+        <img src="https://img.shields.io/badge/-LinkedIn-black.svg?style=for-the-badge&logo=linkedin&color=0077B5">
+    </a>
+    <a href="https://www.instagram.com/hirokazutei/">
+        <img src="https://img.shields.io/badge/-Instagram-black.svg?style=for-the-badge&logo=instagram&logoColor=white&color=E4405F">
+    </a>
+    <a href="https://medium.com/@hirokazutei/enforcing-component-spacing-in-react-react-native-556b8ef90dea">
+        <img src="https://img.shields.io/badge/-Medium-black.svg?style=for-the-badge&logo=Medium&logoColor=white&color=12100E">
+    </a>
+    <a href="https://hirokazutei.me">
+        <img src="https://img.shields.io/badge/-Blog-black.svg?style=for-the-badge&logo=about.me&logoColor=white&color=gray">
+    </a>
+</p>
