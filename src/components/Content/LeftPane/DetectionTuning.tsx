@@ -21,7 +21,7 @@ const styles: Record<StyleKey, CSSProperties> = {
 
 const DetectionTuning = () => {
   const { state, actions } = useStore();
-  const { imageInfo, inputSize } = state;
+  const { imageInfo, inputSize, detections } = state;
   const [open, setOpen] = React.useState(false);
 
   const rescan = async () => {
@@ -37,6 +37,29 @@ const DetectionTuning = () => {
   const overlapScan = async () => {
     await getFullFaceDescription(imageInfo.src, inputSize).then((fullDescription) => {
       if (!!fullDescription) {
+        // remove duplicate overlaps
+        const deleteDetections: Array<number> = [];
+        const { height, width } = imageInfo;
+        const tolerance = height && width ? (height + width) / 100 : 10;
+        console.log(tolerance);
+        fullDescription.forEach((newDetection) => {
+          const { x: bX1, y: bY1, width: bWidth, height: bHeight } = newDetection.detection.box;
+          const bX2 = bX1 + bWidth;
+          const bY2 = bY1 + bHeight;
+          detections?.forEach((oldDetection, index) => {
+            const { x: aX1, y: aY1, width: aWidth, height: aHeight } = oldDetection;
+            const aX2 = aX1 + aWidth;
+            const aY2 = aY1 + aHeight;
+            const averageDiff =
+              (Math.abs(aX1 - bX1) + Math.abs(aX2 - bX2) + Math.abs(aY1 - bY1) + Math.abs(aY2 - bY2)) / 4;
+            if (averageDiff < tolerance) {
+              deleteDetections.push(index);
+            }
+          });
+        });
+        deleteDetections.reverse().forEach((index) => {
+          actions.deleteDetection({ index });
+        });
         actions.appendDetections({
           fullDescription,
         });
