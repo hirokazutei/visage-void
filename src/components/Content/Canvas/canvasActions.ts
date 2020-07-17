@@ -33,7 +33,7 @@ export const handleScaling = ({
   setDragHandler: (dragHander?: { handler?: (args: { p5: P5 } & ContextType) => void }) => void;
   adjDetections: Detections;
 }): void => {
-  const { editingIndex, imageInfo } = state;
+  const { editingIndex, imageInfo, setting } = state;
   const { width, height } = imageInfo;
   const { mouseX, mouseY } = p5;
   if (!width || !height || !adjDetections) {
@@ -44,12 +44,17 @@ export const handleScaling = ({
     const initialY = clamp(mouseY, 0, height);
     // Copy it here so we can use it in its current state later on.
     const detection = { ...adjDetections[editingIndex] };
-    const insideX = between(mouseX, detection.x, detection.x + detection.width);
-    const insideY = between(mouseY, detection.y, detection.y + detection.height);
+    const isEmoji = detection.type ? detection.type === "EMOJI" : setting.type === "EMOJI";
+    const insideX = between(mouseX, detection.x, detection.x + (isEmoji ? detection.emojiSize : detection.width));
+    const insideY = between(mouseY, detection.y, detection.y + (isEmoji ? detection.emojiSize : detection.height));
     const nearW = Math.abs(detection.x - p5.mouseX) <= constants.resizerTolerance;
-    const nearE = Math.abs(detection.x + detection.width - p5.mouseX) <= constants.resizerTolerance;
+    const nearE =
+      Math.abs(detection.x + (isEmoji ? detection.emojiSize : detection.width) - p5.mouseX) <=
+      constants.resizerTolerance;
     const nearN = Math.abs(detection.y - p5.mouseY) <= constants.resizerTolerance;
-    const nearS = Math.abs(detection.y + detection.height - p5.mouseY) <= constants.resizerTolerance;
+    const nearS =
+      Math.abs(detection.y + (isEmoji ? detection.emojiSize : detection.height) - p5.mouseY) <=
+      constants.resizerTolerance;
 
     if (!(insideX || nearE || nearW) || !(insideY || nearN || nearS)) {
       setDragHandler(undefined);
@@ -80,31 +85,47 @@ export const handleScaling = ({
         if (nearN && (insideX || nearE || nearW)) {
           // Resize the top
           newDetection.y = detection.y + deltaY;
-          newDetection.height = detection.height - deltaY;
+          if (isEmoji) {
+            newDetection.emojiSize = detection.emojiSize - deltaY / 2;
+          } else {
+            newDetection.height = detection.height - deltaY;
+          }
           didResize = true;
         }
         if (nearS && (insideX || nearE || nearW)) {
           // Resize the bottom
           newDetection.y = detection.y;
-          newDetection.height = detection.height + deltaY;
+          if (isEmoji) {
+            newDetection.emojiSize = detection.emojiSize + deltaY;
+          } else {
+            newDetection.height = detection.height + deltaY;
+          }
           didResize = true;
         }
         if (nearW && (insideY || nearN || nearS)) {
           // Resize the left
           newDetection.x = detection.x + deltaX;
-          newDetection.width = detection.width - deltaX;
+          if (isEmoji) {
+            newDetection.emojiSize = detection.emojiSize - deltaX;
+          } else {
+            newDetection.width = detection.width - deltaX;
+          }
           didResize = true;
         }
         if (nearE && (insideY || nearN || nearS)) {
           // Resize the right
           newDetection.x = detection.x;
-          newDetection.width = detection.width + deltaX;
+          if (isEmoji) {
+            newDetection.emojiSize = detection.emojiSize + deltaX;
+          } else {
+            newDetection.width = detection.width + deltaX;
+          }
           didResize = true;
         }
         if (!didResize && insideX && insideY) {
           // Then it must be a move!
-          newDetection.x = clamp(detection.x + deltaX, 0, width - detection.width);
-          newDetection.y = clamp(detection.y + deltaY, 0, height - detection.height);
+          newDetection.x = clamp(detection.x + deltaX, 0, width - (isEmoji ? detection.emojiSize : detection.width));
+          newDetection.y = clamp(detection.y + deltaY, 0, height - (isEmoji ? detection.emojiSize : detection.height));
         }
         if (newDetection.width < 0) {
           newDetection.width = -newDetection.width;
@@ -114,8 +135,12 @@ export const handleScaling = ({
           newDetection.height = -newDetection.height;
           newDetection.y -= newDetection.height;
         }
+        if (newDetection.emojiSize < 1) {
+          newDetection.emojiSize = -newDetection.emojiSize;
+        }
         newDetection.width = Math.max(newDetection.width, constants.minDimension);
         newDetection.height = Math.max(newDetection.height, constants.minDimension);
+        newDetection.emojiSize = Math.max(newDetection.emojiSize, constants.minDimension);
         const unadjustedDetections = unadjustDetection(newDetections, currentRatio);
 
         actions.setDetections({ detections: unadjustedDetections });
@@ -126,28 +151,34 @@ export const handleScaling = ({
 
 export const handleCursor = ({ p5, state, adjDetections }: CanvasHandler & { adjDetections: Detections }) => {
   const { mouseX, mouseY } = p5;
-  const { editingIndex } = state;
+  const { editingIndex, setting } = state;
   p5?.cursor("default");
   if (adjDetections) {
     if (editingIndex === undefined) {
       for (const detection of adjDetections) {
-        const insideX = between(mouseX, detection.x, detection.x + detection.width);
-        const insideY = between(mouseY, detection.y, detection.y + detection.height);
+        const isEmoji = detection.type ? detection.type === "EMOJI" : setting.type === "EMOJI";
+        const insideX = between(mouseX, detection.x, detection.x + (isEmoji ? detection.emojiSize : detection.width));
+        const insideY = between(mouseY, detection.y, detection.y + (isEmoji ? detection.emojiSize : detection.height));
         if (insideX && insideY) {
           p5.cursor("pointer");
         }
       }
     } else {
       const detection = adjDetections[editingIndex];
-      const insideX = between(mouseX, detection.x, detection.x + detection.width);
-      const insideY = between(mouseY, detection.y, detection.y + detection.height);
+      const isEmoji = detection.type ? detection.type === "EMOJI" : setting.type === "EMOJI";
+      const insideX = between(mouseX, detection.x, detection.x + (isEmoji ? detection.emojiSize : detection.width));
+      const insideY = between(mouseY, detection.y, detection.y + (isEmoji ? detection.emojiSize : detection.height));
       if (insideX && insideY) {
         p5.cursor("move");
       }
       const nearW = Math.abs(detection.x - mouseX) <= constants.resizerTolerance;
-      const nearE = Math.abs(detection.x + detection.width - mouseX) <= constants.resizerTolerance;
+      const nearE =
+        Math.abs(detection.x + (isEmoji ? detection.emojiSize : detection.width) - mouseX) <=
+        constants.resizerTolerance;
       const nearN = Math.abs(detection.y - mouseY) <= constants.resizerTolerance;
-      const nearS = Math.abs(detection.y + detection.height - mouseY) <= constants.resizerTolerance;
+      const nearS =
+        Math.abs(detection.y + (isEmoji ? detection.emojiSize : detection.height) - mouseY) <=
+        constants.resizerTolerance;
       if ((nearN && nearW) || (nearS && nearE)) {
         p5.cursor("nwse-resize");
       } else if ((nearN && nearE) || (nearS && nearW)) {
@@ -201,14 +232,17 @@ export const drawDetections = ({ p5, state, adjDetections }: CanvasHandler & { a
 };
 
 export const drawSelectedDetection = ({ p5, state, adjDetections }: CanvasHandler & { adjDetections: Detections }) => {
-  const { editingIndex } = state;
+  const { editingIndex, setting } = state;
   if (editingIndex !== undefined && adjDetections) {
     const detection = adjDetections[editingIndex];
+    const isEmoji = detection.type ? detection.type === "EMOJI" : setting.type === "EMOJI";
+    const width = isEmoji ? detection.emojiSize : detection.width;
+    const height = isEmoji ? detection.emojiSize : detection.height;
     p5.stroke(0, 0, 0);
     p5.fill(255, 255, 255);
-    p5.circle(detection.x + detection.width / 2, detection.y, constants.resizerRadius);
-    p5.circle(detection.x + detection.width / 2, detection.y + detection.height, constants.resizerRadius);
-    p5.circle(detection.x, detection.y + detection.height / 2, constants.resizerRadius);
-    p5.circle(detection.x + detection.width, detection.y + detection.height / 2, constants.resizerRadius);
+    p5.circle(detection.x + width / 2, detection.y, constants.resizerRadius);
+    p5.circle(detection.x + width / 2, detection.y + height, constants.resizerRadius);
+    p5.circle(detection.x, detection.y + height / 2, constants.resizerRadius);
+    p5.circle(detection.x + width, detection.y + height / 2, constants.resizerRadius);
   }
 };

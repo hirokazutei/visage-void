@@ -25,7 +25,8 @@ const EmojiRandomizer = () => {
     });
   }, []);
   const emojis = useMemo(() => {
-    return emojiFaceChecked ? FACE_EMOJIS : allEmojis;
+    const emojiSets = emojiFaceChecked ? FACE_EMOJIS : allEmojis;
+    return emojiSets.filter((emoji) => emoji !== undefined);
   }, [emojiFaceChecked, allEmojis]);
 
   const randomizeEmojis = () => {
