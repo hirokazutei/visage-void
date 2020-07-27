@@ -110,8 +110,8 @@ const CanvasWrapper = () => {
     // Function: Drag Items
     if (mouseInCanvas(p5)) {
       p5.loop();
-      handleFocusDetection({ p5, state, actions, adjDetections });
-      handleScaling({ p5, state, actions, setDragHandler, adjDetections });
+      const indexSet = handleFocusDetection({ p5, state, actions, adjDetections });
+      handleScaling({ p5, state, actions, setDragHandler, adjDetections, indexSet });
     } else {
       setDragHandler(undefined);
     }

@@ -4,7 +4,7 @@ import { actions } from "./actions";
 import { messages } from "../strings";
 import { addToDetection } from "./utils";
 
-export function reducer(state: State, action: any) {
+export function reducer(state: State, action: { type: ActionKeys } & any) {
   state.editCount = state.editCount + 1;
   switch (action.type) {
     case actions.SET_DETECTIONS:
