@@ -40,7 +40,7 @@ const Dropzone = () => {
 
   const onDrop = useCallback(
     (images) => {
-      images.forEach((file: any) => {
+      images.forEach((file: Blob) => {
         const reader = new FileReader();
 
         reader.onabort = () => alert("file reading was aborted");
@@ -52,17 +52,14 @@ const Dropzone = () => {
           image.onload = () => {
             const { width, height } = image;
             const maxRatio = (() => {
-              const windowWidth = window.innerWidth;
-              const windowHeight = window.innerHeight;
-              let maxRatio = 1;
-              while (height / maxRatio > windowHeight && width / maxRatio > windowWidth) {
-                maxRatio++;
-              }
-              return maxRatio;
+              const widthRatio = Math.ceil(width / window.innerWidth);
+              const heightRatio = Math.ceil(height / window.innerHeight);
+              return Math.max(widthRatio, heightRatio, 1);
             })();
             const src = URL.createObjectURL(file);
             actions.setImageInfo({ src, height, width, maxRatio });
             actions.refreshCanvas();
+            window.scrollTo(0, document.body.scrollHeight);
           };
         };
         reader.readAsDataURL(file);

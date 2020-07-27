@@ -51,3 +51,7 @@ export const addToDetection = ({ detections, imageInfo, setting }: State) => {
     return { detections, editingIndex: 0 };
   }
 };
+
+export const preventBehavior = (event: TouchEvent): void => {
+  event.preventDefault();
+};

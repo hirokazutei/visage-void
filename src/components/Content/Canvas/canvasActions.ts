@@ -3,6 +3,7 @@ import { between, clamp, unadjustDetection } from "./utils";
 import constants from "./const";
 import { CanvasHandler, P5 } from "./type";
 import { ContextType } from "../../../store/types";
+import { preventBehavior } from "../../../store/utils";
 
 export const handleFocusDetection = ({
   p5,
@@ -12,14 +13,16 @@ export const handleFocusDetection = ({
 }: CanvasHandler & { adjDetections: Detections }) => {
   const { editingIndex } = state;
   if (editingIndex === undefined && adjDetections) {
+    let indexSet;
     adjDetections.forEach((detection, editingIndex) => {
       const insideX = between(p5.mouseX, detection.x, detection.x + detection.width);
       const insideY = between(p5.mouseY, detection.y, detection.y + detection.height);
       if (insideX && insideY) {
         actions.focusDetection({ index: editingIndex });
-        return;
+        indexSet = editingIndex;
       }
     });
+    return indexSet;
   }
 };
 
@@ -29,9 +32,11 @@ export const handleScaling = ({
   actions,
   setDragHandler,
   adjDetections,
+  indexSet,
 }: CanvasHandler & {
   setDragHandler: (dragHander?: { handler?: (args: { p5: P5 } & ContextType) => void }) => void;
   adjDetections: Detections;
+  indexSet: number;
 }): void => {
   const { editingIndex, imageInfo, setting } = state;
   const { width, height } = imageInfo;
@@ -39,11 +44,11 @@ export const handleScaling = ({
   if (!width || !height || !adjDetections) {
     return;
   }
-  if (editingIndex !== undefined) {
+  if ((editingIndex || indexSet) !== undefined) {
     const initialX = clamp(mouseX, 0, width);
     const initialY = clamp(mouseY, 0, height);
     // Copy it here so we can use it in its current state later on.
-    const detection = { ...adjDetections[editingIndex] };
+    const detection = { ...adjDetections[editingIndex || indexSet] };
     const isEmoji = detection.type ? detection.type === "EMOJI" : setting.type === "EMOJI";
     const insideX = between(mouseX, detection.x, detection.x + (isEmoji ? detection.emojiSize : detection.width));
     const insideY = between(mouseY, detection.y, detection.y + (isEmoji ? detection.emojiSize : detection.height));
@@ -58,9 +63,11 @@ export const handleScaling = ({
 
     if (!(insideX || nearE || nearW) || !(insideY || nearN || nearS)) {
       setDragHandler(undefined);
+      document.removeEventListener("touchmove", preventBehavior);
       actions.defocusDetection();
       return;
     }
+    document.addEventListener("touchmove", preventBehavior, { passive: false });
     setDragHandler({
       // React doesn't like states that are functions, so we wrap it in an
       // object with a property.
@@ -68,6 +75,7 @@ export const handleScaling = ({
         const { mouseX, mouseY } = p5;
         const { imageInfo, editingIndex } = state;
         const { width, height, currentRatio } = imageInfo;
+        console.log("a", currentRatio);
         if (!width || !height || !adjDetections || editingIndex === undefined) {
           return;
         }
