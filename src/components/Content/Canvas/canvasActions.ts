@@ -75,7 +75,6 @@ export const handleScaling = ({
         const { mouseX, mouseY } = p5;
         const { imageInfo, editingIndex } = state;
         const { width, height, currentRatio } = imageInfo;
-        console.log("a", currentRatio);
         if (!width || !height || !adjDetections || editingIndex === undefined) {
           return;
         }
