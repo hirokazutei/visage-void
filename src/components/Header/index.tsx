@@ -23,7 +23,6 @@ const styles: Record<StyleKey, CSSProperties> = {
     flex: 1,
     flexDirection: "row",
     maxHeight: 35,
-    width: "100%",
   },
   titleContainer: { flex: 1 },
   buttonContainer: {

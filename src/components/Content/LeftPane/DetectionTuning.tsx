@@ -41,7 +41,6 @@ const DetectionTuning = () => {
         const deleteDetections: Array<number> = [];
         const { height, width } = imageInfo;
         const tolerance = height && width ? (height + width) / 100 : 10;
-        console.log(tolerance);
         fullDescription.forEach((newDetection) => {
           const { x: bX1, y: bY1, width: bWidth, height: bHeight } = newDetection.detection.box;
           const bX2 = bX1 + bWidth;
